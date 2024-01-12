@@ -1,0 +1,21 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run-router",
+            "type": "shell",
+            "windows": {
+                "command": "${workspaceFolder}/venv/Scripts/python.exe ${workspaceFolder}/router.py"
+            }
+        },
+        {
+            "label": "Run-receiver",
+            "type": "shell",
+            "windows": {
+                "command": "${workspaceFolder}/venv/Scripts/python.exe ${workspaceFolder}/receiver.py"
+            }
+        }
+    ]
+}

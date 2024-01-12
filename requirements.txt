@@ -1,0 +1,4 @@
+pyserial
+srp
+xbee-python
+digi
