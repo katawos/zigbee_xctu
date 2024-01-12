@@ -13,13 +13,16 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from digi.xbee.devices import XBeeDevice
+from datetime import datetime
+import time
+import sys
 
 # TODO: Replace with the serial port where your local module is connected to.
-PORT = "COM4"
-#MAC: ___FC (naklejka "2")
+PORT = "COM3"
+#MAC: ___5A (tył kompa)
 
 # TODO: Replace with the baud rate of your local module.
-BAUD_RATE = 9600
+BAUD_RATE = 115200
 
 
 def main():
@@ -30,17 +33,28 @@ def main():
     device = XBeeDevice(PORT, BAUD_RATE)
 
     try:
-        device.open(force_settings=True)
+        while(True):
+            try:
+                device.open(force_settings=True)
+                print("Connected to device")
+                break
+            except:
+                print("Device is not connected .. resuming in 10 seconds")
+                time.sleep(10)
 
         def data_receive_callback(xbee_message):
-            print("From %s >> %s" % (xbee_message.remote_device.get_64bit_addr(),
+            print(f"{datetime.now()} From %s >> %s" % (xbee_message.remote_device.get_64bit_addr(),
                                      xbee_message.data.decode()))
 
         device.add_data_received_callback(data_receive_callback)
 
         print("Waiting for data...\n")
         input()
-
+    except:
+        print("Lost connection to device")
+        if device is not None and device.is_open():
+            device.close()
+        sys.exit(1)
     finally:
         if device is not None and device.is_open():
             device.close()

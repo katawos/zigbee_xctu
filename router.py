@@ -14,16 +14,18 @@
 
 from digi.xbee.devices import XBeeDevice
 import time
+import sys
 
 # TODO: Replace with the serial port where your local module is connected to.
-PORT = "COM3"
-#MAC: ___5A
+PORT = "COM4"
+#MAC: ___FC (naklejka "2", przód kompa, góra)
+
 
 # TODO: Replace with the baud rate of your local module.
-BAUD_RATE = 9600
+BAUD_RATE = 115200
 
 DATA_TO_SEND = "Hello XBee!"
-REMOTE_NODE_ID = "sensor" #REMOTE
+REMOTE_NODE_ID = "coord" #REMOTE
 
 
 def main():
@@ -31,28 +33,56 @@ def main():
     print(" | XBee Python Library Send Data Sample |")
     print(" +--------------------------------------+\n")
 
-    device = XBeeDevice(PORT, BAUD_RATE)
-
+    device = XBeeDevice(PORT, BAUD_RATE)  
+        
     try:
-        device.open()
+        while(True):
+            try:
+                device.open(force_settings=True)
+                print("Connected to device")
+                break
+            except:
+                print("Device is not connected .. resuming in 10 seconds")
+                time.sleep(10)
 
         # Obtain the remote XBee device from the XBee network.
         xbee_network = device.get_network()
 
-        while (True):
-            remote_device = xbee_network.discover_device(REMOTE_NODE_ID)
-            if remote_device is None:
-                print("Could not find the remote device")
-            else:
-                
-                print("Sending data to %s >> %s..." % (remote_device.get_64bit_addr(), DATA_TO_SEND))
-                try:
-                    device.send_data(remote_device, DATA_TO_SEND)
-                    print("Success")
-                except:
-                    print("duuua lipa")
+        found = False
+        dataSendFails = 0
+        dataSendMaxFails = 10
 
-            time.sleep(5)
+        while (True):
+
+            while (found == False):
+                if (device.is_open()):
+                    remote_device = None
+                    try:
+                        remote_device = xbee_network.discover_device(REMOTE_NODE_ID)
+                    except:
+                        pass
+                    if remote_device is None:
+                        print("Could not find the remote device")
+                        time.sleep(10)
+                    else:
+                        found = True
+                else:
+                    print("Device is closed")
+                    device.open(force_settings=True)
+                    xbee_network = device.get_network()
+                
+            print("Sending data to %s >> %s..." % (remote_device.get_64bit_addr(), DATA_TO_SEND))
+            try:
+                device.send_data(remote_device, DATA_TO_SEND)
+                print("Success")
+            except:
+                print("duuua lipa")
+                time.sleep(0.5)
+                dataSendFails += 1
+
+                if (dataSendFails >= dataSendMaxFails):
+                    print("Lost connection to device")
+                    sys.exit(1)
 
     finally:
         if device is not None and device.is_open():
