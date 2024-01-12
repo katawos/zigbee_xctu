@@ -13,14 +13,17 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 from digi.xbee.devices import XBeeDevice
+import time
 
 # TODO: Replace with the serial port where your local module is connected to.
-PORT = "COM1"
+PORT = "COM3"
+#MAC: ___5A
+
 # TODO: Replace with the baud rate of your local module.
 BAUD_RATE = 9600
 
 DATA_TO_SEND = "Hello XBee!"
-REMOTE_NODE_ID = "REMOTE"
+REMOTE_NODE_ID = "sensor" #REMOTE
 
 
 def main():
@@ -35,16 +38,21 @@ def main():
 
         # Obtain the remote XBee device from the XBee network.
         xbee_network = device.get_network()
-        remote_device = xbee_network.discover_device(REMOTE_NODE_ID)
-        if remote_device is None:
-            print("Could not find the remote device")
-            exit(1)
 
-        print("Sending data to %s >> %s..." % (remote_device.get_64bit_addr(), DATA_TO_SEND))
+        while (True):
+            remote_device = xbee_network.discover_device(REMOTE_NODE_ID)
+            if remote_device is None:
+                print("Could not find the remote device")
+            else:
+                
+                print("Sending data to %s >> %s..." % (remote_device.get_64bit_addr(), DATA_TO_SEND))
+                try:
+                    device.send_data(remote_device, DATA_TO_SEND)
+                    print("Success")
+                except:
+                    print("duuua lipa")
 
-        device.send_data(remote_device, DATA_TO_SEND)
-
-        print("Success")
+            time.sleep(5)
 
     finally:
         if device is not None and device.is_open():
