@@ -1,3 +1,6 @@
 pyserial
 srp
 digi-xbee
+numpy<2.0.0
+pandas
+opencv-python

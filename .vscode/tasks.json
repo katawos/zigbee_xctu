@@ -4,10 +4,10 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Run-router",
+            "label": "Run-coordinator",
             "type": "shell",
             "windows": {
-                "command": "${workspaceFolder}/venv/Scripts/python.exe ${workspaceFolder}/router.py"
+                "command": "${workspaceFolder}/venv/Scripts/python.exe ${workspaceFolder}/coordinator.py"
             }
         },
         {
