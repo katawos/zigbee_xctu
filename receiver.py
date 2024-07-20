@@ -32,9 +32,15 @@ bool_get_params = False
 image_x = None
 image_y = None
 
+experiment_transmission_time_start = None
+experiment_transmission_time_end = None
+experiment_reconstruction_time_end = None
+
 def save_image(payload_list):
     global image_x
     global image_y
+    global experiment_transmission_time_start
+    global experiment_reconstruction_time_end
     arr = []
     for idx in range(len(payload_list)):
         arr += payload_list[idx]
@@ -43,7 +49,9 @@ def save_image(payload_list):
     np_data_2d = np_arr.reshape(image_x,image_y)
 
     # DECODE HERE IF METHOD IS USED FOR FASTER DATA TRANSFER
-
+    experiment_reconstruction_time_end = datetime.now()
+    diff_time = experiment_reconstruction_time_end - experiment_transmission_time_start
+    print(f"Transmission + reconstruction: {diff_time}\n")
     cv2.imwrite('received_image.jpg', np_data_2d)
     # cv2.imshow('received_image', np_data_2d)
     # cv2.waitKey(0)
@@ -54,6 +62,8 @@ def data_receive_callback(xbee_message):
     global payload_list
     global image_x
     global image_y
+    global experiment_transmission_time_start
+    global experiment_transmission_time_end
     print(f"{datetime.now()} From %s" % (xbee_message.remote_device.get_64bit_addr()))
     received_data = list(xbee_message.data)
 
@@ -66,9 +76,13 @@ def data_receive_callback(xbee_message):
         print(f"X: {image_x}, Y: {image_y}")
         bool_start_gathering = True
         bool_get_params = False
+        experiment_transmission_time_start = datetime.now()
         return
 
     if (received_data == [101, 110, 100]):
+        experiment_transmission_time_end = datetime.now()
+        diff_time = experiment_transmission_time_end - experiment_transmission_time_start
+        print(f"Transmission: {diff_time}\n")
         print("stop gathering")
         bool_start_gathering = False
         save_image(payload_list)
