@@ -45,3 +45,24 @@
 {X: 320, Y: 240, PayloadSize: 80, Method: None, Experiment: resolution 240p, t: 0:00:31.543944, tr: 0:00:31.548942}
 {X: 720, Y: 480, PayloadSize: 80, Method: None, Experiment: resolution 480p, t: 0:02:20.754373, tr: 0:02:20.788372}
 
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: tcp, t: 0:00:11.300568, tr: 0:00:11.302568}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.012, transmission: udp, seq_bytes: 2, t: 0:00:05.067726, tr: 0:00:05.190728}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.013, transmission: udp, seq_bytes: 2, t: 0:00:05.557377, tr: 0:00:06.095806}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.014, transmission: udp, seq_bytes: 2, t: 0:00:05.827912, tr: 0:00:05.929912}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.015, transmission: udp, seq_bytes: 2, t: 0:00:06.153789, tr: 0:00:06.407308}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.016, transmission: udp, seq_bytes: 2, t: 0:00:06.714286, tr: 0:00:07.157334}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.005, transmission: udp, seq_bytes: 2, t: 0:00:03.115196, tr: 0:00:03.118194}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.006, transmission: udp, seq_bytes: 2, t: 0:00:07.614379, tr: 0:00:07.616381}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.007, transmission: udp, seq_bytes: 2, t: 0:00:12.246566, tr: 0:00:12.250568}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.008, transmission: udp, seq_bytes: 2, t: 0:00:08.128950, tr: 0:00:08.130952}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.009, transmission: udp, seq_bytes: 2, t: 0:00:04.229925, tr: 0:00:04.231926}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.01, transmission: udp, seq_bytes: 2, t: 0:00:04.306094, tr: 0:00:04.308096}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.011, transmission: udp, seq_bytes: 2, t: 0:00:04.669705, tr: 0:00:04.672704}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.012, transmission: udp, seq_bytes: 2, t: 0:00:05.034881, tr: 0:00:05.036881}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.013, transmission: udp, seq_bytes: 2, t: 0:00:05.456370, tr: 0:00:05.458361}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.014, transmission: udp, seq_bytes: 2, t: 0:00:05.876038, tr: 0:00:05.878037}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.015, transmission: udp, seq_bytes: 2, t: 0:00:06.006036, tr: 0:00:06.009035}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.016, transmission: udp, seq_bytes: 2, t: 0:00:06.496190, tr: 0:00:06.498189}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.017, transmission: udp, seq_bytes: 2, t: 0:00:06.897406, tr: 0:00:06.899407}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.018, transmission: udp, seq_bytes: 2, t: 0:00:07.263750, tr: 0:00:07.265755}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.019, transmission: udp, seq_bytes: 2, t: 0:00:07.804759, tr: 0:00:07.808759}

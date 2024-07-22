@@ -32,9 +32,15 @@ bool_get_params = False
 image_x = None
 image_y = None
 
+experiment = None
 experiment_transmission_time_start = None
 experiment_transmission_time_end = None
+experiment_reconstruction_time_start = None
 experiment_reconstruction_time_end = None
+transmission = ""
+sequence_bytes = 0
+prev_packet_num = -1
+payload_size = None
 
 file = open("receive_buffer.txt", "a+")
 write_out_data = ""
@@ -42,13 +48,43 @@ write_out_data = ""
 def save_image(payload_list):
     global image_x
     global image_y
-    global experiment_transmission_time_start
+    global experiment_reconstruction_time_start
     global experiment_reconstruction_time_end
     global file
     global write_out_data
+    global experiment
+    global transmission
+    global sequence_bytes
     arr = []
-    for idx in range(len(payload_list)):
-        arr += payload_list[idx]
+
+    experiment_reconstruction_time_start = datetime.now() 
+
+    if (transmission == "tcp"):
+        for idx in range(len(payload_list)):
+            arr += payload_list[idx]
+    elif(transmission == "udp"):
+        prev_packet_num = -1
+        for payload in payload_list:
+            packet_num_list = payload[0][0:sequence_bytes]
+            # print(payload[0][0:sequence_bytes], end="")
+            byte_data = bytes(packet_num_list)
+            packet_num = int.from_bytes(byte_data, 'big')
+
+            diff = packet_num - prev_packet_num
+
+            for _ in range(0, diff - 1):
+                # print("- nope")
+                arr += np.zeros(len(payload[0]) - sequence_bytes).tolist()
+
+            # print("- xd")
+            arr += payload[0][sequence_bytes:]
+
+            prev_packet_num = packet_num
+
+    # If there is not enough pixels then do all 0
+    if (len(arr) != (image_x * image_y)):
+        diff = (image_x * image_y) - len(arr)
+        arr += np.zeros(diff).tolist()
 
     np_arr = np.array(arr, dtype=np.uint8)
     # Shape takes (row, column) where row = y, column = x
@@ -58,12 +94,12 @@ def save_image(payload_list):
 
         # DECODE HERE IF METHOD IS USED FOR FASTER DATA TRANSFER
         experiment_reconstruction_time_end = datetime.now()
-        diff_time = experiment_reconstruction_time_end - experiment_transmission_time_start
+        diff_time = experiment_reconstruction_time_end - experiment_reconstruction_time_start
         write_out_data += f", tr: {diff_time}" + "}\n"
         print(write_out_data)
         file.write(write_out_data)
         write_out_data = ""
-        cv2.imwrite('received_image.jpg', np_data_2d)
+        cv2.imwrite(f'received_image_{experiment}.jpg', np_data_2d)
     except:
         print("Broken")
         write_out_data += f", tr: broken" + "}\n"
@@ -79,9 +115,14 @@ def data_receive_callback(xbee_message):
     global payload_list
     global image_x
     global image_y
+    global experiment
     global experiment_transmission_time_start
     global experiment_transmission_time_end
     global write_out_data
+    global transmission
+    global sequence_bytes
+    global prev_packet_num
+    global payload_size
     # print(f"{datetime.now()} From %s" % (xbee_message.remote_device.get_64bit_addr()))
     received_data = list(xbee_message.data)
 
@@ -93,14 +134,15 @@ def data_receive_callback(xbee_message):
         payload_size = int(string_list[2])
         method = string_list[3]
         experiment = string_list[4]
-        write_out_data += "{" + f"X: {image_x}, Y: {image_y}, PayloadSize: {payload_size}, Method: {method}, Experiment: {experiment}"
+        transmission = string_list[5]
+        sequence_bytes = int(string_list[6])
+        write_out_data += "{" + f"X: {image_x}, Y: {image_y}, PayloadSize: {payload_size}, Method: {method}, Experiment: {experiment}, transmission: {transmission}, seq_bytes: {sequence_bytes}"
         bool_start_gathering = True
         bool_get_params = False
         experiment_transmission_time_start = datetime.now()
         return
 
     if (received_data == [101, 110, 100]):
-        experiment_transmission_time_end = datetime.now()
         diff_time = experiment_transmission_time_end - experiment_transmission_time_start
         write_out_data += f", t: {diff_time}"
         # print("stop gathering")
@@ -108,8 +150,11 @@ def data_receive_callback(xbee_message):
         save_image(payload_list)
     
     if (bool_start_gathering == True):
-        payload_list.append(received_data) 
-        # print(f"Data {received_data}")
+        if (transmission == "tcp"):
+            payload_list.append(received_data) 
+        elif (transmission == "udp"):
+            payload_list.append([received_data])
+        experiment_transmission_time_end = datetime.now()
 
     if (received_data == [115, 116, 97, 114, 116]): # start
         print("start gathering")

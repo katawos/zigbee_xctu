@@ -39,8 +39,22 @@ def compress2(image):
     # Compress method here
     return image
 
-def divide_to_payload(array, chunk_size, parameters):
-    arr = [array[i:i + chunk_size].tolist() for i in range(0, len(array), chunk_size)]
+def divide_to_payload(array, chunk_size, seq_bytes, parameters):
+    arr = []
+    count = 0
+    for i in range(0, len(array), chunk_size - seq_bytes):
+        new_arr = []
+        # Convert the integer to a bytes object in big-endian order
+        byte_data = count.to_bytes(seq_bytes, byteorder='big')
+        # Convert the bytes object to a list
+        byte_list = list(byte_data)
+        
+        new_arr += byte_list
+        new_arr += array[i:i + chunk_size - seq_bytes].tolist()
+        arr.append(new_arr)
+        count += 1
+
+    # arr = [array[i:i + chunk_size].tolist() for i in range(0, len(array), chunk_size)]
     arr.insert(0, parameters)
     arr.insert(0, "start")
     arr.append("end")
@@ -103,6 +117,7 @@ def XbeeSend(data_payloads, data_size, transmission = "tcp", transmission_sleep 
         dataSendFails = 0
         dataSendMaxFails = 10
 
+        firstUdp = True
         while (data_idx < data_size):
 
             while (found == False):
@@ -129,6 +144,9 @@ def XbeeSend(data_payloads, data_size, transmission = "tcp", transmission_sleep 
                     if (transmission == "tcp"):
                         device.send_data(remote_device, bytearray(data_payloads[data_idx]))
                     elif (transmission == "udp"):
+                        if (firstUdp == True):
+                            time.sleep(transmission_sleep) 
+                            firstUdp = False
                         device.send_data_async(remote_device, bytearray(data_payloads[data_idx]))
                         time.sleep(transmission_sleep)
                 else:
@@ -152,15 +170,26 @@ def XbeeSend(data_payloads, data_size, transmission = "tcp", transmission_sleep 
 def run(image_x, image_y, payload_size, experiment, method = None, transmission = "tcp", transmission_sleep = 0.014):
     img = loadImage()
     mod_img_1d = modifyImage(img, image_x, image_y, method)
-    data_payloads = divide_to_payload(mod_img_1d, payload_size, f"{image_x},{image_y},{payload_size},{method},{experiment}")
-    data_size = len(data_payloads)
 
+    seq_bytes = 0
+    if (transmission == "udp"):
+        seq_bytes = 1
+        number_of_packets = image_x * image_y / (payload_size - seq_bytes)
+        if (number_of_packets > 255):
+            seq_bytes = 2
+            number_of_packets = image_x * image_y / (payload_size - seq_bytes)
+        elif (number_of_packets > 65025):
+            seq_bytes = 3
+            number_of_packets = image_x * image_y / (payload_size - seq_bytes)
+
+    data_payloads = divide_to_payload(mod_img_1d, payload_size, seq_bytes, f"{image_x},{image_y},{payload_size},{method},{experiment},{transmission},{seq_bytes}")
+    data_size = len(data_payloads)
 
     XbeeSend(data_payloads, data_size, transmission, transmission_sleep)
 
 if __name__ == '__main__':
     # for idx in range(40,255, 5):
-    #     run(image_x = 75, image_y = 150, payload_size = idx, method = "compress1", experiment = "payload size")
+    #     run(image_x = 75, image_y = 150, payload_size = idx, method = "compress1", experiment = "payload_size")
 
 # 1-3 4:3, 4-5 16:9
     resolutions = {
@@ -172,12 +201,19 @@ if __name__ == '__main__':
     }
 
     # for key in resolutions.keys():
-    #     run(image_x = resolutions[key][0], image_y = resolutions[key][1], payload_size = 80, experiment = f"resolution {key}", method = None)
+    #     run(image_x = resolutions[key][0], image_y = resolutions[key][1], payload_size = 80, experiment = f"resolution_{key}", method = None)
 
-    run(image_x = resolutions["144p"][0], image_y = resolutions["144p"][1], payload_size = 80, experiment = f"tcp", method = None)
+    # run(image_x = resolutions["144p"][0], image_y = resolutions["144p"][1], payload_size = 80, experiment = f"tcp", method = None)
+    
+    # Udp transmission sleep test from 5 to 20 ms
+    # for idx in range(5, 20):
+    #     sleep_time = idx / 1000
+    #     run(image_x = resolutions["144p"][0], image_y = resolutions["144p"][1], payload_size = 80, experiment = f"udp_sleep_{sleep_time}", method = None, transmission="udp", transmission_sleep=sleep_time)
+    #     print(1)
 
-    for idx in range(10, 20):
-        sleep_time = idx / 1000
-        run(image_x = resolutions["144p"][0], image_y = resolutions["144p"][1], payload_size = 80, experiment = f"udp-sleep-{sleep_time}", method = None, transmission="udp", transmission_sleep=sleep_time)
+
+    # Udp transmission sleep 14ms but varied payload
+
+    run(image_x = resolutions["480p"][0], image_y = resolutions["480p"][1], payload_size = 80, experiment = f"udp_sleep_14_480p", method = None, transmission="udp", transmission_sleep=0.014)
 
 
