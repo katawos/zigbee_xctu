@@ -1,0 +1,47 @@
+{X: 75, Y: 150, PayloadSize: 40, Method: compress1, t: 0:00:09.137346, tr: 0:00:09.138348}
+{X: 75, Y: 150, PayloadSize: 45, Method: compress1, t: 0:00:08.053239, tr: 0:00:08.053239}
+{X: 75, Y: 150, PayloadSize: 50, Method: compress1, t: 0:00:07.511950, tr: 0:00:07.512953}
+{X: 75, Y: 150, PayloadSize: 55, Method: compress1, t: 0:00:06.698420, tr: 0:00:06.698420}
+{X: 75, Y: 150, PayloadSize: 60, Method: compress1, t: 0:00:06.172417, tr: 0:00:06.173427}
+{X: 75, Y: 150, PayloadSize: 65, Method: compress1, t: 0:00:05.654816, tr: 0:00:05.655817}
+{X: 75, Y: 150, PayloadSize: 70, Method: compress1, t: 0:00:05.220494, tr: 0:00:05.221495}
+{X: 75, Y: 150, PayloadSize: 75, Method: compress1, t: 0:00:04.914028, tr: 0:00:04.915026}
+{X: 75, Y: 150, PayloadSize: 80, Method: compress1, t: 0:00:04.699077, tr: 0:00:04.700077}
+{X: 75, Y: 150, PayloadSize: 85, Method: compress1, t: 0:00:15.025850, tr: 0:00:15.026851}
+{X: 75, Y: 150, PayloadSize: 90, Method: compress1, t: 0:00:14.190632, tr: 0:00:14.191641}
+{X: 75, Y: 150, PayloadSize: 95, Method: compress1, t: 0:00:13.417570, tr: 0:00:13.418570}
+{X: 75, Y: 150, PayloadSize: 100, Method: compress1, t: 0:00:12.740698, tr: 0:00:12.741697}
+{X: 75, Y: 150, PayloadSize: 105, Method: compress1, t: 0:00:12.159125, tr: 0:00:12.159125}
+{X: 75, Y: 150, PayloadSize: 110, Method: compress1, t: 0:00:11.646324, tr: 0:00:11.647333}
+{X: 75, Y: 150, PayloadSize: 115, Method: compress1, t: 0:00:11.125274, tr: 0:00:11.125274}
+{X: 75, Y: 150, PayloadSize: 120, Method: compress1, t: 0:00:10.687091, tr: 0:00:10.688091}
+{X: 75, Y: 150, PayloadSize: 125, Method: compress1, t: 0:00:10.242258, tr: 0:00:10.243262}
+{X: 75, Y: 150, PayloadSize: 130, Method: compress1, t: 0:00:09.858338, tr: 0:00:09.858338}
+{X: 75, Y: 150, PayloadSize: 135, Method: compress1, t: 0:00:09.485143, tr: 0:00:09.486144}
+{X: 75, Y: 150, PayloadSize: 140, Method: compress1, t: 0:00:09.139312, tr: 0:00:09.140314}
+{X: 75, Y: 150, PayloadSize: 145, Method: compress1, t: 0:00:08.901147, tr: 0:00:08.902147}
+{X: 75, Y: 150, PayloadSize: 150, Method: compress1, t: 0:00:08.557957, tr: 0:00:08.558960}
+{X: 75, Y: 150, PayloadSize: 155, Method: compress1, t: 0:00:08.303069, tr: 0:00:08.303069}
+{X: 75, Y: 150, PayloadSize: 160, Method: compress1, t: 0:00:08.007058, tr: 0:00:08.007058}
+{X: 75, Y: 150, PayloadSize: 165, Method: compress1, t: 0:00:12.022106, tr: 0:00:12.023105}
+{X: 75, Y: 150, PayloadSize: 170, Method: compress1, t: 0:00:11.700296, tr: 0:00:11.701296}
+{X: 75, Y: 150, PayloadSize: 175, Method: compress1, t: 0:00:11.361301, tr: 0:00:11.361301}
+{X: 75, Y: 150, PayloadSize: 180, Method: compress1, t: 0:00:11.070900, tr: 0:00:11.071899}
+{X: 75, Y: 150, PayloadSize: 185, Method: compress1, t: 0:00:10.707491, tr: 0:00:10.708495}
+{X: 75, Y: 150, PayloadSize: 190, Method: compress1, t: 0:00:10.506066, tr: 0:00:10.507066}
+{X: 75, Y: 150, PayloadSize: 195, Method: compress1, t: 0:00:10.223494, tr: 0:00:10.223494}
+{X: 75, Y: 150, PayloadSize: 200, Method: compress1, t: 0:00:09.948371, tr: 0:00:09.950366}
+{X: 75, Y: 150, PayloadSize: 205, Method: compress1, t: 0:00:09.798825, tr: 0:00:09.798825}
+{X: 75, Y: 150, PayloadSize: 210, Method: compress1, t: 0:00:09.512584, tr: 0:00:09.513584}
+{X: 75, Y: 150, PayloadSize: 215, Method: compress1, t: 0:00:09.244291, tr: 0:00:09.245290}
+{X: 75, Y: 150, PayloadSize: 220, Method: compress1, t: 0:00:09.034727, tr: 0:00:09.035725}
+{X: 75, Y: 150, PayloadSize: 225, Method: compress1, t: 0:00:08.864674, tr: 0:00:08.865673}
+{X: 75, Y: 150, PayloadSize: 230, Method: compress1, t: 0:00:08.738061, tr: 0:00:08.739061}
+{X: 75, Y: 150, PayloadSize: 235, Method: compress1, t: 0:00:08.570559, tr: 0:00:08.571560}
+{X: 75, Y: 150, PayloadSize: 240, Method: compress1, t: 0:00:08.362153, tr: 0:00:08.363155}
+{X: 75, Y: 150, PayloadSize: 245, Method: compress1, t: 0:00:08.197391, tr: 0:00:08.197391}
+{X: 75, Y: 150, PayloadSize: 250, Method: compress1, t: 0:00:10.812804, tr: 0:00:10.813821}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: resolution 144p, t: 0:00:11.378931, tr: 0:00:11.379930}
+{X: 320, Y: 240, PayloadSize: 80, Method: None, Experiment: resolution 240p, t: 0:00:31.543944, tr: 0:00:31.548942}
+{X: 720, Y: 480, PayloadSize: 80, Method: None, Experiment: resolution 480p, t: 0:02:20.754373, tr: 0:02:20.788372}
+

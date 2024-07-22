@@ -36,23 +36,40 @@ experiment_transmission_time_start = None
 experiment_transmission_time_end = None
 experiment_reconstruction_time_end = None
 
+file = open("receive_buffer.txt", "a+")
+write_out_data = ""
+
 def save_image(payload_list):
     global image_x
     global image_y
     global experiment_transmission_time_start
     global experiment_reconstruction_time_end
+    global file
+    global write_out_data
     arr = []
     for idx in range(len(payload_list)):
         arr += payload_list[idx]
 
     np_arr = np.array(arr, dtype=np.uint8)
-    np_data_2d = np_arr.reshape(image_x,image_y)
+    # Shape takes (row, column) where row = y, column = x
 
-    # DECODE HERE IF METHOD IS USED FOR FASTER DATA TRANSFER
-    experiment_reconstruction_time_end = datetime.now()
-    diff_time = experiment_reconstruction_time_end - experiment_transmission_time_start
-    print(f"Transmission + reconstruction: {diff_time}\n")
-    cv2.imwrite('received_image.jpg', np_data_2d)
+    try:
+        np_data_2d = np_arr.reshape(image_y,image_x)
+
+        # DECODE HERE IF METHOD IS USED FOR FASTER DATA TRANSFER
+        experiment_reconstruction_time_end = datetime.now()
+        diff_time = experiment_reconstruction_time_end - experiment_transmission_time_start
+        write_out_data += f", tr: {diff_time}" + "}\n"
+        print(write_out_data)
+        file.write(write_out_data)
+        write_out_data = ""
+        cv2.imwrite('received_image.jpg', np_data_2d)
+    except:
+        print("Broken")
+        write_out_data += f", tr: broken" + "}\n"
+        print(write_out_data)
+        file.write(write_out_data)
+        write_out_data = ""
     # cv2.imshow('received_image', np_data_2d)
     # cv2.waitKey(0)
 
@@ -64,16 +81,19 @@ def data_receive_callback(xbee_message):
     global image_y
     global experiment_transmission_time_start
     global experiment_transmission_time_end
-    print(f"{datetime.now()} From %s" % (xbee_message.remote_device.get_64bit_addr()))
+    global write_out_data
+    # print(f"{datetime.now()} From %s" % (xbee_message.remote_device.get_64bit_addr()))
     received_data = list(xbee_message.data)
 
     if (bool_get_params == True):
         string = f"{xbee_message.data.decode('utf-8')}"
-        print(string)
         string_list = string.split(",")
-        image_y = int(string_list[0])
-        image_x = int(string_list[1])
-        print(f"X: {image_x}, Y: {image_y}")
+        image_x = int(string_list[0])
+        image_y = int(string_list[1])
+        payload_size = int(string_list[2])
+        method = string_list[3]
+        experiment = string_list[4]
+        write_out_data += "{" + f"X: {image_x}, Y: {image_y}, PayloadSize: {payload_size}, Method: {method}, Experiment: {experiment}"
         bool_start_gathering = True
         bool_get_params = False
         experiment_transmission_time_start = datetime.now()
@@ -82,8 +102,8 @@ def data_receive_callback(xbee_message):
     if (received_data == [101, 110, 100]):
         experiment_transmission_time_end = datetime.now()
         diff_time = experiment_transmission_time_end - experiment_transmission_time_start
-        print(f"Transmission: {diff_time}\n")
-        print("stop gathering")
+        write_out_data += f", t: {diff_time}"
+        # print("stop gathering")
         bool_start_gathering = False
         save_image(payload_list)
     
@@ -97,7 +117,7 @@ def data_receive_callback(xbee_message):
         payload_list = []
         
 
-def main():
+def run():
     print(" +-----------------------------------------+")
     print(" | XBee Python Library Receive Data Sample |")
     print(" +-----------------------------------------+\n")
@@ -129,4 +149,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    run()
