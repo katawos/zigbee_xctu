@@ -18,6 +18,8 @@ import time
 import sys
 import numpy as np
 import cv2
+from skimage.metrics import structural_similarity as ssim
+import jpeg_ls
 
 # TODO: Replace with the serial port where your local module is connected to.
 PORT = "COM4"
@@ -41,6 +43,9 @@ transmission = ""
 sequence_bytes = 0
 prev_packet_num = -1
 payload_size = None
+comparison_image = False
+original_image_name = ""
+method = None
 
 file = open("receive_buffer.txt", "a+")
 write_out_data = ""
@@ -55,6 +60,9 @@ def save_image(payload_list):
     global experiment
     global transmission
     global sequence_bytes
+    global comparison_image
+    global original_image_name
+    global method
     arr = []
 
     experiment_reconstruction_time_start = datetime.now() 
@@ -82,28 +90,50 @@ def save_image(payload_list):
             prev_packet_num = packet_num
 
     # If there is not enough pixels then do all 0
-    if (len(arr) != (image_x * image_y)):
-        diff = (image_x * image_y) - len(arr)
-        arr += np.zeros(diff).tolist()
+    # if (len(arr) != (image_x * image_y)):
+    #     diff = (image_x * image_y) - len(arr)
+    #     arr += np.zeros(diff).tolist()
 
     np_arr = np.array(arr, dtype=np.uint8)
-    image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
     # Shape takes (row, column) where row = y, column = x
 
     try:
-        image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+        if (method == "None"):
+            image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+        elif (method == "JPEG"):
+            image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+        elif (method == "JPEG2000"):
+            image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+        elif (method == "JPEG_LS"):
+            image = jpeg_ls.decode(np_arr)
         # np_data_2d = np_arr.reshape(image_y,image_x)
 
         # DECODE HERE IF METHOD IS USED FOR FASTER DATA TRANSFER
         experiment_reconstruction_time_end = datetime.now()
         diff_time = experiment_reconstruction_time_end - experiment_reconstruction_time_start
-        write_out_data += f", tr: {diff_time}" + "}\n"
+        if (original_image_name != ""):
+            originalImage = cv2.imread(original_image_name)
+            # MSE
+            err = np.sum((originalImage.astype("float") - image.astype("float")) ** 2)
+            err /= float(originalImage.shape[0] * image.shape[1])
+            # SSIM
+            original_gray = cv2.cvtColor(originalImage, cv2.COLOR_BGR2GRAY)
+            img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            s, diff = ssim(original_gray, img_gray, full=True)
+            write_out_data += f", tr: {diff_time}, MSE: {err}, SSIM: {s}" + "}\n"
+        else:    
+            write_out_data += f", tr: {diff_time}, image save only" + "}\n"
         print(write_out_data)
         file.write(write_out_data)
+        file.flush()
         write_out_data = ""
-        cv2.imwrite(f'received_image_{experiment}.jpg', image)
-    except:
-        print("Broken")
+
+        image_name = f'received_image_{experiment}.jpg'
+        if (original_image_name == ""):
+            original_image_name = image_name
+        cv2.imwrite(image_name, image)
+    except Exception as e:
+        print(f"Broken\n{e}")
         write_out_data += f", tr: broken" + "}\n"
         print(write_out_data)
         file.write(write_out_data)
@@ -125,6 +155,9 @@ def data_receive_callback(xbee_message):
     global sequence_bytes
     global prev_packet_num
     global payload_size
+    global comparison_image
+    global original_image_name
+    global method
     # print(f"{datetime.now()} From %s" % (xbee_message.remote_device.get_64bit_addr()))
     received_data = list(xbee_message.data)
 
@@ -138,6 +171,9 @@ def data_receive_callback(xbee_message):
         experiment = string_list[4]
         transmission = string_list[5]
         sequence_bytes = int(string_list[6])
+        comparison_image = string_list[7]
+        if (comparison_image == "True"):
+            original_image_name = ""
         write_out_data += "{" + f"X: {image_x}, Y: {image_y}, PayloadSize: {payload_size}, Method: {method}, Experiment: {experiment}, transmission: {transmission}, seq_bytes: {sequence_bytes}"
         bool_start_gathering = True
         bool_get_params = False
