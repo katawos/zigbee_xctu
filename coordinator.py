@@ -44,13 +44,16 @@ def divide_to_payload(array, chunk_size, seq_bytes, parameters):
     count = 0
     for i in range(0, len(array), chunk_size - seq_bytes):
         new_arr = []
-        # Convert the integer to a bytes object in big-endian order
-        byte_data = count.to_bytes(seq_bytes, byteorder='big')
-        # Convert the bytes object to a list
-        byte_list = list(byte_data)
+
+        # If udp seq number
+        if (seq_bytes > 0):
+            # Convert the integer to a bytes object in big-endian order
+            byte_data = count.to_bytes(seq_bytes, byteorder='big')
+            # Convert the bytes object to a list
+            byte_list = list(byte_data)
         
-        new_arr += byte_list
-        new_arr += array[i:i + chunk_size - seq_bytes].tolist()
+            new_arr += byte_list
+        new_arr += array[i:i + chunk_size - seq_bytes]
         arr.append(new_arr)
         count += 1
 
@@ -87,9 +90,13 @@ def modifyImage(img, image_x, image_y, method = None):
     else:
         mod_img = gray_img
 
-    mod_img_1d = mod_img.flatten()
+    cv2.imwrite('before_mod_image.jpg', mod_img)
 
-    return mod_img_1d
+    img_file = open("before_mod_image.jpg", "rb")
+    img_bytes = img_file.read()
+    img_1d_arr = np.frombuffer(img_bytes, dtype=np.uint8).tolist()
+
+    return img_1d_arr
 
 def XbeeSend(data_payloads, data_size, transmission = "tcp", transmission_sleep = 0.014):
     print(" +--------------------------------------+")
@@ -214,6 +221,9 @@ if __name__ == '__main__':
 
     # Udp transmission sleep 14ms but varied payload
 
-    run(image_x = resolutions["480p"][0], image_y = resolutions["480p"][1], payload_size = 80, experiment = f"udp_sleep_14_480p", method = None, transmission="udp", transmission_sleep=0.014)
+    # run(image_x = resolutions["480p"][0], image_y = resolutions["480p"][1], payload_size = 80, experiment = f"udp_sleep_14_480p", method = None, transmission="udp", transmission_sleep=0.014)
+
+
+    run(image_x = resolutions["144p"][0], image_y = resolutions["144p"][1], payload_size = 80, experiment = f"tcp_send_bytes", method = None, transmission="tcp", transmission_sleep=0.014)
 
 

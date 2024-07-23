@@ -87,10 +87,12 @@ def save_image(payload_list):
         arr += np.zeros(diff).tolist()
 
     np_arr = np.array(arr, dtype=np.uint8)
+    image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
     # Shape takes (row, column) where row = y, column = x
 
     try:
-        np_data_2d = np_arr.reshape(image_y,image_x)
+        image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+        # np_data_2d = np_arr.reshape(image_y,image_x)
 
         # DECODE HERE IF METHOD IS USED FOR FASTER DATA TRANSFER
         experiment_reconstruction_time_end = datetime.now()
@@ -99,7 +101,7 @@ def save_image(payload_list):
         print(write_out_data)
         file.write(write_out_data)
         write_out_data = ""
-        cv2.imwrite(f'received_image_{experiment}.jpg', np_data_2d)
+        cv2.imwrite(f'received_image_{experiment}.jpg', image)
     except:
         print("Broken")
         write_out_data += f", tr: broken" + "}\n"
