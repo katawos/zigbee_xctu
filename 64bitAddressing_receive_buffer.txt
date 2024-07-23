@@ -1,0 +1,334 @@
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.083069, tr: 0:00:00.002001, image save only}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.005, transmission: udp, seq_bytes: 2, t: 0:00:01.975641, tr: 0:00:00.005002, MSE: 39180.028428819445, SSIM: 0.028244170078777334}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.006, transmission: udp, seq_bytes: 2, t: 0:00:01.956967, tr: 0:00:00.003000, MSE: 96128.51009114583, SSIM: 0.0864475893498751}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.007, transmission: udp, seq_bytes: 2, t: 0:00:02.047094, tr: 0:00:00.002999, MSE: 30288.8466796875, SSIM: 0.0693819970345005}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.008, transmission: udp, seq_bytes: 2, t: 0:00:02.249167{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.009, transmission: udp, seq_bytes: 2, t: 0:00:02.424013, tr: 0:00:00.004999, MSE: 17901.101236979168, SSIM: 0.17072582907842973}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.01, transmission: udp, seq_bytes: 2, t: 0:00:02.666531, tr: 0:00:00.011999, MSE: 24734.6416015625, SSIM: 0.15931322368097098}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.011, transmission: udp, seq_bytes: 2, t: 0:00:02.970803, tr: 0:00:00.003002, MSE: 18050.09201388889, SSIM: 0.17033355257960986}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.012, transmission: udp, seq_bytes: 2, t: 0:00:03.190240, tr: 0:00:00.002999, MSE: 19153.111762152777, SSIM: 0.2148049391787518}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.013, transmission: udp, seq_bytes: 2, t: 0:00:03.521364, tr: 0:00:00.003999, MSE: 13191.815321180555, SSIM: 0.35821151744518526}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.014, transmission: udp, seq_bytes: 2, t: 0:00:03.599080, tr: 0:00:00.005001, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.015, transmission: udp, seq_bytes: 2, t: 0:00:03.735070, tr: 0:00:00.004001, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.016, transmission: udp, seq_bytes: 2, t: 0:00:03.974248, tr: 0:00:00.001998, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.017, transmission: udp, seq_bytes: 2, t: 0:00:04.195552, tr: 0:00:00.003520, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.018, transmission: udp, seq_bytes: 2, t: 0:00:04.439621, tr: 0:00:00.003000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_sleep_0.019, transmission: udp, seq_bytes: 2, t: 0:00:04.774114, tr: 0:00:00.003000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:06.991422, tr: 0:00:00.002001, image save only}
+{X: 192, Y: 144, PayloadSize: 40, Method: None, Experiment: tcp_payload_40, transmission: tcp, seq_bytes: 0, t: 0:00:13.905173, tr: 0:00:00.003004, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 45, Method: None, Experiment: tcp_payload_45, transmission: tcp, seq_bytes: 0, t: 0:00:12.946716, tr: 0:00:00.003000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 50, Method: None, Experiment: tcp_payload_50, transmission: tcp, seq_bytes: 0, t: 0:00:11.369931, tr: 0:00:00.003000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 55, Method: None, Experiment: tcp_payload_55, transmission: tcp, seq_bytes: 0, t: 0:00:10.460114, tr: 0:00:00.002997, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 60, Method: None, Experiment: tcp_payload_60, transmission: tcp, seq_bytes: 0, t: 0:00:09.475636, tr: 0:00:00.003000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 65, Method: None, Experiment: tcp_payload_65, transmission: tcp, seq_bytes: 0, t: 0:00:08.976344, tr: 0:00:00.002992, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 70, Method: None, Experiment: tcp_payload_70, transmission: tcp, seq_bytes: 0, t: 0:00:08.495594, tr: 0:00:00.002000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 75, Method: None, Experiment: tcp_payload_75, transmission: tcp, seq_bytes: 0, t: 0:00:07.781860, tr: 0:00:00.003008, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: tcp_payload_80, transmission: tcp, seq_bytes: 0, t: 0:00:07.176572, tr: 0:00:00.002999, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 85, Method: None, Experiment: tcp_payload_85, transmission: tcp, seq_bytes: 0, t: 0:00:22.979635, tr: 0:00:00.002001, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 90, Method: None, Experiment: tcp_payload_90, transmission: tcp, seq_bytes: 0, t: 0:00:21.558286, tr: 0:00:00.005002, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 95, Method: None, Experiment: tcp_payload_95, transmission: tcp, seq_bytes: 0, t: 0:00:20.461855, tr: 0:00:00.001996, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 100, Method: None, Experiment: tcp_payload_100, transmission: tcp, seq_bytes: 0, t: 0:00:19.552860, tr: 0:00:00.003002, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 105, Method: None, Experiment: tcp_payload_105, transmission: tcp, seq_bytes: 0, t: 0:00:19.229293, tr: 0:00:00.002001, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 110, Method: None, Experiment: tcp_payload_110, transmission: tcp, seq_bytes: 0, t: 0:00:17.732326, tr: 0:00:00.001998, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 115, Method: None, Experiment: tcp_payload_115, transmission: tcp, seq_bytes: 0, t: 0:00:16.901718, tr: 0:00:00.002000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 120, Method: None, Experiment: tcp_payload_120, transmission: tcp, seq_bytes: 0, t: 0:00:16.272001, tr: 0:00:00.002000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 125, Method: None, Experiment: tcp_payload_125, transmission: tcp, seq_bytes: 0, t: 0:00:15.581138, tr: 0:00:00.002003, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 130, Method: None, Experiment: tcp_payload_130, transmission: tcp, seq_bytes: 0, t: 0:00:15.024405, tr: 0:00:00.004999, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 135, Method: None, Experiment: tcp_payload_135, transmission: tcp, seq_bytes: 0, t: 0:00:14.406975, tr: 0:00:00.003012, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 140, Method: None, Experiment: tcp_payload_140, transmission: tcp, seq_bytes: 0, t: 0:00:14.021812, tr: 0:00:00.002000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 145, Method: None, Experiment: tcp_payload_145, transmission: tcp, seq_bytes: 0, t: 0:00:22.470358, tr: 0:00:00.003002, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 150, Method: None, Experiment: tcp_payload_150, transmission: tcp, seq_bytes: 0, t: 0:00:13.192250, tr: 0:00:00.002999, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 155, Method: None, Experiment: tcp_payload_155, transmission: tcp, seq_bytes: 0, t: 0:00:12.961797, tr: 0:00:00.001996, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 160, Method: None, Experiment: tcp_payload_160, transmission: tcp, seq_bytes: 0, t: 0:00:12.205878, tr: 0:00:00.003001, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 165, Method: None, Experiment: tcp_payload_165, transmission: tcp, seq_bytes: 0, t: 0:00:18.380031, tr: 0:00:00.001998, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 170, Method: None, Experiment: tcp_payload_170, transmission: tcp, seq_bytes: 0, t: 0:00:17.710248, tr: 0:00:00.005000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 175, Method: None, Experiment: tcp_payload_175, transmission: tcp, seq_bytes: 0, t: 0:00:17.303152, tr: 0:00:00.003000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 180, Method: None, Experiment: tcp_payload_180, transmission: tcp, seq_bytes: 0, t: 0:00:16.760433, tr: 0:00:00.002999, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 185, Method: None, Experiment: tcp_payload_185, transmission: tcp, seq_bytes: 0, t: 0:00:16.334490, tr: 0:00:00.003997, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 190, Method: None, Experiment: tcp_payload_190, transmission: tcp, seq_bytes: 0, t: 0:00:15.856062, tr: 0:00:00.003000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 195, Method: None, Experiment: tcp_payload_195, transmission: tcp, seq_bytes: 0, t: 0:00:24.538993, tr: 0:00:00.002271, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 200, Method: None, Experiment: tcp_payload_200, transmission: tcp, seq_bytes: 0, t: 0:00:15.109410, tr: 0:00:00.002001, MSE: 13086.590386284723, SSIM: 0.2586847294245857}
+{X: 192, Y: 144, PayloadSize: 205, Method: None, Experiment: tcp_payload_205, transmission: tcp, seq_bytes: 0, t: 0:00:14.772347, tr: 0:00:00.002000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 210, Method: None, Experiment: tcp_payload_210, transmission: tcp, seq_bytes: 0, t: 0:00:14.440145, tr: 0:00:00.004002, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 215, Method: None, Experiment: tcp_payload_215, transmission: tcp, seq_bytes: 0, t: 0:00:14.178907, tr: 0:00:00.001997, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 220, Method: None, Experiment: tcp_payload_220, transmission: tcp, seq_bytes: 0, t: 0:00:13.757373, tr: 0:00:00.003000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 225, Method: None, Experiment: tcp_payload_225, transmission: tcp, seq_bytes: 0, t: 0:00:13.597449, tr: 0:00:00.002001, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 230, Method: None, Experiment: tcp_payload_230, transmission: tcp, seq_bytes: 0, t: 0:00:13.187916, tr: 0:00:00.002000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 235, Method: None, Experiment: tcp_payload_235, transmission: tcp, seq_bytes: 0, t: 0:00:13.023945, tr: 0:00:00.001999, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 240, Method: None, Experiment: tcp_payload_240, transmission: tcp, seq_bytes: 0, t: 0:00:12.802719, tr: 0:00:00.001999, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 245, Method: None, Experiment: tcp_payload_245, transmission: tcp, seq_bytes: 0, t: 0:00:12.443857, tr: 0:00:00.002001, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 250, Method: None, Experiment: tcp_payload_250, transmission: tcp, seq_bytes: 0, t: 0:00:16.494264, tr: 0:00:00.002001, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.037662, tr: 0:00:00.002001, image save only}
+{X: 192, Y: 144, PayloadSize: 40, Method: None, Experiment: udp_payload_40, transmission: udp, seq_bytes: 2, t: 0:00:07.241090, tr: 0:00:00.005996, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 45, Method: None, Experiment: udp_payload_45, transmission: udp, seq_bytes: 2, t: 0:00:06.270767, tr: 0:00:00.003001, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 50, Method: None, Experiment: udp_payload_50, transmission: udp, seq_bytes: 2, t: 0:00:05.659044, tr: 0:00:00.003000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 55, Method: None, Experiment: udp_payload_55, transmission: udp, seq_bytes: 2, t: 0:00:05.159754, tr: 0:00:00.002998, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 60, Method: None, Experiment: udp_payload_60, transmission: udp, seq_bytes: 2, t: 0:00:04.714899, tr: 0:00:00.003000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 65, Method: None, Experiment: udp_payload_65, transmission: udp, seq_bytes: 2, t: 0:00:04.359127, tr: 0:00:00.003002, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 70, Method: None, Experiment: udp_payload_70, transmission: udp, seq_bytes: 2, t: 0:00:04.066004, tr: 0:00:00.002996, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 75, Method: None, Experiment: udp_payload_75, transmission: udp, seq_bytes: 2, t: 0:00:03.823866, tr: 0:00:00.003001, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_payload_80, transmission: udp, seq_bytes: 2, t: 0:00:03.639351, tr: 0:00:00.003001, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 85, Method: None, Experiment: udp_payload_85, transmission: udp, seq_bytes: 2, t: 0:00:04.138502, tr: 0:00:00.003000, MSE: 23150.64626736111, SSIM: 0.06804333800725709}
+{X: 192, Y: 144, PayloadSize: 90, Method: None, Experiment: udp_payload_90, transmission: udp, seq_bytes: 2, t: 0:00:03.472087, tr: 0:00:00.002998, MSE: 17236.296223958332, SSIM: 0.13162295221036943}
+{X: 192, Y: 144, PayloadSize: 95, Method: None, Experiment: udp_payload_95, transmission: udp, seq_bytes: 2, t: 0:00:02.973308, tr: 0:00:00.005005, MSE: 17794.50314670139, SSIM: 0.11445431228404673}
+{X: 192, Y: 144, PayloadSize: 100, Method: None, Experiment: udp_payload_100, transmission: udp, seq_bytes: 2, t: 0:00:03.112943, tr: 0:00:00.002997, MSE: 20021.696180555555, SSIM: 0.11181781348579338}
+{X: 192, Y: 144, PayloadSize: 105, Method: None, Experiment: udp_payload_105, transmission: udp, seq_bytes: 2, t: 0:00:03.279814, tr: 0:00:00.003000, MSE: 39234.129557291664, SSIM: 0.11148154578059115}
+{X: 192, Y: 144, PayloadSize: 110, Method: None, Experiment: udp_payload_110, transmission: udp, seq_bytes: 1, t: 0:00:02.794151, tr: 0:00:00.001997, MSE: 24921.96701388889, SSIM: 0.09267634859745542}
+{X: 192, Y: 144, PayloadSize: 115, Method: None, Experiment: udp_payload_115, transmission: udp, seq_bytes: 1, t: 0:00:03.523483, tr: 0:00:00.003000, MSE: 25708.573893229168, SSIM: 0.05364492912102784}
+{X: 192, Y: 144, PayloadSize: 120, Method: None, Experiment: udp_payload_120, transmission: udp, seq_bytes: 1, t: 0:00:03.319957, tr: 0:00:00.003997, MSE: 18946.160481770832, SSIM: 0.10998133451692675}
+{X: 192, Y: 144, PayloadSize: 125, Method: None, Experiment: udp_payload_125, transmission: udp, seq_bytes: 1, t: 0:00:03.539518, tr: 0:00:00.005002, MSE: 25766.31564670139, SSIM: 0.06551013947051587}
+{X: 192, Y: 144, PayloadSize: 130, Method: None, Experiment: udp_payload_130, transmission: udp, seq_bytes: 1, t: 0:00:03.095503, tr: 0:00:00.009001, MSE: 33055.83865017361, SSIM: 0.06652170079871508}
+{X: 192, Y: 144, PayloadSize: 135, Method: None, Experiment: udp_payload_135, transmission: udp, seq_bytes: 1, t: 0:00:02.883715, tr: 0:00:00.002999, MSE: 26160.937391493055, SSIM: 0.06559137837826369}
+{X: 192, Y: 144, PayloadSize: 140, Method: None, Experiment: udp_payload_140, transmission: udp, seq_bytes: 1, t: 0:00:02.700842, tr: 0:00:00.004998, MSE: 42814.87109375, SSIM: 0.1091624329724027}
+{X: 192, Y: 144, PayloadSize: 145, Method: None, Experiment: udp_payload_145, transmission: udp, seq_bytes: 1, t: 0:00:02.692104, tr: 0:00:00.003001, MSE: 21153.570963541668, SSIM: 0.11800861390720313}
+{X: 192, Y: 144, PayloadSize: 150, Method: None, Experiment: udp_payload_150, transmission: udp, seq_bytes: 1, t: 0:00:02.644523, tr: 0:00:00.008993, MSE: 28897.265082465277, SSIM: 0.10511590800907235}
+{X: 192, Y: 144, PayloadSize: 155, Method: None, Experiment: udp_payload_155, transmission: udp, seq_bytes: 1, t: 0:00:02.651897, tr: 0:00:00.003001, MSE: 27498.732530381945, SSIM: 0.045605264351774304}
+{X: 192, Y: 144, PayloadSize: 160, Method: None, Experiment: udp_payload_160, transmission: udp, seq_bytes: 1, t: 0:00:02.624517, tr: 0:00:00.004003, MSE: 26832.770399305555, SSIM: 0.07248794949390205}
+{X: 192, Y: 144, PayloadSize: 165, Method: None, Experiment: udp_payload_165, transmission: udp, seq_bytes: 1, t: 0:00:02.670218, tr: 0:00:00.003003, MSE: 16541.298502604168, SSIM: 0.13951517195233087}
+{X: 192, Y: 144, PayloadSize: 170, Method: None, Experiment: udp_payload_170, transmission: udp, seq_bytes: 1, t: 0:00:02.624500, tr: 0:00:00.002998, MSE: 20892.203559027777, SSIM: 0.12725631659664446}
+{X: 192, Y: 144, PayloadSize: 175, Method: None, Experiment: udp_payload_175, transmission: udp, seq_bytes: 1, t: 0:00:03.042216, tr: 0:00:00.002998, MSE: 94039.79578993056, SSIM: 0.1092707698006321}
+{X: 192, Y: 144, PayloadSize: 180, Method: None, Experiment: udp_payload_180, transmission: udp, seq_bytes: 1, t: 0:00:02.897803, tr: 0:00:00.002999, MSE: 28244.954535590277, SSIM: 0.1072453159868978}
+{X: 192, Y: 144, PayloadSize: 185, Method: None, Experiment: udp_payload_185, transmission: udp, seq_bytes: 1, t: 0:00:02.910897, tr: 0:00:00.002999, MSE: 25415.89670138889, SSIM: 0.06884964145809484}
+{X: 192, Y: 144, PayloadSize: 190, Method: None, Experiment: udp_payload_190, transmission: udp, seq_bytes: 1, t: 0:00:02.926775, tr: 0:00:00.003000, MSE: 26322.65646701389, SSIM: 0.06218722644488349}
+{X: 192, Y: 144, PayloadSize: 195, Method: None, Experiment: udp_payload_195, transmission: udp, seq_bytes: 1, t: 0:00:02.928589, tr: 0:00:00.003001, MSE: 22323.132161458332, SSIM: 0.10095794082623144}
+{X: 192, Y: 144, PayloadSize: 200, Method: None, Experiment: udp_payload_200, transmission: udp, seq_bytes: 1, t: 0:00:02.942690, tr: 0:00:00.003999, MSE: 20330.311197916668, SSIM: 0.1209063579522869}
+{X: 192, Y: 144, PayloadSize: 205, Method: None, Experiment: udp_payload_205, transmission: udp, seq_bytes: 1, t: 0:00:02.744088, tr: 0:00:00.003002, MSE: 25114.131510416668, SSIM: 0.07488095711084065}
+{X: 192, Y: 144, PayloadSize: 210, Method: None, Experiment: udp_payload_210, transmission: udp, seq_bytes: 1, t: 0:00:02.706900, tr: 0:00:00.002999, MSE: 24946.020616319445, SSIM: 0.0759561182682726}
+{X: 192, Y: 144, PayloadSize: 215, Method: None, Experiment: udp_payload_215, transmission: udp, seq_bytes: 1, t: 0:00:02.198149, tr: 0:00:00.001998, MSE: 18518.45583767361, SSIM: 0.1354219585681014}
+{X: 192, Y: 144, PayloadSize: 220, Method: None, Experiment: udp_payload_220, transmission: udp, seq_bytes: 1{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.193817, tr: 0:00:00.002006, image save only}
+{X: 192, Y: 144, PayloadSize: 220, Method: None, Experiment: udp_payload_220, transmission: udp, seq_bytes: 1{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:06.917512, tr: 0:00:00.003000, image save only}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:06.926328, tr: 0:00:00.001999, image save only}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG, Experiment: tcp_compression, transmission: tcp, seq_bytes: 0, t: 0:00:00.415890, tr: 0:00:00.002002, MSE: 2541.0821397569443, SSIM: 0.41170145554639587}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.012740, tr: 0:00:00.002000, image save only}
+, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG, Experiment: tcp_compression, transmission: tcp, seq_bytes: 0, t: 0:00:00.414189, tr: 0:00:00.002998, MSE: 2541.0821397569443, SSIM: 0.41170145554639587}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.790393, tr: 0:00:00.001999, image save only}
+, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG, Experiment: tcp_compression, transmission: tcp, seq_bytes: 0, t: 0:00:00.415160, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:06.976473, tr: 0:00:00.001998, image save only}
+, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG, Experiment: tcp_compression_JPEG, transmission: tcp, seq_bytes: 0, t: 0:00:00.400430, tr: 0:00:00.003000, MSE: 2541.0821397569443, SSIM: 0.41170145554639587}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.083003, tr: 0:00:00.001996, image save only}
+, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG, Experiment: tcp_compression_JPEG, transmission: tcp, seq_bytes: 0, t: 0:00:05.170029, tr: 0:00:00.002000, MSE: 55.345377604166664, SSIM: 0.9611491894556097}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG2000, Experiment: tcp_compression_JPEG2000, transmission: tcp, seq_bytes: 0, t: 0:00:06.944275, tr: 0:00:00.002001, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:06.938876, tr: 0:00:00.001002, image save only}
+, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG, Experiment: tcp_compression_JPEG, transmission: tcp, seq_bytes: 0, t: 0:00:05.234313, tr: 0:00:00.002005, MSE: 55.345377604166664, SSIM: 0.9611491894556097}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG2000, Experiment: tcp_compression_JPEG2000, transmission: tcp, seq_bytes: 0, t: 0:00:06.907267, tr: 0:00:00.001999, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:06.948997, tr: 0:00:00.001999, image save only}
+, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG, Experiment: tcp_compression_JPEG, transmission: tcp, seq_bytes: 0, t: 0:00:05.226953, tr: 0:00:00.001998, MSE: 55.345377604166664, SSIM: 0.9611491894556097}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG2000, Experiment: tcp_compression_JPEG2000, transmission: tcp, seq_bytes: 0, t: 0:00:06.922324, tr: 0:00:00.002002, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:06.972053, tr: 0:00:00.002004, image save only}
+, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG, Experiment: tcp_compression_JPEG, transmission: tcp, seq_bytes: 0, t: 0:00:05.582495, tr: 0:00:00.002000, MSE: 50.65180121527778, SSIM: 0.9666882180300261}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG2000, Experiment: tcp_compression_JPEG2000, transmission: tcp, seq_bytes: 0, t: 0:00:07.210011, tr: 0:00:00.001999, MSE: 0.0, SSIM: 1.0}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.237197, tr: 0:00:00.001000, image save only}
+, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG, Experiment: tcp_compression_JPEG, transmission: tcp, seq_bytes: 0, t: 0:00:05.726260, tr: 0:00:00.001001, MSE: 50.65180121527778, SSIM: 0.9666882180300261}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG2000, Experiment: tcp_compression_JPEG2000, transmission: tcp, seq_bytes: 0, t: 0:00:07.305463, tr: 0:00:00.002002, MSE: 0.0, SSIM: 1.0}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.144436, tr: 0:00:00.002000, image save only}
+, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG, Experiment: tcp_compression_JPEG, transmission: tcp, seq_bytes: 0, t: 0:00:05.883764, tr: 0:00:00.000996, MSE: 50.65180121527778, SSIM: 0.9666882180300261}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG2000, Experiment: tcp_compression_JPEG2000, transmission: tcp, seq_bytes: 0, t: 0:00:07.386939, tr: 0:00:00.002001, MSE: 0.0, SSIM: 1.0}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.252333, tr: 0:00:00.000999, image save only}
+, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG, Experiment: tcp_compression_JPEG, transmission: tcp, seq_bytes: 0, t: 0:00:05.693221, tr: 0:00:00.002000, MSE: 50.65180121527778, SSIM: 0.9666882180300261}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG2000, Experiment: tcp_compression_JPEG2000, transmission: tcp, seq_bytes: 0, t: 0:00:07.209648, tr: 0:00:00.001758, MSE: 0.0, SSIM: 1.0}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.174759, tr: 0:00:00.000999, image save only}
+, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.094184, tr: 0:00:00, image save only}
+, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.174089, tr: 0:00:00.001001, image save only}
+, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.006460, tr: 0:00:00.001000, image save only}
+, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG_LS, Experiment: tcp_compression_JPEG_LS, transmission: tcp, seq_bytes: 0, t: 0:01:05.623065, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.039269, tr: 0:00:00.001000, image save only}
+, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:06.905020, tr: 0:00:00.001001, image save only}
+, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG_LS, Experiment: tcp_compression_JPEG_LS, transmission: tcp, seq_bytes: 0, t: 0:00:09.538301, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.068782, tr: 0:00:00.001002, image save only}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:06.977382, tr: 0:00:00.002001, image save only}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:06.986669, tr: 0:00:00.001998, image save only}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.038776, tr: 0:00:00.001996, image save only}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.011626, tr: 0:00:00.002999, image save only}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:06.972300, tr: 0:00:00.003000, image save only}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:06.976757, tr: 0:00:00.001999, image save only}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG_LS, Experiment: tcp_compression_JPEG_LS, transmission: tcp, seq_bytes: 0, t: 0:00:00.546739, tr: 0:00:10.722354, MSE: 8078.012514467592, SSIM: 0.2524320555717715}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:06.947533, tr: 0:00:00.001999, image save only}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG_LS, Experiment: tcp_compression_JPEG_LS_100, transmission: tcp, seq_bytes: 0, t: 0:00:25.117392, t: 0:00:25.117392, tr: 0:00:43.827608, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+, tr: 0:00:47.057074, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.013549, tr: 0:00:00.002002, image save only}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG_LS, Experiment: tcp_compression_JPEG_LS_100, transmission: tcp, seq_bytes: 0, t: 0:00:25.117060, tr: 0:00:00.006999, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG_LS, Experiment: tcp_compression_JPEG_LS_90, transmission: tcp, seq_bytes: 0, t: 0:00:03.714872, tr: 0:00:00.002002, MSE: 502.66297743055554, SSIM: 0.780972081907664}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.030416, tr: 0:00:00.002001, image save only}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG, Experiment: tcp_compression_JPEG_90, transmission: tcp, seq_bytes: 0, t: 0:00:05.693543, tr: 0:00:00.001000, MSE: 50.65180121527778, SSIM: 0.9666882180300261}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG, Experiment: tcp_compression_JPEG_80, transmission: tcp, seq_bytes: 0, t: 0:00:04.154230, tr: 0:00:00.002001, MSE: 134.8583984375, SSIM: 0.9277976905558275}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG, Experiment: tcp_compression_JPEG_70, transmission: tcp, seq_bytes: 0, t: 0:00:03.225654, tr: 0:00:00.000999, MSE: 238.28059895833334, SSIM: 0.893913909027771}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG2000, Experiment: tcp_compression_JPEG2000_90, transmission: tcp, seq_bytes: 0, t: 0:00:07.320488, tr: 0:00:00.000999, MSE: 0.0, SSIM: 1.0}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG2000, Experiment: tcp_compression_JPEG2000_80, transmission: tcp, seq_bytes: 0, t: 0:00:07.491434, tr: 0:00:00.001001, MSE: 0.0, SSIM: 1.0}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG2000, Experiment: tcp_compression_JPEG2000_70, transmission: tcp, seq_bytes: 0, t: 0:00:07.379647, tr: 0:00:00.002000, MSE: 0.0, SSIM: 1.0}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG_LS, Experiment: tcp_compression_JPEG_LS_99, transmission: tcp, seq_bytes: 0, t: 0:00:15.699625, tr: 0:00:00.006003, MSE: 6.059136284722222, SSIM: 0.9967905764588255}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG_LS, Experiment: tcp_compression_JPEG_LS_90, transmission: tcp, seq_bytes: 0, t: 0:00:03.973176, tr: 0:00:00.001996, MSE: 502.66297743055554, SSIM: 0.780972081907664}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG_LS, Experiment: tcp_compression_JPEG_LS_80, transmission: tcp, seq_bytes: 0, t: 0:00:02.220492, tr: 0:00:00.002002, MSE: 1864.7698929398148, SSIM: 0.5542697989089381}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.298038, tr: 0:00:00.000999, image save only}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG_LS, Experiment: tcp_compression_JPEG_LS_99, transmission: tcp, seq_bytes: 0, t: 0:00:15.723752, tr: 0:00:00.004999, MSE: 6.059136284722222, SSIM: 0.9967905764588255}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG_LS, Experiment: tcp_compression_JPEG_LS_97, transmission: tcp, seq_bytes: 0, t: 0:00:09.553077, tr: 0:00:00.003998, MSE: 53.073531539351855, SSIM: 0.9732470556884196}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG_LS, Experiment: tcp_compression_JPEG_LS_95, transmission: tcp, seq_bytes: 0, t: 0:00:07.098398, tr: 0:00:00.005001, MSE: 137.93091724537038, SSIM: 0.933243095923356}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG_LS, Experiment: tcp_compression_JPEG_LS_93, transmission: tcp, seq_bytes: 0, t: 0:00:05.635830, tr: 0:00:00.001999, MSE: 255.70160590277777, SSIM: 0.8749263079573331}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG_LS, Experiment: tcp_compression_JPEG_LS_90, transmission: tcp, seq_bytes: 0, t: 0:00:03.827777, tr: 0:00:00.002002, MSE: 502.66297743055554, SSIM: 0.780972081907664}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG_LS, Experiment: tcp_compression_JPEG_LS_80, transmission: tcp, seq_bytes: 0, t: 0:00:01.936849, tr: 0:00:00.002003, MSE: 1864.7698929398148, SSIM: 0.5542697989089381}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.034227, tr: 0:00:00.001999, image save only}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG, Experiment: tcp_compression_JPEG_90, transmission: tcp, seq_bytes: 0, t: 0:00:05.805864, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG, Experiment: tcp_compression_JPEG_80, transmission: tcp, seq_bytes: 0, t: 0:00:04.389973, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG, Experiment: tcp_compression_JPEG_70, transmission: tcp, seq_bytes: 0, t: 0:00:03.383220, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG2000, Experiment: tcp_compression_JPEG2000_90, transmission: tcp, seq_bytes: 0, t: 0:00:07.208428, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG2000, Experiment: tcp_compression_JPEG2000_80, transmission: tcp, seq_bytes: 0, t: 0:00:07.526780, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG2000, Experiment: tcp_compression_JPEG2000_70, transmission: tcp, seq_bytes: 0, t: 0:00:07.529835, tr: broken}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG_LS, Experiment: tcp_compression_JPEG_LS_99, transmission: tcp, seq_bytes: 0, t: 0:00:16.777593, tr: 0:00:00.004997, MSE: 6.059136284722222, SSIM: 0.9967905764588255}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG_LS, Experiment: tcp_compression_JPEG_LS_97, transmission: tcp, seq_bytes: 0, t: 0:00:09.664188, tr: 0:00:00.003999, MSE: 53.073531539351855, SSIM: 0.9732470556884196}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.237523, tr: 0:00:00.003003, image save only}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG, Experiment: tcp_compression_JPEG_90, transmission: tcp, seq_bytes: 0, t: 0:00:05.774043, tr: 0:00:00.003002, MSE: 50.65180121527778, SSIM: 0.9666882180300261}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG, Experiment: tcp_compression_JPEG_80, transmission: tcp, seq_bytes: 0, t: 0:00:04.452207, tr: 0:00:00.001000, MSE: 134.8583984375, SSIM: 0.9277976905558275}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG, Experiment: tcp_compression_JPEG_70, transmission: tcp, seq_bytes: 0, t: 0:00:03.542358, tr: 0:00:00.001001, MSE: 238.28059895833334, SSIM: 0.893913909027771}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG2000, Experiment: tcp_compression_JPEG2000_90, transmission: tcp, seq_bytes: 0, t: 0:00:07.576074, tr: 0:00:00.001999, MSE: 0.0, SSIM: 1.0}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG2000, Experiment: tcp_compression_JPEG2000_80, transmission: tcp, seq_bytes: 0, t: 0:00:07.369296, tr: 0:00:00.002001, MSE: 0.0, SSIM: 1.0}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG2000, Experiment: tcp_compression_JPEG2000_70, transmission: tcp, seq_bytes: 0, t: 0:00:07.403679, tr: 0:00:00.002002, MSE: 0.0, SSIM: 1.0}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG_LS, Experiment: tcp_compression_JPEG_LS_99, transmission: tcp, seq_bytes: 0, t: 0:00:15.947858, tr: 0:00:00.005999, MSE: 6.059136284722222, SSIM: 0.9967905764588255}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG_LS, Experiment: tcp_compression_JPEG_LS_97, transmission: tcp, seq_bytes: 0, t: 0:00:09.678434, tr: 0:00:00.004000, MSE: 53.073531539351855, SSIM: 0.9732470556884196}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG_LS, Experiment: tcp_compression_JPEG_LS_95, transmission: tcp, seq_bytes: 0, t: 0:00:07.290393, tr: 0:00:00.007007, MSE: 137.93091724537038, SSIM: 0.933243095923356}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG_LS, Experiment: tcp_compression_JPEG_LS_93, transmission: tcp, seq_bytes: 0, t: 0:00:05.424742, tr: 0:00:00.002001, MSE: 255.70160590277777, SSIM: 0.8749263079573331}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG_LS, Experiment: tcp_compression_JPEG_LS_90, transmission: tcp, seq_bytes: 0, t: 0:00:03.796936, tr: 0:00:00.002002, MSE: 502.66297743055554, SSIM: 0.780972081907664}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG_LS, Experiment: tcp_compression_JPEG_LS_80, transmission: tcp, seq_bytes: 0, t: 0:00:02.138555, tr: 0:00:00.001000, MSE: 1864.7698929398148, SSIM: 0.5542697989089381}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.192190, tr: 0:00:00.001999, image save only}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.301805, tr: 0:00:00.002003, image save only}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_res144p_sleep_0.005, transmission: udp, seq_bytes: 2, t: 0:00:01.999061, tr: 0:00:00.003003, MSE: 73576.57486979167, SSIM: 0.07011413652994769}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_res144p_sleep_0.006, transmission: udp, seq_bytes: 2, t: 0:00:01.970334, tr: 0:00:00.018000, MSE: 80575.42447916667, SSIM: 0.0793776073769303}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_res144p_sleep_0.007, transmission: udp, seq_bytes: 2, t: 0:00:02.124816, tr: 0:00:00.001999, MSE: 85023.34917534722, SSIM: 0.08992993290876912}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_res144p_sleep_0.008, transmission: udp, seq_bytes: 2, t: 0:00:02.330908, tr: 0:00:00.001998, MSE: 44930.22504340278, SSIM: 0.14059789011606486}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_res144p_sleep_0.009, transmission: udp, seq_bytes: 2, t: 0:00:02.513519, tr: 0:00:00.002000, MSE: 19849.817925347223, SSIM: 0.12651532353137288}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_res144p_sleep_0.01, transmission: udp, seq_bytes: 2, t: 0:00:02.662458, tr: 0:00:00.004003, MSE: 29084.385416666668, SSIM: 0.1609533631613308}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_res144p_sleep_0.011, transmission: udp, seq_bytes: 2, t: 0:00:02.849435, tr: 0:00:00.003000, MSE: 17754.448893229168, SSIM: 0.22285288150918459}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_res144p_sleep_0.012, transmission: udp, seq_bytes: 2, t: 0:00:03.100440, tr: 0:00:00.003000, MSE: 19751.32421875, SSIM: 0.19066389112364038}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_res144p_sleep_0.013, transmission: udp, seq_bytes: 2, t: 0:00:03.331998, tr: 0:00:00.001999, MSE: 9500.997287326389, SSIM: 0.4632246582655819}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_res144p_sleep_0.014, transmission: udp, seq_bytes: 2, t: 0:00:03.695958, tr: 0:00:00.001999, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_res144p_sleep_0.015, transmission: udp, seq_bytes: 2, t: 0:00:03.719626, tr: 0:00:00.003001, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_res144p_sleep_0.016, transmission: udp, seq_bytes: 2, t: 0:00:03.985063, tr: 0:00:00.002002, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_res144p_sleep_0.017, transmission: udp, seq_bytes: 2, t: 0:00:04.207895, tr: 0:00:00.002003, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_res144p_sleep_0.018, transmission: udp, seq_bytes: 2, t: 0:00:04.452573, tr: 0:00:00.003001, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_res144p_sleep_0.019, transmission: udp, seq_bytes: 2, t: 0:00:04.708544, tr: 0:00:00.002003, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.082769, tr: 0:00:00.002002, image save only}
+{X: 192, Y: 144, PayloadSize: 40, Method: None, Experiment: tcp_res144p_payload_40, transmission: tcp, seq_bytes: 0, t: 0:00:13.904778, tr: 0:00:00.001003, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 40, Method: None, Experiment: udp_res144p_payload_40, transmission: udp, seq_bytes: 2, t: 0:00:07.330554, tr: 0:00:00.003000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 45, Method: None, Experiment: tcp_res144p_payload_45, transmission: tcp, seq_bytes: 0, t: 0:00:12.404007, tr: 0:00:00.001999, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 45, Method: None, Experiment: udp_res144p_payload_45, transmission: udp, seq_bytes: 2, t: 0:00:07.050680, tr: 0:00:00.003000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 50, Method: None, Experiment: tcp_res144p_payload_50, transmission: tcp, seq_bytes: 0, t: 0:00:11.821226, tr: 0:00:00.001004, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 50, Method: None, Experiment: udp_res144p_payload_50, transmission: udp, seq_bytes: 2, t: 0:00:05.924473, tr: 0:00:00.002001, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 55, Method: None, Experiment: tcp_res144p_payload_55, transmission: tcp, seq_bytes: 0, t: 0:00:11.764481, tr: 0:00:00.000999, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 55, Method: None, Experiment: udp_res144p_payload_55, transmission: udp, seq_bytes: 2, t: 0:00:05.433178, tr: 0:00:00.002999, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 60, Method: None, Experiment: tcp_res144p_payload_60, transmission: tcp, seq_bytes: 0, t: 0:00:09.423810, tr: 0:00:00.001000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 60, Method: None, Experiment: udp_res144p_payload_60, transmission: udp, seq_bytes: 2, t: 0:00:04.972523, tr: 0:00:00.001999, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 65, Method: None, Experiment: tcp_res144p_payload_65, transmission: tcp, seq_bytes: 0, t: 0:00:08.785345, tr: 0:00:00.005002, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 65, Method: None, Experiment: udp_res144p_payload_65, transmission: udp, seq_bytes: 2, t: 0:00:04.563130, tr: 0:00:00.002001, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 70, Method: None, Experiment: tcp_res144p_payload_70, transmission: tcp, seq_bytes: 0, t: 0:00:08.428394, tr: 0:00:00.000998, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 70, Method: None, Experiment: udp_res144p_payload_70, transmission: udp, seq_bytes: 2, t: 0:00:04.260715, tr: 0:00:00.004999, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 75, Method: None, Experiment: tcp_res144p_payload_75, transmission: tcp, seq_bytes: 0, t: 0:00:07.609155, tr: 0:00:00.000997, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 75, Method: None, Experiment: udp_res144p_payload_75, transmission: udp, seq_bytes: 2, t: 0:00:03.978616, tr: 0:00:00.002000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: tcp_res144p_payload_80, transmission: tcp, seq_bytes: 0, t: 0:00:07.248533, tr: 0:00:00.002001, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_res144p_payload_80, transmission: udp, seq_bytes: 2, t: 0:00:03.753534, tr: 0:00:00.001004, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 85, Method: None, Experiment: tcp_res144p_payload_85, transmission: tcp, seq_bytes: 0, t: 0:00:22.836795, tr: 0:00:00.002002, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 85, Method: None, Experiment: udp_res144p_payload_85, transmission: udp, seq_bytes: 2, t: 0:00:03.845760, tr: 0:00:00.001998, MSE: 16587.744466145832, SSIM: 0.10532594834948303}
+{X: 192, Y: 144, PayloadSize: 90, Method: None, Experiment: tcp_res144p_payload_90, transmission: tcp, seq_bytes: 0, t: 0:00:21.543367, tr: 0:00:00.002001, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 90, Method: None, Experiment: udp_res144p_payload_90, transmission: udp, seq_bytes: 2, t: 0:00:03.699665, tr: 0:00:00.003001, MSE: 17196.579427083332, SSIM: 0.11635103949806361}
+{X: 192, Y: 144, PayloadSize: 95, Method: None, Experiment: tcp_res144p_payload_95, transmission: tcp, seq_bytes: 0, t: 0:00:20.488622, tr: 0:00:00.000999, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 95, Method: None, Experiment: udp_res144p_payload_95, transmission: udp, seq_bytes: 2, t: 0:00:03.584889, tr: 0:00:00.002002, MSE: 26897.43630642361, SSIM: 0.06210602297030696}
+{X: 192, Y: 144, PayloadSize: 100, Method: None, Experiment: tcp_res144p_payload_100, transmission: tcp, seq_bytes: 0, t: 0:00:19.521731, tr: 0:00:00.001997, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 100, Method: None, Experiment: udp_res144p_payload_100, transmission: udp, seq_bytes: 2, t: 0:00:03.320435, tr: 0:00:00.001000, MSE: 21206.844292534723, SSIM: 0.0929137916933462}
+{X: 192, Y: 144, PayloadSize: 105, Method: None, Experiment: tcp_res144p_payload_105, transmission: tcp, seq_bytes: 0, t: 0:00:18.621728, tr: 0:00:00.000999, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 105, Method: None, Experiment: udp_res144p_payload_105, transmission: udp, seq_bytes: 2, t: 0:00:03.455798, tr: 0:00:00.001999, MSE: 29894.368706597223, SSIM: 0.12782864864008056}
+{X: 192, Y: 144, PayloadSize: 110, Method: None, Experiment: tcp_res144p_payload_110, transmission: tcp, seq_bytes: 0, t: 0:00:17.844128, tr: 0:00:00.002001, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 110, Method: None, Experiment: udp_res144p_payload_110, transmission: udp, seq_bytes: 1, t: 0:00:02.845868, tr: 0:00:00.002000, MSE: 36622.854600694445, SSIM: 0.10839911088325366}
+{X: 192, Y: 144, PayloadSize: 115, Method: None, Experiment: tcp_res144p_payload_115, transmission: tcp, seq_bytes: 0, t: 0:00:16.871297, tr: 0:00:00.000994, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 115, Method: None, Experiment: udp_res144p_payload_115, transmission: udp, seq_bytes: 1, t: 0:00:03.465507, tr: 0:00:00.002008, MSE: 22313.470703125, SSIM: 0.11571775629576062}
+{X: 192, Y: 144, PayloadSize: 120, Method: None, Experiment: tcp_res144p_payload_120, transmission: tcp, seq_bytes: 0, t: 0:00:16.351558, tr: 0:00:00.001001, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 120, Method: None, Experiment: udp_res144p_payload_120, transmission: udp, seq_bytes: 1, t: 0:00:05.180732, tr: 0:00:00.015013, MSE: 23530.54372829861, SSIM: 0.09450869817101645}
+{X: 192, Y: 144, PayloadSize: 125, Method: None, Experiment: tcp_res144p_payload_125, transmission: tcp, seq_bytes: 0, t: 0:00:15.578339, tr: 0:00:00.001000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 125, Method: None, Experiment: udp_res144p_payload_125, transmission: udp, seq_bytes: 1, t: 0:00:03.214053, tr: 0:00:00.003000, MSE: 40341.103190104164, SSIM: 0.09959489097910808}
+{X: 192, Y: 144, PayloadSize: 130, Method: None, Experiment: tcp_res144p_payload_130, transmission: tcp, seq_bytes: 0, t: 0:00:15.034782, tr: 0:00:00.001001, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 130, Method: None, Experiment: udp_res144p_payload_130, transmission: udp, seq_bytes: 1, t: 0:00:03.290523, tr: 0:00:00.002000, MSE: 20926.771484375, SSIM: 0.1154433732078481}
+{X: 192, Y: 144, PayloadSize: 135, Method: None, Experiment: tcp_res144p_payload_135, transmission: tcp, seq_bytes: 0, t: 0:00:14.423050, tr: 0:00:00.001000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 135, Method: None, Experiment: udp_res144p_payload_135, transmission: udp, seq_bytes: 1, t: 0:00:03.106734, tr: 0:00:00.003000, MSE: 20247.173394097223, SSIM: 0.11811737259859037}
+{X: 192, Y: 144, PayloadSize: 140, Method: None, Experiment: tcp_res144p_payload_140, transmission: tcp, seq_bytes: 0, t: 0:00:13.899022, tr: 0:00:00.001999, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 140, Method: None, Experiment: udp_res144p_payload_140, transmission: udp, seq_bytes: 1, t: 0:00:03.121439, tr: 0:00:00.004001, MSE: 24614.613606770832, SSIM: 0.05706368886439657}
+{X: 192, Y: 144, PayloadSize: 145, Method: None, Experiment: tcp_res144p_payload_145, transmission: tcp, seq_bytes: 0, t: 0:00:13.520808, tr: 0:00:00.002003, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 145, Method: None, Experiment: udp_res144p_payload_145, transmission: udp, seq_bytes: 1, t: 0:00:02.991359, tr: 0:00:00.002000, MSE: 54195.05588107639, SSIM: 0.0439254806705995}
+{X: 192, Y: 144, PayloadSize: 150, Method: None, Experiment: tcp_res144p_payload_150, transmission: tcp, seq_bytes: 0, t: 0:00:13.077691, tr: 0:00:00.000999, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 150, Method: None, Experiment: udp_res144p_payload_150, transmission: udp, seq_bytes: 1, t: 0:00:02.782112, tr: 0:00:00.001998, MSE: 20356.583550347223, SSIM: 0.12394242983576628}
+{X: 192, Y: 144, PayloadSize: 155, Method: None, Experiment: tcp_res144p_payload_155, transmission: tcp, seq_bytes: 0, t: 0:00:12.634172, tr: 0:00:00.001000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 155, Method: None, Experiment: udp_res144p_payload_155, transmission: udp, seq_bytes: 1, t: 0:00:02.620868, tr: 0:00:00.002998, MSE: 25697.269205729168, SSIM: 0.07106495117004326}
+{X: 192, Y: 144, PayloadSize: 160, Method: None, Experiment: tcp_res144p_payload_160, transmission: tcp, seq_bytes: 0, t: 0:00:21.165458, tr: 0:00:00.000999, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 160, Method: None, Experiment: udp_res144p_payload_160, transmission: udp, seq_bytes: 1, t: 0:00:02.668265, tr: 0:00:00.002000, MSE: 26878.464952256945, SSIM: 0.06908821619262175}
+{X: 192, Y: 144, PayloadSize: 165, Method: None, Experiment: tcp_res144p_payload_165, transmission: tcp, seq_bytes: 0, t: 0:00:18.324030, tr: 0:00:00.002001, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 165, Method: None, Experiment: udp_res144p_payload_165, transmission: udp, seq_bytes: 1, t: 0:00:02.715233, tr: 0:00:00.002002, MSE: 16306.949761284723, SSIM: 0.1351232253833534}
+{X: 192, Y: 144, PayloadSize: 170, Method: None, Experiment: tcp_res144p_payload_170, transmission: tcp, seq_bytes: 0, t: 0:00:17.899003, tr: 0:00:00.000999, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 170, Method: None, Experiment: udp_res144p_payload_170, transmission: udp, seq_bytes: 1, t: 0:00:02.600185, tr: 0:00:00.000999, MSE: 18988.032877604168, SSIM: 0.1351677202687234}
+{X: 192, Y: 144, PayloadSize: 175, Method: None, Experiment: tcp_res144p_payload_175, transmission: tcp, seq_bytes: 0, t: 0:00:26.318172, tr: 0:00:00.001000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 175, Method: None, Experiment: udp_res144p_payload_175, transmission: udp, seq_bytes: 1, t: 0:00:03.019507, tr: 0:00:00.003998, MSE: 23319.876844618055, SSIM: 0.1324386272664615}
+{X: 192, Y: 144, PayloadSize: 180, Method: None, Experiment: tcp_res144p_payload_180, transmission: tcp, seq_bytes: 0, t: 0:00:16.877171, tr: 0:00:00.002000, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 180, Method: None, Experiment: udp_res144p_payload_180, transmission: udp, seq_bytes: 1, t: 0:00:03.055958, tr: 0:00:00.000992, MSE: 32774.55978732639, SSIM: 0.10463795103720488}
+{X: 192, Y: 144, PayloadSize: 185, Method: None, Experiment: tcp_res144p_payload_185, transmission: tcp, seq_bytes: 0, t: 0:00:16.335330, tr: 0:00:00.001997, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 185, Method: None, Experiment: udp_res144p_payload_185, transmission: udp, seq_bytes: 1{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.092557, tr: 0:00:00.000989, image save only}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.193645, tr: 0:00:00.002000, image save only}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: tcp_resolution_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.050578, tr: 0:00:00.000996, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_resolution_144p, transmission: udp, seq_bytes: 2, t: 0:00:03.585522, tr: 0:00:00.002001, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 320, Y: 240, PayloadSize: 80, Method: None, Experiment: original_240p, transmission: tcp, seq_bytes: 0, t: 0:00:18.135913, tr: 0:00:00.002995, image save only}
+{X: 320, Y: 240, PayloadSize: 80, Method: None, Experiment: tcp_resolution_240p, transmission: tcp, seq_bytes: 0, t: 0:00:17.617180, tr: 0:00:00.003000, MSE: 0.109296875, SSIM: 0.9998517898424901}
+{X: 320, Y: 240, PayloadSize: 80, Method: None, Experiment: udp_resolution_240p, transmission: udp, seq_bytes: 2, t: 0:00:09.127233, tr: 0:00:00.005004, MSE: 0.109296875, SSIM: 0.9998517898424901}
+{X: 720, Y: 480, PayloadSize: 80, Method: None, Experiment: original_480p, transmission: tcp, seq_bytes: 0, t: 0:01:07.111612, tr: 0:00:00.017002, image save only}
+{X: 720, Y: 480, PayloadSize: 80, Method: None, Experiment: tcp_resolution_480p, transmission: tcp, seq_bytes: 0, t: 0:01:07.027781, tr: 0:00:00.016000, MSE: 0.11592013888888889, SSIM: 0.9997832480602147}
+{X: 720, Y: 480, PayloadSize: 80, Method: None, Experiment: udp_resolution_480p, transmission: udp, seq_bytes: 2, t: 0:00:34.562510, tr: 0:00:00.021000, MSE: 9558.621545138889, SSIM: 0.40300454316631923}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:08.158656, tr: 0:00:00.002000, image save only}
+{X: 192, Y: 144, PayloadSize: 40, Method: None, Experiment: udp_res144p_payload_40_sleep_0.012, transmission: udp, seq_bytes: 2, t: 0:00:06.389049, tr: 0:00:00.001999, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 45, Method: None, Experiment: udp_res144p_payload_45_sleep_0.012, transmission: udp, seq_bytes: 2, t: 0:00:05.745573, tr: 0:00:00.002998, MSE: 0.1193576388888889, SSIM: 0.9998869634396934}
+{X: 192, Y: 144, PayloadSize: 50, Method: None, Experiment: udp_res144p_payload_50_sleep_0.012, transmission: udp, seq_bytes: 2, t: 0:00:05.208369, tr: 0:00:00.001999, MSE: 8093.399088541667, SSIM: 0.7567953932969985}
+{X: 192, Y: 144, PayloadSize: 55, Method: None, Experiment: udp_res144p_payload_55_sleep_0.012, transmission: udp, seq_bytes: 2, t: 0:00:04.671682, tr: 0:00:00.001999, MSE: 20092.073567708332, SSIM: 0.40667976098157166}
+{X: 192, Y: 144, PayloadSize: 60, Method: None, Experiment: udp_res144p_payload_60_sleep_0.012, transmission: udp, seq_bytes: 2, t: 0:00:04.345934, tr: 0:00:00.001999, MSE: 16081.343207465277, SSIM: 0.38174109751588053}
+{X: 192, Y: 144, PayloadSize: 65, Method: None, Experiment: udp_res144p_payload_65_sleep_0.012, transmission: udp, seq_bytes: 2, t: 0:00:04.155007, tr: 0:00:00.003000, MSE: 1457.4537760416667, SSIM: 0.9091234124212834}
+{X: 192, Y: 144, PayloadSize: 70, Method: None, Experiment: udp_res144p_payload_70_sleep_0.012, transmission: udp, seq_bytes: 2, t: 0:00:03.694048, tr: 0:00:00.003001, MSE: 16102.795572916666, SSIM: 0.2729173124019267}
+{X: 192, Y: 144, PayloadSize: 75, Method: None, Experiment: udp_res144p_payload_75_sleep_0.012, transmission: udp, seq_bytes: 2, t: 0:00:03.564138, tr: 0:00:00.004013, MSE: 57445.100694444445, SSIM: 0.26777204550033873}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: udp_res144p_payload_80_sleep_0.012, transmission: udp, seq_bytes: 2, t: 0:00:03.334830, tr: 0:00:00.002000, MSE: 16073.598849826389, SSIM: 0.2829101273802096}
+{X: 192, Y: 144, PayloadSize: 85, Method: None, Experiment: udp_res144p_payload_85_sleep_0.012, transmission: udp, seq_bytes: 2, t: 0:00:03.798870, tr: 0:00:00.001998, MSE: 21805.523003472223, SSIM: 0.10749518426273312}
+{X: 192, Y: 144, PayloadSize: 90, Method: None, Experiment: udp_res144p_payload_90_sleep_0.012, transmission: udp, seq_bytes: 2, t: 0:00:03.251001, tr: 0:00:00.003998, MSE: 16610.92209201389, SSIM: 0.13609599167987707}
+{X: 192, Y: 144, PayloadSize: 95, Method: None, Experiment: udp_res144p_payload_95_sleep_0.012, transmission: udp, seq_bytes: 2, t: 0:00:02.528036, tr: 0:00:00.002002, MSE: 19286.907335069445, SSIM: 0.1103761062673737}
+{X: 192, Y: 144, PayloadSize: 100, Method: None, Experiment: udp_res144p_payload_100_sleep_0.012, transmission: udp, seq_bytes: 2, t: 0:00:02.763013, tr: 0:00:00.001999, MSE: 18265.597764756945, SSIM: 0.11938940275517394}
+{X: 192, Y: 144, PayloadSize: 105, Method: None, Experiment: udp_res144p_payload_105_sleep_0.012, transmission: udp, seq_bytes: 2, t: 0:00:02.565458, tr: 0:00:00.002004, MSE: 19672.507378472223, SSIM: 0.12777441734788536}
+{X: 192, Y: 144, PayloadSize: 110, Method: None, Experiment: udp_res144p_payload_110_sleep_0.012, transmission: udp, seq_bytes: 1, t: 0:00:02.443170, tr: 0:00:00.008000, MSE: 17521.29079861111, SSIM: 0.1353032904080395}
+{X: 192, Y: 144, PayloadSize: 115, Method: None, Experiment: udp_res144p_payload_115_sleep_0.012, transmission: udp, seq_bytes: 1, t: 0:00:03.270086, tr: 0:00:00.003001, MSE: 30463.233832465277, SSIM: 0.10147073702513361}
+{X: 192, Y: 144, PayloadSize: 120, Method: None, Experiment: udp_res144p_payload_120_sleep_0.012, transmission: udp, seq_bytes: 1, t: 0:00:03.306300, tr: 0:00:00.003001, MSE: 57580.97092013889, SSIM: 0.10905259313826014}
+{X: 192, Y: 144, PayloadSize: 125, Method: None, Experiment: udp_res144p_payload_125_sleep_0.012, transmission: udp, seq_bytes: 1, t: 0:00:02.815318, tr: 0:00:00.002001, MSE: 17750.773111979168, SSIM: 0.13528190607482815}
+{X: 192, Y: 144, PayloadSize: 130, Method: None, Experiment: udp_res144p_payload_130_sleep_0.012, transmission: udp, seq_bytes: 1, t: 0:00:02.612501, tr: 0:00:00.002000, MSE: 25696.987413194445, SSIM: 0.06446241323438784}
+{X: 192, Y: 144, PayloadSize: 135, Method: None, Experiment: udp_res144p_payload_135_sleep_0.012, transmission: udp, seq_bytes: 1, t: 0:00:03.019386, tr: 0:00:00.002000, MSE: 37673.27907986111, SSIM: 0.12462523602816675}
+{X: 192, Y: 144, PayloadSize: 140, Method: None, Experiment: udp_res144p_payload_140_sleep_0.012, transmission: udp, seq_bytes: 1, t: 0:00:02.855232, tr: 0:00:00.002000, MSE: 30038.10915798611, SSIM: 0.03928225192694341}
+{X: 192, Y: 144, PayloadSize: 145, Method: None, Experiment: udp_res144p_payload_145_sleep_0.012, transmission: udp, seq_bytes: 1, t: 0:00:02.692744, tr: 0:00:00.003000, MSE: 25804.297960069445, SSIM: 0.06307993417556797}
+{X: 192, Y: 144, PayloadSize: 150, Method: None, Experiment: udp_res144p_payload_150_sleep_0.012, transmission: udp, seq_bytes: 1, t: 0:00:02.625975, tr: 0:00:00.003000, MSE: 20090.407552083332, SSIM: 0.12356536765894553}
+{X: 192, Y: 144, PayloadSize: 155, Method: None, Experiment: udp_res144p_payload_155_sleep_0.012, transmission: udp, seq_bytes: 1, t: 0:00:02.554026, tr: 0:00:00.007000, MSE: 39696.44585503472, SSIM: 0.11844431533547983}
+{X: 192, Y: 144, PayloadSize: 160, Method: None, Experiment: udp_res144p_payload_160_sleep_0.012, transmission: udp, seq_bytes: 1, t: 0:00:02.495230, tr: 0:00:00.002011, MSE: 24832.726236979168, SSIM: 0.12424751092351152}
+{X: 192, Y: 144, PayloadSize: 165, Method: None, Experiment: udp_res144p_payload_165_sleep_0.012, transmission: udp, seq_bytes: 1, t: 0:00:02.508421, tr: 0:00:00.001998, MSE: 17994.627278645832, SSIM: 0.12707009886356094}
+{X: 192, Y: 144, PayloadSize: 170, Method: None, Experiment: udp_res144p_payload_170_sleep_0.012, transmission: udp, seq_bytes: 1, t: 0:00:01.768057, tr: 0:00:00.001001, MSE: 24703.395146122686, SSIM: 0.10668918664546925}
+{X: 192, Y: 144, PayloadSize: 175, Method: None, Experiment: udp_res144p_payload_175_sleep_0.012, transmission: udp, seq_bytes: 1, t: 0:00:03.193213, tr: 0:00:00.002000, MSE: 29606.89084201389, SSIM: 0.12131041013895585}
+{X: 192, Y: 144, PayloadSize: 180, Method: None, Experiment: udp_res144p_payload_180_sleep_0.012, transmission: udp, seq_bytes: 1{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:07.555616, tr: 0:00:00.005002, image save only}
+{X: 192, Y: 144, PayloadSize: 80, Method: None, Experiment: original_144p, transmission: tcp, seq_bytes: 0, t: 0:00:08.533928, tr: 0:00:00.001001, image save only}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG, Experiment: tcp_res144p_compr_JPEG_qual_95, transmission: tcp, seq_bytes: 0, t: 0:00:08.789219, tr: 0:00:00.001997, MSE: 0.0, SSIM: 1.0}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG, Experiment: udp_res144p_compr_JPEG_qual_95, transmission: udp, seq_bytes: 2, t: 0:00:03.867379, tr: 0:00:00.005009, MSE: 0.0, SSIM: 1.0}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG, Experiment: tcp_res144p_compr_JPEG_qual_85, transmission: tcp, seq_bytes: 0, t: 0:00:05.792046, tr: 0:00:00.001996, MSE: 72.80620659722223, SSIM: 0.9532762825101463}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG, Experiment: udp_res144p_compr_JPEG_qual_85, transmission: udp, seq_bytes: 2, t: 0:00:02.597115, tr: 0:00:00.003001, MSE: 72.80620659722223, SSIM: 0.9532762825101463}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG-2000, Experiment: tcp_res144p_compr_JPEG-2000_qual_95, transmission: tcp, seq_bytes: 0, t: 0:00:08.458690, tr: 0:00:00.001998, MSE: 0.0, SSIM: 1.0}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG-2000, Experiment: udp_res144p_compr_JPEG-2000_qual_95, transmission: udp, seq_bytes: 2, t: 0:00:03.941541, tr: 0:00:00.007001, MSE: 0.0, SSIM: 1.0}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG-2000, Experiment: tcp_res144p_compr_JPEG-2000_qual_85, transmission: tcp, seq_bytes: 0, t: 0:00:08.551365, tr: 0:00:00.002000, MSE: 0.0, SSIM: 1.0}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG-2000, Experiment: udp_res144p_compr_JPEG-2000_qual_85, transmission: udp, seq_bytes: 2, t: 0:00:03.897026, tr: 0:00:00.003002, MSE: 0.0, SSIM: 1.0}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG-LS, Experiment: tcp_res144p_compr_JPEG-LS_qual_95, transmission: tcp, seq_bytes: 0, t: 0:00:08.435147, tr: 0:00:00.005003, MSE: 137.93091724537038, SSIM: 0.933243095923356}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG-LS, Experiment: udp_res144p_compr_JPEG-LS_qual_95, transmission: udp, seq_bytes: 2, t: 0:00:03.731010, tr: 0:00:00.004000, MSE: 137.93091724537038, SSIM: 0.933243095923356}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG-LS, Experiment: tcp_res144p_compr_JPEG-LS_qual_85, transmission: tcp, seq_bytes: 0, t: 0:00:03.253833, tr: 0:00:00.003001, MSE: 1045.7662760416667, SSIM: 0.6520033313748211}
+{X: 192, Y: 144, PayloadSize: 80, Method: JPEG-LS, Experiment: udp_res144p_compr_JPEG-LS_qual_85, transmission: udp, seq_bytes: 2, t: 0:00:01.684312, tr: 0:00:00.001998, MSE: 1045.7662760416667, SSIM: 0.6520033313748211}

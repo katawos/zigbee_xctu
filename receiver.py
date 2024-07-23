@@ -23,7 +23,7 @@ import jpeg_ls
 
 # TODO: Replace with the serial port where your local module is connected to.
 PORT = "COM4"
-#MAC: ___5A (lewo)
+#MAC: ___5A, no sticker (left)
 
 # TODO: Replace with the baud rate of your local module.
 BAUD_RATE = 115200
@@ -47,7 +47,8 @@ comparison_image = False
 original_image_name = ""
 method = None
 
-file = open("receive_buffer.txt", "a+")
+#output file
+file = open("16bitAddressing_receive_buffer.txt", "a+")
 write_out_data = ""
 
 def save_image(payload_list):
@@ -68,8 +69,10 @@ def save_image(payload_list):
     experiment_reconstruction_time_start = datetime.now() 
 
     if (transmission == "tcp"):
+        #flatten payload list by adding each element separately
         for idx in range(len(payload_list)):
             arr += payload_list[idx]
+
     elif(transmission == "udp"):
         prev_packet_num = -1
         for payload in payload_list:
@@ -81,10 +84,10 @@ def save_image(payload_list):
             diff = packet_num - prev_packet_num
 
             for _ in range(0, diff - 1):
-                # print("- nope")
+                # fill with zeros all missing parts
                 arr += np.zeros(len(payload[0]) - sequence_bytes).tolist()
 
-            # print("- xd")
+            # add to arr rest of the payload
             arr += payload[0][sequence_bytes:]
 
             prev_packet_num = packet_num
@@ -94,7 +97,7 @@ def save_image(payload_list):
     #     diff = (image_x * image_y) - len(arr)
     #     arr += np.zeros(diff).tolist()
 
-    np_arr = np.array(arr, dtype=np.uint8)
+    np_arr = np.array(arr, dtype = np.uint8)
     # Shape takes (row, column) where row = y, column = x
 
     try:
@@ -102,9 +105,9 @@ def save_image(payload_list):
             image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
         elif (method == "JPEG"):
             image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
-        elif (method == "JPEG2000"):
+        elif (method == "JPEG-2000"):
             image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
-        elif (method == "JPEG_LS"):
+        elif (method == "JPEG-LS"):
             image = jpeg_ls.decode(np_arr)
         # np_data_2d = np_arr.reshape(image_y,image_x)
 
@@ -113,25 +116,33 @@ def save_image(payload_list):
         diff_time = experiment_reconstruction_time_end - experiment_reconstruction_time_start
         if (original_image_name != ""):
             originalImage = cv2.imread(original_image_name)
-            # MSE
-            err = np.sum((originalImage.astype("float") - image.astype("float")) ** 2)
-            err /= float(originalImage.shape[0] * image.shape[1])
-            # SSIM
+            # MSE - Mean Squared Error (for absolute diff between pixel values)
+            #converts to float (proper arithmetic operations), squared differences and sum of them
+            MSE = np.sum((originalImage.astype("float") - image.astype("float")) ** 2) 
+            #normalize by number of pixels - divide by (rows0 * columns1)
+            MSE /= float(originalImage.shape[0] * image.shape[1])
+            
+            # SSIM - Structural Similarity Index Measure (changes in structural information, contrast)
+            #modify images to grayscale
             original_gray = cv2.cvtColor(originalImage, cv2.COLOR_BGR2GRAY)
             img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            s, diff = ssim(original_gray, img_gray, full=True)
-            write_out_data += f", tr: {diff_time}, MSE: {err}, SSIM: {s}" + "}\n"
+            SSIM, diff = ssim(original_gray, img_gray, full=True)
+
+            write_out_data += f", tr: {diff_time}, MSE: {MSE}, SSIM: {SSIM}" + "}\n"
         else:    
             write_out_data += f", tr: {diff_time}, image save only" + "}\n"
+
         print(write_out_data)
         file.write(write_out_data)
         file.flush()
         write_out_data = ""
-
         image_name = f'received_image_{experiment}.jpg'
+
         if (original_image_name == ""):
             original_image_name = image_name
+
         cv2.imwrite(image_name, image)
+    
     except Exception as e:
         print(f"Broken\n{e}")
         write_out_data += f", tr: broken" + "}\n"
@@ -180,7 +191,7 @@ def data_receive_callback(xbee_message):
         experiment_transmission_time_start = datetime.now()
         return
 
-    if (received_data == [101, 110, 100]):
+    if (received_data == [101, 110, 100]):  # END
         diff_time = experiment_transmission_time_end - experiment_transmission_time_start
         write_out_data += f", t: {diff_time}"
         # print("stop gathering")
@@ -194,7 +205,7 @@ def data_receive_callback(xbee_message):
             payload_list.append([received_data])
         experiment_transmission_time_end = datetime.now()
 
-    if (received_data == [115, 116, 97, 114, 116]): # start
+    if (received_data == [115, 116, 97, 114, 116]): # START
         print("start gathering")
         bool_get_params = True
         payload_list = []
