@@ -22,7 +22,7 @@ from skimage.metrics import structural_similarity as ssim
 import jpeg_ls
 
 # TODO: Replace with the serial port where your local module is connected to.
-PORT = "COM4"
+PORT = "COM6"
 #MAC: ___5A, no sticker (left)
 
 # TODO: Replace with the baud rate of your local module.
@@ -48,7 +48,7 @@ original_image_name = ""
 method = None
 
 #output file
-file = open("16bitAddressing_receive_buffer.txt", "a+")
+file = open("16bitAddressingColor_receive_buffer.txt", "a+")
 write_out_data = ""
 
 def save_image(payload_list):
@@ -128,9 +128,9 @@ def save_image(payload_list):
             img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             SSIM, diff = ssim(original_gray, img_gray, full=True)
 
-            write_out_data += f", tr: {diff_time}, MSE: {MSE}, SSIM: {SSIM}" + "}\n"
+            write_out_data += f', "tr": "{diff_time}", "MSE": {MSE}, "SSIM": {SSIM}' + "}\n"
         else:    
-            write_out_data += f", tr: {diff_time}, image save only" + "}\n"
+            write_out_data += f', "tr": "{diff_time}", "MSE": 0, "SSIM": 0' + "}\n"
 
         print(write_out_data)
         file.write(write_out_data)
@@ -145,7 +145,7 @@ def save_image(payload_list):
     
     except Exception as e:
         print(f"Broken\n{e}")
-        write_out_data += f", tr: broken" + "}\n"
+        write_out_data += f', "tr": "broken"' + "}\n"
         print(write_out_data)
         file.write(write_out_data)
         write_out_data = ""
@@ -185,7 +185,7 @@ def data_receive_callback(xbee_message):
         comparison_image = string_list[7]
         if (comparison_image == "True"):
             original_image_name = ""
-        write_out_data += "{" + f"X: {image_x}, Y: {image_y}, PayloadSize: {payload_size}, Method: {method}, Experiment: {experiment}, transmission: {transmission}, seq_bytes: {sequence_bytes}"
+        write_out_data += "{" + f'"X": {image_x}, "Y": {image_y}, "PayloadSize": {payload_size}, "Method": "{method}", "Experiment": "{experiment}", "transmission": "{transmission}", "seq_bytes": {sequence_bytes}'
         bool_start_gathering = True
         bool_get_params = False
         experiment_transmission_time_start = datetime.now()
@@ -193,7 +193,7 @@ def data_receive_callback(xbee_message):
 
     if (received_data == [101, 110, 100]):  # END
         diff_time = experiment_transmission_time_end - experiment_transmission_time_start
-        write_out_data += f", t: {diff_time}"
+        write_out_data += f', "t": "{diff_time}"'
         # print("stop gathering")
         bool_start_gathering = False
         save_image(payload_list)
