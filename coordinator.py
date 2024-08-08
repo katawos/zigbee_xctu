@@ -21,8 +21,10 @@ import pandas as pd
 from PIL import Image
 import jpeg_ls
 
+#import openjpeg
+
 # TODO: Replace with the serial port where your local module is connected to.
-PORT = "COM5"
+PORT = "COM3"
 #MAC: ___FC (right, sticker "2")
 
 # TODO: Replace with the baud rate of your local module.
@@ -35,7 +37,6 @@ REMOTE_NODE_ID = "sensor" #REMOTE
 def compressJPEG(image_name, quality):
     print("Im compressing JPEG")
     image = cv2.imread(image_name)
-    # Compress method here
     img_name = 'before_JPEG_image.jpg'
     #save image to the one with the new name and given JPEG quality
     cv2.imwrite(img_name, image, [int(cv2.IMWRITE_JPEG_QUALITY), quality])  # Quality ranges from 0 to 100
@@ -45,11 +46,9 @@ def compressJPEG(image_name, quality):
 def compressJPEG2000(image_name, quality):
     print("Im compressing JPEG-2000")
     image = cv2.imread(image_name)
-    # Compress method here
     img_name = 'before_JPEG-2000_image.jpg'
-
     #save image to the one with the new name and given JPEG compression ratio
-    cv2.imwrite(img_name, image, [int(cv2.IMWRITE_JPEG2000_COMPRESSION_X1000), quality * 10])  # Compression ratio ranges from 0 to 1000
+    cv2.imwrite(img_name, image, [int(cv2.IMWRITE_JPEG2000_COMPRESSION_X1000), quality])  # Compression ratio ranges from 0 to 1000
     return img_name
 
 
@@ -57,7 +56,6 @@ def compressJPEG_LS(image, quality):
     print("Im compressing JPEG-LS")
     image = cv2.imread(image)
     quality = int(((100 - quality) / 100) * 255)    #ranges from 0 to 255
-    # Compress method here
     img_name = 'before_JPEG-LS_image.jpg'
     data_buffer = jpeg_ls.encode(image, quality)
 
@@ -67,13 +65,14 @@ def compressJPEG_LS(image, quality):
     return img_name
 
 
-def divide_to_payload(array, chunk_size, seq_bytes, parameters):
+def divide_to_payload(array, _payload_size, seq_bytes, parameters):
     arr = []
     count = 0
-    for i in range(0, len(array), chunk_size - seq_bytes):
+    # array = image size in array, _payload_size = size of image part that can be send at a time 
+    for i in range(0, len(array), _payload_size - seq_bytes):
         new_arr = []
 
-        # If udp seq number
+        # If asynch seq number
         if (seq_bytes > 0):
             # Convert the integer to a bytes object in big-endian order
             byte_data = count.to_bytes(seq_bytes, byteorder='big')  #number of bytes required, MSB is stored in smallest memory address -> LSB is first
@@ -82,11 +81,10 @@ def divide_to_payload(array, chunk_size, seq_bytes, parameters):
         
             new_arr += byte_list
         #slice array to include elements from i to (i+ch-seq)
-        new_arr += array[i:i + chunk_size - seq_bytes]
+        new_arr += array[i:i + _payload_size - seq_bytes]
         arr.append(new_arr)
         count += 1
 
-    # arr = [array[i:i + chunk_size].tolist() for i in range(0, len(array), chunk_size)]
     #pattern for data array
     arr.insert(0, "start")
     arr.insert(1, parameters)
@@ -113,9 +111,9 @@ def modifyImage(img, image_x, image_y, method = None, quality = None):
         "JPEG-LS": compressJPEG_LS
     }
     
-    #resize and change to grayscale
+    #resize
     img = cv2.resize(img, (image_x, image_y))
-    # gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    # gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  #for grayscale
 
     #rename and save as new image
     img_name = 'before_image.jpg'
@@ -132,7 +130,7 @@ def modifyImage(img, image_x, image_y, method = None, quality = None):
     return img_1d_arr
 
 
-def XbeeSend(data_payloads, data_size, transmission = "tcp", transmission_sleep = 0.014):
+def XbeeSend(data_payloads, data_size, transmission = "synch", transmission_sleep = 0.014):
     print(" +--------------------------------------+")
     print(" | XBee Python Library Send Data Sample |")
     print(" +--------------------------------------+\n")
@@ -146,9 +144,14 @@ def XbeeSend(data_payloads, data_size, transmission = "tcp", transmission_sleep 
             try:
                 device.open(force_settings=True)
                 print("Connected to device")
+                #set ACK parameter, TO = 0 => retries, TO = 1 => no retries
+                print(device.get_parameter("TO"))
+                device.set_parameter("TO", b"\x00")
+                print(device.get_parameter("TO"))
                 break
-            except:
+            except Exception as e:
                 print("Device is not connected .. resuming in 10 seconds")
+                print(e)
                 time.sleep(10)
 
         # Obtain the remote XBee device from the XBee network.
@@ -158,7 +161,7 @@ def XbeeSend(data_payloads, data_size, transmission = "tcp", transmission_sleep 
         dataSendFails = 0
         dataSendMaxFails = 50
 
-        firstUdp = True
+        firstAsynch = True
         while (data_idx < data_size):
 
             while (found == False):
@@ -177,20 +180,18 @@ def XbeeSend(data_payloads, data_size, transmission = "tcp", transmission_sleep 
                     print("Device is closed")
                     device.open(force_settings=True)
                     xbee_network = device.get_network()
-
-#CHEEECK - 16bit addressing                
+               
             print(f"Sending data to {remote_device.get_16bit_addr()}")
-            # print(f" >> {data_payloads[data_idx]}\n")
+
             try:
                 if (type(data_payloads[data_idx]) != str):  #check the type of particular element, if not string (e.g. "start")
-                    if (transmission == "tcp"):
+                    if (transmission == "synch"):
                         #send data Synchronously - wait until the data has been fully sent before continuing
-                        #TCP manages flow control and ensures reliable data transfer
                         device.send_data(remote_device, bytearray(data_payloads[data_idx])) 
-                    elif (transmission == "udp"):
-                        if (firstUdp == True):
+                    elif (transmission == "asynch"):
+                        if (firstAsynch == True):
                             time.sleep(transmission_sleep) 
-                            firstUdp = False
+                            firstAsynch = False
                         #send data Asynchronously - not wait for data to be sent before moving on
                         #time.sleep() slows down sending the packets to: reduce number of dropped packets, avoid collisions and help control data rate
                         device.send_data_async(remote_device, bytearray(data_payloads[data_idx]))   
@@ -201,36 +202,36 @@ def XbeeSend(data_payloads, data_size, transmission = "tcp", transmission_sleep 
                 data_idx += 1
             except Exception as e:
                 print(e)
-                time.sleep(0.5)
+                
                 dataSendFails += 1
 
                 if (dataSendFails >= dataSendMaxFails):
                     print("Max send fails are reached. Lost connection to device")
                     sys.exit(1)
-            # time.sleep(1)
 
     finally:
         if device is not None and device.is_open():
             device.close()
 
 
-def SendPerfectImage(image_resolution): #send image to reliably compare and calculate transmission errors (original, tcp, no compression)
-    run(image_x = resolutions[image_resolution][0], image_y = resolutions[image_resolution][1], payload_size = 80, experiment = f"original_{image_resolution}_image_save", method = None, transmission="tcp", transmission_sleep=0.014, comparison_image=True)
+def SendPerfectImage(image_resolution): #send image to reliably compare and calculate transmission errors (original, synch, no compression)
+    run(image_x = resolutions[image_resolution][0], image_y = resolutions[image_resolution][1], payload_size = 80, experiment = f"original_{image_resolution}_image_save", method = None, transmission="synch", transmission_sleep=0.014, comparison_image=True)
 
 
-def run(image_x, image_y, payload_size, experiment, method = None, quality = None, transmission = "tcp", transmission_sleep = 0.014, comparison_image = False):
+def run(image_x, image_y, payload_size, experiment, method = None, quality = None, transmission = "synch", transmission_sleep = 0.014, comparison_image = False):
     img = loadImage()
     mod_img_1d = modifyImage(img, image_x, image_y, method, quality)
 
     #set appropriate header size for given number of packets
+    #payload size = known, sequence bytes subtracted from payload to ensure that data packets are sequenced in header
     seq_bytes = 0
-    if (transmission == "udp"):
-        seq_bytes = 1
+    if (transmission == "asynch"):
+        seq_bytes = 1   #0 - 255
         number_of_packets = image_x * image_y / (payload_size - seq_bytes)
-        if (number_of_packets > 255):
+        if (number_of_packets > 255):       #0 - 65,535
             seq_bytes = 2
             number_of_packets = image_x * image_y / (payload_size - seq_bytes)
-        elif (number_of_packets > 65025):
+        elif (number_of_packets > 65535):   #0 - 16,777,216
             seq_bytes = 3
             number_of_packets = image_x * image_y / (payload_size - seq_bytes)
 
@@ -241,89 +242,106 @@ def run(image_x, image_y, payload_size, experiment, method = None, quality = Non
 
 
 if __name__ == '__main__':
-    # 1-3 4:3, 4-5 16:9
+
     resolutions = {
-        "144p": [192, 144],
-        "240p": [320, 240],
-        "480p": [720, 480],
-        # "720p": [1280, 720],
-        # "1080p": [1920, 1080]
+        #"144p": [192, 144],
+        #"240p": [320, 240],
+        "480p": [640, 480],
+        "720p": [1280, 720],
+        "1080p": [1920, 1080]
     }
 
     #TESTS
-    #for resolution 144p
-    res = "144p"
-    #transmission type
-    trans_type = ["tcp", "udp"]
+    #for resolution ___p
+    res = "480p"
+    #transmission type-like
+    trans_type = ["synch", "asynch"]
 
 
-    # (1) Udp transmission sleep test from 5 to 20 ms
-    SendPerfectImage(res)
-    for idx in range(5, 20):
-        sleep_time = idx / 1000
-        # #tcp
-        # run(image_x = resolutions["144p"][0], image_y = resolutions["144p"][1], payload_size = 80, experiment = f"tcp_sleep_{sleep_time}", method = None, transmission="tcp", transmission_sleep=sleep_time)
-        #udp
-        exper_name = trans_type[1] + f"_res{res}_sleep_{sleep_time}"
-        run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 80, experiment = exper_name, method = None, transmission = trans_type[1], transmission_sleep = sleep_time)
+    # # (1) asynch transmission sleep test from 5 to 20 ms
+    # SendPerfectImage(res)
+    # for idx in range(5, 20):
+    #     sleep_time = idx / 1000
+    #     #asynch
+    #     exper_name = trans_type[1] + f"_res{res}_sleep_{sleep_time}"
+    #     run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 80, experiment = exper_name, method = None, transmission = trans_type[1], transmission_sleep = sleep_time)
 
 
     # (2) Payload test
+    # SendPerfectImage(res)
+    # for payload_bytes in range(40, 255, 5):
+    #     #synch
+    #     exper_name = trans_type[0] + f"_res{res}_payload_{payload_bytes}"
+    #     run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = payload_bytes, experiment = exper_name, method = None, transmission = trans_type[0])
+    #     #asynch
+    #     exper_name = trans_type[1] + f"_res{res}_payload_{payload_bytes}"
+    #     run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = payload_bytes, experiment = exper_name, method = None, transmission = trans_type[1])
+
+
+    # # (3) Resolution test
+    # for key in resolutions.keys():  #go through each of resolutions names (key pairs)
+    #     SendPerfectImage(key)
+    #     #synch
+    #     exper_name = trans_type[0] + f"_resolution_{key}"
+    #     run(image_x = resolutions[key][0], image_y = resolutions[key][1], payload_size = 80, experiment = exper_name, method = None, transmission = trans_type[0])
+    #     #asynch
+    #     exper_name = trans_type[1] + f"_resolution_{key}"
+    #     run(image_x = resolutions[key][0], image_y = resolutions[key][1], payload_size = 80, experiment = exper_name, method = None, transmission = trans_type[1], transmission_sleep=0.014)
+
+
+    # # (4) Sleep and payload asynch
+    # SendPerfectImage(res)
+    # for idx in range(12, 16):
+    #     sleep_time = idx / 1000
+    #     for payload_bytes in range(40, 255, 5):
+    #         exper_name = trans_type[1] + f"_res{res}_payload_{payload_bytes}_sleep_{sleep_time}"
+    #         run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = payload_bytes, experiment = exper_name, method = None, transmission = trans_type[1], transmission_sleep = sleep_time)
+
+
+    # # (5) Compression methods
     SendPerfectImage(res)
-    for payload_bytes in range(40, 255, 5):
-        #tcp
-        exper_name = trans_type[0] + f"_res{res}_payload_{payload_bytes}"
-        run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = payload_bytes, experiment = exper_name, method = None, transmission = trans_type[0])
-        #udp
-        exper_name = trans_type[1] + f"_res{res}_payload_{payload_bytes}"
-        run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = payload_bytes, experiment = exper_name, method = None, transmission = trans_type[1])
+    # # JPEG
+    # for quality_ in range(95, 75, -10):
+    # quality_ = 80
+    # #synch
+    # exper_name = trans_type[0] + f"_res{res}_compr_JPEG_qual_" + str(quality_)
+    # run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 80, experiment = exper_name, method = "JPEG", quality = quality_, transmission = trans_type[0])
+    # #asynch
+    # exper_name = trans_type[1] + f"_res{res}_compr_JPEG_qual_" + str(quality_)
+    # run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 80, experiment = exper_name, method = "JPEG", quality = quality_, transmission = trans_type[1])
+
+    # # JPEG 2000
+    # for quality_ in range(95, 75, -10):
+    quality_ = 272
+    #synch
+    exper_name = trans_type[0] + f"_res{res}_compr_JPEG-2000_qual_" + str(quality_)
+    run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 80, experiment = exper_name, method = "JPEG-2000", quality = quality_, transmission = trans_type[0])
+    #asynch
+    exper_name = trans_type[1] + f"_res{res}_compr_JPEG-2000_qual_" + str(quality_)
+    run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 80, experiment = exper_name, method = "JPEG-2000", quality = quality_, transmission = trans_type[1])
+
+    ## # JPEG LS
+    ## for quality_ in range(95, 75, -10):
+    ##     #synch
+    ##     exper_name = trans_type[0] + f"_res{res}_compr_JPEG-LS_qual_" + str(quality_)
+    ##     run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 80, experiment = exper_name, method = "JPEG-LS", quality = quality_, transmission = trans_type[0])
+    ##     #asynch
+    ##     exper_name = trans_type[1] + f"_res{res}_compr_JPEG-LS_qual_" + str(quality_)
+    ##     run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 80, experiment = exper_name, method = "JPEG-LS", quality = quality_, transmission = trans_type[1])
 
 
-    # (3) Resolution test
-    for key in resolutions.keys():  #go through each of resolutions names (key pairs)
-        SendPerfectImage(key)
-        #tcp
-        exper_name = trans_type[0] + f"_resolution_{key}"
-        run(image_x = resolutions[key][0], image_y = resolutions[key][1], payload_size = 80, experiment = exper_name, method = None, transmission = trans_type[0])
-        #udp
-        exper_name = trans_type[1] + f"_resolution_{key}"
-        run(image_x = resolutions[key][0], image_y = resolutions[key][1], payload_size = 80, experiment = exper_name, method = None, transmission = trans_type[1], transmission_sleep=0.014)
+    #test which jpeg is the best
+    # for quality_ in range(65, 25, -10):
+    #     exper_name = trans_type[0] + f"_res{res}_compr_JPEG_qual_" + str(quality_)
+    #     run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 80, experiment = exper_name, method = "JPEG", quality = quality_, transmission = trans_type[0])
 
+    #     exper_name = trans_type[0] + f"_res{res}_compr_JPEG-2000_qual_" + str(quality_)
+    #     run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 80, experiment = exper_name, method = "JPEG-2000", quality = quality_, transmission = trans_type[0])
 
-    # (4) Sleep and payload UDP
-    SendPerfectImage(res)
-    for idx in range(12, 16):
-        sleep_time = idx / 1000
-        for payload_bytes in range(40, 255, 5):
-            exper_name = trans_type[1] + f"_res{res}_payload_{payload_bytes}_sleep_{sleep_time}"
-            run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = payload_bytes, experiment = exper_name, method = None, transmission = trans_type[1], transmission_sleep = sleep_time)
+    # quality_ = 55
+    # exper_name = trans_type[0] + f"_res{res}_compr_JPEG-LS_qual_" + str(quality_)
+    # run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 80, experiment = exper_name, method = "JPEG-LS", quality = quality_, transmission = trans_type[0])
 
-
-    # (5) Compression methods
-    SendPerfectImage(res)
-    # JPEG
-    for quality_ in range(95, 75, -10):
-        #tcp
-        exper_name = trans_type[0] + f"_res{res}_compr_JPEG_qual_" + str(quality_)
-        run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 80, experiment = exper_name, method = "JPEG", quality = quality_, transmission = trans_type[0])
-        #udp
-        exper_name = trans_type[1] + f"_res{res}_compr_JPEG_qual_" + str(quality_)
-        run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 80, experiment = exper_name, method = "JPEG", quality = quality_, transmission = trans_type[1])
-
-    # JPEG 2000
-    for quality_ in range(95, 75, -10):
-        #tcp
-        exper_name = trans_type[0] + f"_res{res}_compr_JPEG-2000_qual_" + str(quality_)
-        run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 80, experiment = exper_name, method = "JPEG-2000", quality = quality_, transmission = trans_type[0])
-        #udp
-        exper_name = trans_type[1] + f"_res{res}_compr_JPEG-2000_qual_" + str(quality_)
-        run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 80, experiment = exper_name, method = "JPEG-2000", quality = quality_, transmission = trans_type[1])
-
-    # JPEG LS
-    for quality_ in range(95, 75, -10):
-        #tcp
-        exper_name = trans_type[0] + f"_res{res}_compr_JPEG-LS_qual_" + str(quality_)
-        run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 80, experiment = exper_name, method = "JPEG-LS", quality = quality_, transmission = trans_type[0])
-        #udp
-        exper_name = trans_type[1] + f"_res{res}_compr_JPEG-LS_qual_" + str(quality_)
-        run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 80, experiment = exper_name, method = "JPEG-LS", quality = quality_, transmission = trans_type[1])
+    # quality_ = 35
+    # exper_name = trans_type[0] + f"_res{res}_compr_JPEG-2000_qual_" + str(quality_)
+    # run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 80, experiment = exper_name, method = "JPEG-2000", quality = quality_, transmission = trans_type[0])

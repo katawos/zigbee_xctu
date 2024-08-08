@@ -19,10 +19,11 @@ import sys
 import numpy as np
 import cv2
 from skimage.metrics import structural_similarity as ssim
+#from skimage.metrics import mse
 import jpeg_ls
 
 # TODO: Replace with the serial port where your local module is connected to.
-PORT = "COM6"
+PORT = "COM4"
 #MAC: ___5A, no sticker (left)
 
 # TODO: Replace with the baud rate of your local module.
@@ -68,12 +69,12 @@ def save_image(payload_list):
 
     experiment_reconstruction_time_start = datetime.now() 
 
-    if (transmission == "tcp"):
+    if (transmission == "synch"):
         #flatten payload list by adding each element separately
         for idx in range(len(payload_list)):
             arr += payload_list[idx]
 
-    elif(transmission == "udp"):
+    elif(transmission == "asynch"):
         prev_packet_num = -1
         for payload in payload_list:
             packet_num_list = payload[0][0:sequence_bytes]
@@ -92,11 +93,6 @@ def save_image(payload_list):
 
             prev_packet_num = packet_num
 
-    # If there is not enough pixels then do all 0
-    # if (len(arr) != (image_x * image_y)):
-    #     diff = (image_x * image_y) - len(arr)
-    #     arr += np.zeros(diff).tolist()
-
     np_arr = np.array(arr, dtype = np.uint8)
     # Shape takes (row, column) where row = y, column = x
 
@@ -107,8 +103,8 @@ def save_image(payload_list):
             image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
         elif (method == "JPEG-2000"):
             image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
-        elif (method == "JPEG-LS"):
-            image = jpeg_ls.decode(np_arr)
+        # elif (method == "JPEG-LS"):
+        #     image = jpeg_ls.decode(np_arr)
         # np_data_2d = np_arr.reshape(image_y,image_x)
 
         # DECODE HERE IF METHOD IS USED FOR FASTER DATA TRANSFER
@@ -121,6 +117,11 @@ def save_image(payload_list):
             MSE = np.sum((originalImage.astype("float") - image.astype("float")) ** 2) 
             #normalize by number of pixels - divide by (rows0 * columns1)
             MSE /= float(originalImage.shape[0] * image.shape[1])
+
+            #READY FUNCTION, TO BE CHANGED
+            #originalImage = img_as_float(originalImage)
+            #image = img_as_float(image)
+            #MSE = mse(originalImage, image)
             
             # SSIM - Structural Similarity Index Measure (changes in structural information, contrast)
             #modify images to grayscale
@@ -169,7 +170,6 @@ def data_receive_callback(xbee_message):
     global comparison_image
     global original_image_name
     global method
-    # print(f"{datetime.now()} From %s" % (xbee_message.remote_device.get_64bit_addr()))
     received_data = list(xbee_message.data)
 
     if (bool_get_params == True):
@@ -199,14 +199,15 @@ def data_receive_callback(xbee_message):
         save_image(payload_list)
     
     if (bool_start_gathering == True):
-        if (transmission == "tcp"):
+        if (transmission == "synch"):
             payload_list.append(received_data) 
-        elif (transmission == "udp"):
+        elif (transmission == "asynch"):
             payload_list.append([received_data])
         experiment_transmission_time_end = datetime.now()
 
     if (received_data == [115, 116, 97, 114, 116]): # START
         print("start gathering")
+        write_out_data = ""
         bool_get_params = True
         payload_list = []
         
@@ -223,6 +224,9 @@ def run():
             try:
                 device.open(force_settings=True)
                 print("Connected to device")
+                print(device.get_parameter("TO"))
+                device.set_parameter("TO", b"\x00")
+                print(device.get_parameter("TO"))
                 break
             except:
                 print("Device is not connected .. resuming in 10 seconds")
