@@ -46,7 +46,7 @@ def compressJPEG(image_name, quality):
 def compressJPEG2000(image_name, quality):
     print("Im compressing JPEG-2000")
     image = cv2.imread(image_name)
-    img_name = 'before_JPEG-2000_image.jpg'
+    img_name = 'before_JPEG-2000_image.jp2'
     #save image to the one with the new name and given JPEG compression ratio
     cv2.imwrite(img_name, image, [int(cv2.IMWRITE_JPEG2000_COMPRESSION_X1000), quality])  # Compression ratio ranges from 0 to 1000
     return img_name
@@ -56,7 +56,7 @@ def compressJPEG_LS(image, quality):
     print("Im compressing JPEG-LS")
     image = cv2.imread(image)
     quality = int(((100 - quality) / 100) * 255)    #ranges from 0 to 255
-    img_name = 'before_JPEG-LS_image.jpg'
+    img_name = 'before_JPEG-LS_image.jls'
     data_buffer = jpeg_ls.encode(image, quality)
 
     f = open(img_name, "wb")    #write in binary format
@@ -244,8 +244,8 @@ def run(image_x, image_y, payload_size, experiment, method = None, quality = Non
 if __name__ == '__main__':
 
     resolutions = {
-        #"144p": [192, 144],
-        #"240p": [320, 240],
+        "144p": [192, 144],
+        "240p": [320, 240],
         "480p": [640, 480],
         "720p": [1280, 720],
         "1080p": [1920, 1080]
@@ -253,7 +253,7 @@ if __name__ == '__main__':
 
     #TESTS
     #for resolution ___p
-    res = "480p"
+    res = "144p"
     #transmission type-like
     trans_type = ["synch", "asynch"]
 
@@ -312,7 +312,7 @@ if __name__ == '__main__':
 
     # # JPEG 2000
     # for quality_ in range(95, 75, -10):
-    quality_ = 272
+    quality_ = 240
     #synch
     exper_name = trans_type[0] + f"_res{res}_compr_JPEG-2000_qual_" + str(quality_)
     run(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 80, experiment = exper_name, method = "JPEG-2000", quality = quality_, transmission = trans_type[0])
