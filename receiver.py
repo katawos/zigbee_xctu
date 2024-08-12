@@ -19,6 +19,7 @@ import sys
 import numpy as np
 import cv2
 from skimage.metrics import structural_similarity as ssim
+from skimage import io, img_as_ubyte, img_as_float
 #from skimage.metrics import mse
 import jpeg_ls
 
@@ -65,6 +66,7 @@ def save_image(payload_list):
     global comparison_image
     global original_image_name
     global method
+    global diff_map
     arr = []
 
     experiment_reconstruction_time_start = datetime.now() 
@@ -103,35 +105,72 @@ def save_image(payload_list):
             image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
         elif (method == "JPEG-2000"):
             image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
-        # elif (method == "JPEG-LS"):
-        #     image = jpeg_ls.decode(np_arr)
-        # np_data_2d = np_arr.reshape(image_y,image_x)
+        elif (method == "JPEG-LS"):
+            image = jpeg_ls.decode(np_arr)
+        
+        if (diff_map == "True"):
+            image_2_name = original_image_name[:-6] + "_2.jpg"
 
-        # DECODE HERE IF METHOD IS USED FOR FASTER DATA TRANSFER
-        experiment_reconstruction_time_end = datetime.now()
-        diff_time = experiment_reconstruction_time_end - experiment_reconstruction_time_start
-        if (original_image_name != ""):
-            originalImage = cv2.imread(original_image_name)
-            # MSE - Mean Squared Error (for absolute diff between pixel values)
-            #converts to float (proper arithmetic operations), squared differences and sum of them
-            MSE = np.sum((originalImage.astype("float") - image.astype("float")) ** 2) 
-            #normalize by number of pixels - divide by (rows0 * columns1)
-            MSE /= float(originalImage.shape[0] * image.shape[1])
+            ssim_map = img_as_float(image) * 2 - 1
 
-            #READY FUNCTION, TO BE CHANGED
-            #originalImage = img_as_float(originalImage)
-            #image = img_as_float(image)
-            #MSE = mse(originalImage, image)
+            image_2_after_map = img_as_float(cv2.imread(original_image_name)) + ssim_map
+            image_2_after_map = image_2_after_map - np.min(image_2_after_map)
+            image_2_after_map = image_2_after_map / np.max(image_2_after_map)
+            # image_2_after_map = np.clip(image_2_after_map, 0, 1)
+
+            # ENHANCEMENTS HERE OR BELOW
+            image_2_after_map = img_as_ubyte(image_2_after_map)
+            cv2.imwrite(f"diff_{experiment}_image_2_after_map.jpg", image_2_after_map)
+
             
-            # SSIM - Structural Similarity Index Measure (changes in structural information, contrast)
-            #modify images to grayscale
-            original_gray = cv2.cvtColor(originalImage, cv2.COLOR_BGR2GRAY)
-            img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            SSIM, diff = ssim(original_gray, img_gray, full=True)
 
-            write_out_data += f', "tr": "{diff_time}", "MSE": {MSE}, "SSIM": {SSIM}' + "}\n"
-        else:    
-            write_out_data += f', "tr": "{diff_time}", "MSE": 0, "SSIM": 0' + "}\n"
+            # DECODE HERE IF METHOD IS USED FOR FASTER DATA TRANSFER
+            experiment_reconstruction_time_end = datetime.now()
+            diff_time = experiment_reconstruction_time_end - experiment_reconstruction_time_start
+            if (image_2_name != ""):
+                image_2 = cv2.imread(image_2_name)
+                MSE = np.sum((image_2.astype("float") - image_2_after_map.astype("float")) ** 2) 
+                MSE /= float(image_2.shape[0] * image_2_after_map.shape[1])
+                img_2_gray = cv2.cvtColor(image_2, cv2.COLOR_BGR2GRAY)
+                img_2_after_map_gray = cv2.cvtColor(image_2_after_map, cv2.COLOR_BGR2GRAY)
+                SSIM, diff = ssim(img_2_gray, img_2_after_map_gray, full=True)
+                cv2.imwrite(f"diff_{experiment}_image_2_after_map_ssim.jpg", img_as_ubyte(diff))
+
+                write_out_data += f', "tr": "{diff_time}", "MSE": {MSE}, "SSIM": {SSIM}' + "}\n"
+            else:    
+                write_out_data += f', "tr": "{diff_time}", "MSE": X, "SSIM": X' + "}\n"
+        else:
+            # DECODE HERE IF METHOD IS USED FOR FASTER DATA TRANSFER
+            experiment_reconstruction_time_end = datetime.now()
+            diff_time = experiment_reconstruction_time_end - experiment_reconstruction_time_start
+            if (original_image_name != ""):
+                originalImage = cv2.imread(original_image_name)
+                # MSE - Mean Squared Error (for absolute diff between pixel values)
+                #converts to float (proper arithmetic operations), squared differences and sum of them
+                MSE = np.sum((originalImage.astype("float") - image.astype("float")) ** 2) 
+                #normalize by number of pixels - divide by (rows0 * columns1)
+                MSE /= float(originalImage.shape[0] * image.shape[1])
+
+                #READY FUNCTION, TO BE CHANGED
+                #originalImage = img_as_float(originalImage)
+                #image = img_as_float(image)
+                #MSE = mse(originalImage, image)
+                
+                # SSIM - Structural Similarity Index Measure (changes in structural information, contrast)
+                #modify images to grayscale
+                original_gray = cv2.cvtColor(originalImage, cv2.COLOR_BGR2GRAY)
+                img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+                SSIM, diff = ssim(original_gray, img_gray, full=True)
+
+                # #diff image
+                # cv2.imshow("diff_image", diff)
+                # cv2.waitKey()
+                # Convert to allow for saving
+                cv2.imwrite(f"diff_image_{experiment}.jpg", diff)
+
+                write_out_data += f', "tr": "{diff_time}", "MSE": {MSE}, "SSIM": {SSIM}' + "}\n"
+            else:    
+                write_out_data += f', "tr": "{diff_time}", "MSE": X, "SSIM": X' + "}\n"
 
         print(write_out_data)
         file.write(write_out_data)
@@ -170,6 +209,7 @@ def data_receive_callback(xbee_message):
     global comparison_image
     global original_image_name
     global method
+    global diff_map
     received_data = list(xbee_message.data)
 
     if (bool_get_params == True):
@@ -183,6 +223,7 @@ def data_receive_callback(xbee_message):
         transmission = string_list[5]
         sequence_bytes = int(string_list[6])
         comparison_image = string_list[7]
+        diff_map = string_list[8]
         if (comparison_image == "True"):
             original_image_name = ""
         write_out_data += "{" + f'"X": {image_x}, "Y": {image_y}, "PayloadSize": {payload_size}, "Method": "{method}", "Experiment": "{experiment}", "transmission": "{transmission}", "seq_bytes": {sequence_bytes}'
