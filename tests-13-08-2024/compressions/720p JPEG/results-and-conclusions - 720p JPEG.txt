@@ -1,0 +1,44 @@
+TESTY WYKONYWANE DLA PARAMETRU TO = 0 (z retransmisjami), DLA ROZDZIELCZOŚCI 720p
+
+JPEG quality: 95 - 35
+
+SYNCH = ASYNCH
+rozmiary obrazu (oryginał 397KB)
+1) quality=95, size=398KB (+1)
+2) quality=85, size=340KB (-58)
+3) quality=75, size=300KB (-40)
+4) quality=65, size=269KB (-31)
+5) quality=55, size=247KB (-22)
+6) quality=45, size=228KB (-19)
+7) quality=35, size=207KB (-21)
+
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+WNIOSKI:
+
+- jakość: bardzo dobra, jedyny problem tylko dla asynch quality=95 (zgubione 3/4 czy 4/5 obrazu)
+- rozmiar: maleje z każdym krokiem, ale jest ona całkiem znacząca (prawie 2-krotna kompresja rozmiaru)
+- czas: oryginał 2:51min, 
+	synch 2:46min spadło do 00:33sek (różnice spadają), 
+	asynch 1:28min spadło do 00:17sek (również różnice spadają)
+- SSIM: synch i asynch właściwie to samo (wyjątek asynch quality=95), z 1.0 spadek do 0.8506 (dobry wynik, 15% tylko)
+
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+RESULTS:
+
+{"X": 1280, "Y": 720, "PayloadSize": 80, "Method": "None", "Experiment": "original_720p_image_save", "transmission": "synch", "seq_bytes": 0, "t": "0:02:51.371428", "tr": "0:00:00.062005", "MSE": X, "SSIM": X}
+{"X": 1280, "Y": 720, "PayloadSize": 80, "Method": "JPEG", "Experiment": "synch_res720p_compr_JPEG_qual_95", "transmission": "synch", "seq_bytes": 0, "t": "0:02:46.172441", "tr": "0:00:00.071005", "MSE": 0.0, "SSIM": 1.0}
+{"X": 1280, "Y": 720, "PayloadSize": 80, "Method": "JPEG", "Experiment": "asynch_res720p_compr_JPEG_qual_95", "transmission": "asynch", "seq_bytes": 2, "t": "0:01:28.029039", "tr": "0:00:00.051234", "MSE": 18913.785379774305, "SSIM": 0.26159678093151945}
+{"X": 1280, "Y": 720, "PayloadSize": 80, "Method": "JPEG", "Experiment": "synch_res720p_compr_JPEG_qual_85", "transmission": "synch", "seq_bytes": 0, "t": "0:01:30.624086", "tr": "0:00:00.029002", "MSE": 46.04247395833333, "SSIM": 0.9443353978675958}
+{"X": 1280, "Y": 720, "PayloadSize": 80, "Method": "JPEG", "Experiment": "asynch_res720p_compr_JPEG_qual_85", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:47.756859", "tr": "0:00:00.033998", "MSE": 46.04247395833333, "SSIM": 0.9443353978675958}
+{"X": 1280, "Y": 720, "PayloadSize": 80, "Method": "JPEG", "Experiment": "synch_res720p_compr_JPEG_qual_75", "transmission": "synch", "seq_bytes": 0, "t": "0:01:05.678687", "tr": "0:00:00.023001", "MSE": 81.451396484375, "SSIM": 0.9146498058876288}
+{"X": 1280, "Y": 720, "PayloadSize": 80, "Method": "JPEG", "Experiment": "asynch_res720p_compr_JPEG_qual_75", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:34.341976", "tr": "0:00:00.028003", "MSE": 81.451396484375, "SSIM": 0.9146498058876288}
+{"X": 1280, "Y": 720, "PayloadSize": 80, "Method": "JPEG", "Experiment": "synch_res720p_compr_JPEG_qual_65", "transmission": "synch", "seq_bytes": 0, "t": "0:00:53.328908", "tr": "0:00:00.021007", "MSE": 110.88639214409723, "SSIM": 0.8960284548577367}
+{"X": 1280, "Y": 720, "PayloadSize": 80, "Method": "JPEG", "Experiment": "asynch_res720p_compr_JPEG_qual_65", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:28.121358", "tr": "0:00:00.023001", "MSE": 110.88639214409723, "SSIM": 0.8960284548577367}
+{"X": 1280, "Y": 720, "PayloadSize": 80, "Method": "JPEG", "Experiment": "synch_res720p_compr_JPEG_qual_55", "transmission": "synch", "seq_bytes": 0, "t": "0:00:45.251383", "tr": "0:00:00.018002", "MSE": 138.60126085069444, "SSIM": 0.8810028386891187}
+{"X": 1280, "Y": 720, "PayloadSize": 80, "Method": "JPEG", "Experiment": "asynch_res720p_compr_JPEG_qual_55", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:23.783501", "tr": "0:00:00.019998", "MSE": 138.60126085069444, "SSIM": 0.8810028386891187}
+{"X": 1280, "Y": 720, "PayloadSize": 80, "Method": "JPEG", "Experiment": "synch_res720p_compr_JPEG_qual_45", "transmission": "synch", "seq_bytes": 0, "t": "0:00:39.940066", "tr": "0:00:00.019018", "MSE": 164.5464919704861, "SSIM": 0.8678164039283077}
+{"X": 1280, "Y": 720, "PayloadSize": 80, "Method": "JPEG", "Experiment": "asynch_res720p_compr_JPEG_qual_45", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:20.835959", "tr": "0:00:00.020001", "MSE": 164.5464919704861, "SSIM": 0.8678164039283077}
+{"X": 1280, "Y": 720, "PayloadSize": 80, "Method": "JPEG", "Experiment": "synch_res720p_compr_JPEG_qual_35", "transmission": "synch", "seq_bytes": 0, "t": "0:00:33.309591", "tr": "0:00:00.015999", "MSE": 200.49844618055556, "SSIM": 0.8506150828731339}
+{"X": 1280, "Y": 720, "PayloadSize": 80, "Method": "JPEG", "Experiment": "asynch_res720p_compr_JPEG_qual_35", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:17.600643", "tr": "0:00:00.019004", "MSE": 200.49844618055556, "SSIM": 0.8506150828731339}

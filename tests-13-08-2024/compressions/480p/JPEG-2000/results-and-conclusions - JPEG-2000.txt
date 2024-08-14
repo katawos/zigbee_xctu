@@ -1,0 +1,48 @@
+TESTY WYKONYWANE DLA PARAMETRU TO = 0 (z retransmisjami), DLA ROZDZIELCZOŚCI 480p
+
+JPEG-2000 quality: 360 - 80
+
+SYNCH = ASYNCH (różnica w czasie transmisji)
+rozmiary obrazu (oryginał 154KB)
+1) quality=360, size=154KB
+2) quality=320, size=154KB
+3) quality=280, size=153KB (-1)
+4) quality=240, size=152KB (-1)
+5) quality=200, size=148KB (-4)
+6) quality=160, size=143KB (-5)
+7) quality=120, size=135KB (-8)
+8) quality=80, size=125KB (-10)
+9) quality=40, size=107KB (-18)
+
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+WNIOSKI:
+
+- na poziomie quality=120 (porównywalnego rozmiarem z JPEG quality=85), nieznacznie mniej artefaktów (bloków pikseli), natomiast plaża znacznie bardziej rozmazana
+- na poziomie quality=40 (porównywalnego rozmiarem z JPEG quality=60), JPEG-2000 bardzo mocno rozmazany, spora utrata szczegółów w porównaniu
+- większy spadek w rozmiarze obrazu przy niższym pułapie quality, natomiast równie większy spadek na jakości obrazu, nieporównywalnie gorszy od JPEG
+- czasy: synch vs asynch różnica prawie 2-krotna, przy zmianie współczynnika jakości o 40, różnica w czasie dla synch to ok. 15sek, natomiast dla asynch jest to ok. 8sek (dość liniowa różnica),
+	czas nieznacznie lepszy niż dla porównywalnego rozmiarem obrazu z JPEG (ok.2sek), natomiast jakość gorsza
+- MSE rośnie znacząco, natomiast SSIM spadek do 0.73069, co daje ~27% spadku jakości (znacząca różnica)
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+RESULTS:
+
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-2000", "Experiment": "synch_res480p_compr_JPEG-2000_qual_360", "transmission": "synch", "seq_bytes": 0, "t": "0:02:15.083278", "tr": "0:00:00.115515", "MSE": X, "SSIM": X}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-2000", "Experiment": "asynch_res480p_compr_JPEG-2000_qual_360", "transmission": "asynch", "seq_bytes": 2, "t": "0:01:10.984860", "tr": "0:00:00.107003", "MSE": 8.426722005208333, "SSIM": 0.9943653890121772}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-2000", "Experiment": "synch_res480p_compr_JPEG-2000_qual_320", "transmission": "synch", "seq_bytes": 0, "t": "0:02:00.107349", "tr": "0:00:00.090000", "MSE": 14.214505208333334, "SSIM": 0.9866214508841269}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-2000", "Experiment": "asynch_res480p_compr_JPEG-2000_qual_320", "transmission": "asynch", "seq_bytes": 2, "t": "0:01:03.112570", "tr": "0:00:00.095001", "MSE": 14.214505208333334, "SSIM": 0.9866214508841269}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-2000", "Experiment": "synch_res480p_compr_JPEG-2000_qual_280", "transmission": "synch", "seq_bytes": 0, "t": "0:01:44.779207", "tr": "0:00:00.107002", "MSE": 21.685833333333335, "SSIM": 0.9760512539150799}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-2000", "Experiment": "asynch_res480p_compr_JPEG-2000_qual_280", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:55.240935", "tr": "0:00:00.083000", "MSE": 21.685833333333335, "SSIM": 0.9760512539150799}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-2000", "Experiment": "synch_res480p_compr_JPEG-2000_qual_240", "transmission": "synch", "seq_bytes": 0, "t": "0:01:29.896397", "tr": "0:00:00.069015", "MSE": 31.891702473958333, "SSIM": 0.9648415385810101}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-2000", "Experiment": "asynch_res480p_compr_JPEG-2000_qual_240", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:47.555712", "tr": "0:00:00.076998", "MSE": 31.891702473958333, "SSIM": 0.9648415385810101}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-2000", "Experiment": "synch_res480p_compr_JPEG-2000_qual_200", "transmission": "synch", "seq_bytes": 0, "t": "0:01:15.076250", "tr": "0:00:00.057998", "MSE": 49.42063802083333, "SSIM": 0.9417665337372255}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-2000", "Experiment": "asynch_res480p_compr_JPEG-2000_qual_200", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:39.460525", "tr": "0:00:00.063001", "MSE": 49.42063802083333, "SSIM": 0.9417665337372255}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-2000", "Experiment": "synch_res480p_compr_JPEG-2000_qual_160", "transmission": "synch", "seq_bytes": 0, "t": "0:00:59.904127", "tr": "0:00:00.050999", "MSE": 75.43076171875, "SSIM": 0.9143844760870643}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-2000", "Experiment": "asynch_res480p_compr_JPEG-2000_qual_160", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:31.530465", "tr": "0:00:00.054001", "MSE": 75.43076171875, "SSIM": 0.9143844760870643}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-2000", "Experiment": "synch_res480p_compr_JPEG-2000_qual_120", "transmission": "synch", "seq_bytes": 0, "t": "0:00:45.036894", "tr": "0:00:00.038002", "MSE": 116.62593424479167, "SSIM": 0.8789361881718978}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-2000", "Experiment": "asynch_res480p_compr_JPEG-2000_qual_120", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:23.708078", "tr": "0:00:00.040999", "MSE": 116.62593424479167, "SSIM": 0.8789361881718978}
+"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-2000", "Experiment": "synch_res480p_compr_JPEG-2000_qual_80", "transmission": "synch", "seq_bytes": 0, "t": "0:00:30.007102", "tr": "0:00:00.028001", "MSE": 196.14766927083335, "SSIM": 0.8274176685982079}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-2000", "Experiment": "asynch_res480p_compr_JPEG-2000_qual_80", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:15.831212", "tr": "0:00:00.030000", "MSE": 196.14766927083335, "SSIM": 0.8274176685982079}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-2000", "Experiment": "synch_res480p_compr_JPEG-2000_qual_40", "transmission": "synch", "seq_bytes": 0, "t": "0:00:15.060750", "tr": "0:00:00.019002", "MSE": 429.063408203125, "SSIM": 0.7306913199006977}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-2000", "Experiment": "asynch_res480p_compr_JPEG-2000_qual_40", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:07.920946", "tr": "0:00:00.020472", "MSE": 429.063408203125, "SSIM": 0.7306913199006977}

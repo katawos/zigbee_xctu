@@ -1,0 +1,33 @@
+TESTY WYKONYWANE DLA PARAMETRU TO = 0 (z retransmisjami), DLA ROZDZIELCZOŚCI 480p
+
+od sleep=0.013 obrazy przesyłają się poprawnie
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res480p_sleep_0.013", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:32.590562", "tr": "0:00:00.020000", "MSE": 0.7266015625, "SSIM": 0.9997797754932035}
+
+dla większego czasu opóźniającego, czas transmisji wydłuża się
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+WNIOSKI:
+13 i 14ms wyniki czasu transmisji są bardzo podobne, natomiast z poprzednich testów bezpieczniejszym wyborem jest 0.014s gdyż jest pewniejsza transmisja kosztem 1.12s
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res480p_sleep_0.014", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:33.717319", "tr": "0:00:00.020001", "MSE": 0.7266015625, "SSIM": 0.9997797754932035}
+
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+RESULTS:
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "original_480p_image_save", "transmission": "synch", "seq_bytes": 0, "t": "0:01:08.541006", "tr": "0:00:00.019002", "MSE": X, "SSIM": X}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res480p_sleep_0.005", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:17.374728", "tr": "0:00:00.025998", "MSE": 48321.438528645835, "SSIM": 0.20014251203735384}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res480p_sleep_0.006", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:17.677034", "tr": "0:00:00.026014", "MSE": 45624.416995442705, "SSIM": 0.20001471242587937}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res480p_sleep_0.007", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:20.070971", "tr": "0:00:00.023001", "MSE": 62288.43940429688, "SSIM": 0.1657566968132973}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res480p_sleep_0.008", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:20.793229", "tr": "0:00:00.020997", "MSE": 45695.762763671875, "SSIM": 0.18222979281175114}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res480p_sleep_0.009", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:22.675139", "tr": "0:00:00.021000", "MSE": 31475.887942708334, "SSIM": 0.21348868116090908}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res480p_sleep_0.01", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:25.136818", "tr": "0:00:00.023001", "MSE": 47171.633785807295, "SSIM": 0.21929818711086357}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res480p_sleep_0.011", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:27.254167", "tr": "0:00:00.030997", "MSE": 39484.877532552084, "SSIM": 0.22587366937877232}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res480p_sleep_0.012", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:29.439114", "tr": "0:00:00.033995", "MSE": 38320.96798177083, "SSIM": 0.13771336129716275}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res480p_sleep_0.013", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:32.590562", "tr": "0:00:00.020000", "MSE": 0.7266015625, "SSIM": 0.9997797754932035}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res480p_sleep_0.014", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:33.717319", "tr": "0:00:00.020001", "MSE": 0.7266015625, "SSIM": 0.9997797754932035}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res480p_sleep_0.015", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:34.899789", "tr": "0:00:00.019998", "MSE": 0.7266015625, "SSIM": 0.9997797754932035}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res480p_sleep_0.016", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:37.151568", "tr": "0:00:00.022003", "MSE": 0.7266015625, "SSIM": 0.9997797754932035}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res480p_sleep_0.017", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:39.472918", "tr": "0:00:00.019995", "MSE": 0.7266015625, "SSIM": 0.9997797754932035}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res480p_sleep_0.018", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:41.663654", "tr": "0:00:00.023002", "MSE": 0.7266015625, "SSIM": 0.9997797754932035}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res480p_sleep_0.019", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:43.927123", "tr": "0:00:00.019995", "MSE": 0.7266015625, "SSIM": 0.9997797754932035}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res480p_sleep_0.02", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:45.679099", "tr": "0:00:00.019997", "MSE": 0.7266015625, "SSIM": 0.9997797754932035}

@@ -1,0 +1,41 @@
+TESTY WYKONYWANE DLA PARAMETRU TO = 0 (z retransmisjami), DLA ROZDZIELCZOŚCI 480p
+
+JPEG-LS quality: 95 - 35
+
+SYNCH = ASYNCH
+rozmiary obrazu (oryginał 154KB)
+1) quality=95, size=163KB (+9KB od oryginału)
+2) quality=85, size=155KB (+1KB od oryginału)
+3) quality=75, size=134KB (-20KB od oryginału)
+4) quality=65, size=110KB (-24)
+5) quality=55, size=86.5KB (-23.5)
+6) quality=45, size=KB 	broken
+7) quality=35, size=KB 	broken
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+WNIOSKI:
+
+- jakość: dla quality=95 jakość bardzo dobra (chociaż SSIM 0.9), poniżej pojawiają się poziome pasy wraz z utraconą głębią kolorów
+- rozmiar: spadki rozmiarów w porządku, znaczące, ale również idzie to z utratą jakości (mocno zniekształcone)
+- czasy: dla synch spadki głównie ok. 5sek, natomiast dla asynch jest to 2-3sek różnicy
+- SSIM: 0.905 do 0.272 co jest widoczne
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+RESULTS:
+
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "original_480p_image_save", "transmission": "synch", "seq_bytes": 0, "t": "0:01:04.169717", "tr": "0:00:00.016382", "MSE": X, "SSIM": X}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-LS", "Experiment": "synch_res480p_compr_JPEG-LS_qual_95", "transmission": "synch", "seq_bytes": 0, "t": "0:00:51.365752", "tr": "0:00:00.030688", "MSE": 127.164833984375, "SSIM": 0.9052919616032273}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-LS", "Experiment": "asynch_res480p_compr_JPEG-LS_qual_95", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:27.022525", "tr": "0:00:00.028512", "MSE": 127.164833984375, "SSIM": 0.9052919616032273}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-LS", "Experiment": "synch_res480p_compr_JPEG-LS_qual_85", "transmission": "synch", "seq_bytes": 0, "t": "0:00:16.841885", "tr": "0:00:00.011999", "MSE": 958.1469401041667, "SSIM": 0.6024134959770688}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-LS", "Experiment": "asynch_res480p_compr_JPEG-LS_qual_85", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:08.966339", "tr": "0:00:00.012002", "MSE": 958.1469401041667, "SSIM": 0.6024134959770688}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-LS", "Experiment": "synch_res480p_compr_JPEG-LS_qual_75", "transmission": "synch", "seq_bytes": 0, "t": "0:00:10.017009", "tr": "0:00:00.009518", "MSE": 2414.3259375, "SSIM": 0.4692287806087566}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-LS", "Experiment": "asynch_res480p_compr_JPEG-LS_qual_75", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:05.292627", "tr": "0:00:00.010999", "MSE": 2414.3259375, "SSIM": 0.4692287806087566}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-LS", "Experiment": "synch_res480p_compr_JPEG-LS_qual_65", "transmission": "synch", "seq_bytes": 0, "t": "0:00:05.737310", "tr": "0:00:00.005000", "MSE": 5680.460042317708, "SSIM": 0.3567622931979309}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-LS", "Experiment": "asynch_res480p_compr_JPEG-LS_qual_65", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:03.026758", "tr": "0:00:00.008003", "MSE": 5680.460042317708, "SSIM": 0.3567622931979309}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-LS", "Experiment": "synch_res480p_compr_JPEG-LS_qual_55", "transmission": "synch", "seq_bytes": 0, "t": "0:00:02.608481", "tr": "0:00:00.004000", "MSE": 10665.277067057292, "SSIM": 0.27219965824482667}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG-LS", "Experiment": "asynch_res480p_compr_JPEG-LS_qual_55", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:01.461930", "tr": "0:00:00.006003", "MSE": 10665.277067057292, "SSIM": 0.27219965824482667}
+
+poniżej (50-35)
+start gathering
+Broken
+Decoding error: Invalid JPEG-LS stream: near-lossless is outside the range [0, min(255, MAXVAL/2)]

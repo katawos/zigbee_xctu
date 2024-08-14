@@ -1,0 +1,272 @@
+TESTOWANIE USTAWIEŃ DLA ASYNCH 
+
+- wyrzucenie sekwencyjności, która się tworzy na coordinatorze i po drugiej stronie wyrzucić dodawanie zer i po prostu porównać na czymkolwiek czy to ma jakieś znaczenie
+
+Dlaczego?
+- Bo to było głównie łatanie pixeli ... A może nawet tego nie będzie potrzeba dla samych plików 
+- Pliki mają dane zapisane w jakiś x sposób i mogą się regenerowac, jaki wpływ mają zera? Pierwsze ramki mają dane o rozdzielczości a dalsze to typowo pixele. 
+- Możesz porównać co jest lepsze i używać tego w udp jako standard
+
+__________________________________________________________________________________________________________________________________________________
+
+CO WYRZUCONE
+1) coord - sekwencyjność run()
+
+def run(img_name, image_x, image_y, payload_size, experiment, method = None, quality = None, transmission = "synch", transmission_sleep = 0.014, comparison_image = False, diff_map = False):
+    img = loadImage(img_name)
+    mod_img_1d = modifyImage(img, image_x, image_y, method, quality)
+
+    #set appropriate header size for given number of packets
+    #payload size = known, sequence bytes subtracted from payload to ensure that data packets are sequenced in header
+    seq_bytes = 0
+    if (transmission == "asynch"):
+        seq_bytes = 1   #0 - 255
+        number_of_packets = image_x * image_y / (payload_size - seq_bytes)
+        if (number_of_packets > 255):       #0 - 65,535
+            seq_bytes = 2
+            number_of_packets = image_x * image_y / (payload_size - seq_bytes)
+        elif (number_of_packets > 65535):   #0 - 16,777,216 (65535, earlier 65025)
+            seq_bytes = 3
+            number_of_packets = image_x * image_y / (payload_size - seq_bytes)
+
+    data_payloads = divide_to_payload(mod_img_1d, payload_size, seq_bytes, f"{image_x},{image_y},{payload_size},{method},{experiment},{transmission},{seq_bytes},{comparison_image},{diff_map}")
+    data_size = len(data_payloads)
+
+    XbeeSend(data_payloads, data_size, transmission, transmission_sleep)
+   
+-------------------------------------------------------------------------------------
+2) coord - sekwencyjność divide_to_payload()
+
+def divide_to_payload(array, _payload_size, seq_bytes, parameters):
+    arr = []
+    count = 0
+    #array = image size in array, _payload_size = size of image part that can be send at a time 
+    for i in range(0, len(array), _payload_size - seq_bytes):
+        new_arr = []
+
+        # If asynch seq number
+        if (seq_bytes > 0):
+            # Convert the integer to a bytes object in big-endian order
+            byte_data = count.to_bytes(seq_bytes, byteorder='big')  #number of bytes required, MSB is stored in smallest memory address -> LSB is first
+            # Convert the bytes object to a list
+            byte_list = list(byte_data)
+        
+            new_arr += byte_list
+        #slice array to include elements from i to (i+payload_size-seq)
+        new_arr += array[i:i + _payload_size - seq_bytes]
+        arr.append(new_arr)
+        count += 1
+
+    #pattern for data array
+    arr.insert(0, "start")
+    arr.insert(1, parameters)
+    arr.append("end")
+    return arr
+-------------------------------------------------------------------------------------
+3) receiver - wyrzucić dodawanie zer
+
+def save_image(payload_list):
+    global image_x
+    global image_y
+    global experiment_reconstruction_time_start
+    global experiment_reconstruction_time_end
+    global file
+    global write_out_data
+    global experiment
+    global transmission
+    global sequence_bytes
+    global comparison_image
+    global original_image_name
+    global method
+    global diff_map
+    arr = []
+
+    experiment_reconstruction_time_start = datetime.now() 
+
+    if (transmission == "synch"):
+        #flatten payload list by adding each element separately
+        for idx in range(len(payload_list)):
+            arr += payload_list[idx]
+
+    elif(transmission == "asynch"):
+        prev_packet_num = -1
+        for payload in payload_list:
+            packet_num_list = payload[0][0:sequence_bytes]
+            # print(payload[0][0:sequence_bytes], end="")
+            byte_data = bytes(packet_num_list)
+            packet_num = int.from_bytes(byte_data, 'big')
+
+            diff = packet_num - prev_packet_num
+
+            for _ in range(0, diff - 1):
+                # fill with zeros all missing parts
+                arr += np.zeros(len(payload[0]) - sequence_bytes).tolist()
+
+            # add to arr rest of the payload
+            arr += payload[0][sequence_bytes:]
+
+            prev_packet_num = packet_num
+
+    np_arr = np.array(arr, dtype = np.uint8)
+    # Shape takes (row, column) where row = y, column = x
+
+    try:
+        #decode data accordingly
+        if (method == "None"):
+            image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+        elif (method == "JPEG"):
+            image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+        elif (method == "JPEG-2000"):
+            image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+        elif (method == "JPEG-LS"):
+            image = jpeg_ls.decode(np_arr)
+        
+        if (diff_map == "True"):
+            image_2_name = original_image_name[:-6] + "_2.jpg"
+
+            #change the type of image and ssim_map to float for pixel-wise addition (and to prevent overflow)
+            #change range from <0,1> to <-1,1>, which is ssim range
+            ssim_map = img_as_float(image) * 2 - 1
+
+            image_2_after_map = img_as_float(cv2.imread(original_image_name)) + ssim_map
+            #normalize values to range <0,1> (to save image values as bytes)
+            image_2_after_map = image_2_after_map - np.min(image_2_after_map)
+            image_2_after_map = image_2_after_map / np.max(image_2_after_map)
+            # image_2_after_map = np.clip(image_2_after_map, 0, 1) #not working properly, cuts values and does not normalize them
+
+            # ENHANCEMENTS HERE OR BELOW
+            #convert and save in 8-bit unsigned integer format, range <0,255>
+            image_2_after_map = img_as_ubyte(image_2_after_map)
+            # ENHANCEMENTS HERE OR ABOVE
+            cv2.imwrite(f"diff_{experiment}_image_2_after_map.jpg", image_2_after_map)
+
+            
+            experiment_reconstruction_time_end = datetime.now()
+            diff_time = experiment_reconstruction_time_end - experiment_reconstruction_time_start
+            if (image_2_name != ""):
+                image_2 = cv2.imread(image_2_name)
+                MSE = np.sum((image_2.astype("float") - image_2_after_map.astype("float")) ** 2) 
+                MSE /= float(image_2.shape[0] * image_2_after_map.shape[1])
+                img_2_gray = cv2.cvtColor(image_2, cv2.COLOR_BGR2GRAY)
+                img_2_after_map_gray = cv2.cvtColor(image_2_after_map, cv2.COLOR_BGR2GRAY)
+                SSIM, diff = ssim(img_2_gray, img_2_after_map_gray, full=True)
+                cv2.imwrite(f"diff_{experiment}_image_2_after_map_ssim.jpg", img_as_ubyte(diff))
+
+                write_out_data += f', "tr": "{diff_time}", "MSE": {MSE}, "SSIM": {SSIM}' + "}\n"
+            else:    
+                write_out_data += f', "tr": "{diff_time}", "MSE": X, "SSIM": X' + "}\n"
+        else:
+            experiment_reconstruction_time_end = datetime.now()
+            diff_time = experiment_reconstruction_time_end - experiment_reconstruction_time_start
+            if (original_image_name != ""):
+                originalImage = cv2.imread(original_image_name)
+                # MSE - Mean Squared Error (for absolute diff between pixel values)
+                #converts to float (proper arithmetic operations), squared differences and sum of them
+                MSE = np.sum((originalImage.astype("float") - image.astype("float")) ** 2) 
+                #normalize by number of pixels - divide by (rows0 * columns1)
+                MSE /= float(originalImage.shape[0] * image.shape[1])
+
+                #READY FUNCTION, TO BE CHANGED
+                #originalImage = img_as_float(originalImage)
+                #image = img_as_float(image)
+                #MSE = mse(originalImage, image)
+                
+                # SSIM - Structural Similarity Index Measure (changes in structural information, contrast)
+                #modify images to grayscale
+                original_gray = cv2.cvtColor(originalImage, cv2.COLOR_BGR2GRAY)
+                img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+                SSIM, diff = ssim(original_gray, img_gray, full=True)
+                
+                # # Convert to allow for saving
+                # cv2.imwrite(f"diff_image_{experiment}.jpg", diff)
+
+                write_out_data += f', "tr": "{diff_time}", "MSE": {MSE}, "SSIM": {SSIM}' + "}\n"
+            else:    
+                write_out_data += f', "tr": "{diff_time}", "MSE": X, "SSIM": X' + "}\n"
+
+        print(write_out_data)
+        file.write(write_out_data)
+        file.flush()
+        write_out_data = ""
+        image_name = f'received_image_{experiment}.jpg'
+
+        if (original_image_name == ""):
+            original_image_name = image_name
+
+        cv2.imwrite(image_name, image)
+    
+    except Exception as e:
+        print(f"Broken\n{e}")
+        write_out_data += f', "tr": "broken"' + "}\n"
+        print(write_out_data)
+        file.write(write_out_data)
+        write_out_data = ""
+    # cv2.imshow('received_image', np_data_2d)
+    # cv2.waitKey(0)
+
+-------------------------------------------------------------------------------------
+4) receiver - wyrzucić z write_out_data seq_bytes
+
+def data_receive_callback(xbee_message):
+    global bool_start_gathering
+    global bool_get_params
+    global payload_list
+    global image_x
+    global image_y
+    global experiment
+    global experiment_transmission_time_start
+    global experiment_transmission_time_end
+    global write_out_data
+    global transmission
+    global sequence_bytes
+    global prev_packet_num
+    global payload_size
+    global comparison_image
+    global original_image_name
+    global method
+    global diff_map
+    received_data = list(xbee_message.data)
+
+    if (bool_get_params == True):
+        string = f"{xbee_message.data.decode('utf-8')}"
+        string_list = string.split(",")
+        image_x = int(string_list[0])
+        image_y = int(string_list[1])
+        payload_size = int(string_list[2])
+        method = string_list[3]
+        experiment = string_list[4]
+        transmission = string_list[5]
+        sequence_bytes = int(string_list[6])
+        comparison_image = string_list[7]
+        diff_map = string_list[8]
+        if (comparison_image == "True"):
+            original_image_name = ""
+        write_out_data += "{" + f'"X": {image_x}, "Y": {image_y}, "PayloadSize": {payload_size}, "Method": "{method}", "Experiment": "{experiment}", "transmission": "{transmission}", "seq_bytes": {sequence_bytes}'
+        bool_start_gathering = True
+        bool_get_params = False
+        experiment_transmission_time_start = datetime.now()
+        return
+
+    if (received_data == [101, 110, 100]):  # END
+        diff_time = experiment_transmission_time_end - experiment_transmission_time_start
+        write_out_data += f', "t": "{diff_time}"'
+        # print("stop gathering")
+        bool_start_gathering = False
+        save_image(payload_list)
+    
+    if (bool_start_gathering == True):
+        if (transmission == "synch"):
+            payload_list.append(received_data) 
+        elif (transmission == "asynch"):
+            payload_list.append(received_data)
+        experiment_transmission_time_end = datetime.now()
+
+    if (received_data == [115, 116, 97, 114, 116]): # START
+        print("start gathering")
+        write_out_data = ""
+        bool_get_params = True
+        payload_list = []
+
+__________________________________________________________________________________________________________________________________________________________________
+
+

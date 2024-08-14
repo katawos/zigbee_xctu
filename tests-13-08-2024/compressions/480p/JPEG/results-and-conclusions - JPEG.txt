@@ -1,0 +1,43 @@
+TESTY WYKONYWANE DLA PARAMETRU TO = 0 (z retransmisjami), DLA ROZDZIELCZOŚCI 480p
+
+JPEG quality: 95 - 35
+
+SYNCH = ASYNCH
+rozmiary obrazu (oryginał 154KB)
+1) quality=95, size=154KB
+2) quality=85, size=136KB (-18)
+3) quality=75, size=123KB (-13)
+4) quality=65, size=111KB (-12)
+5) quality=55, size=103KB (-8)
+6) quality=45, size=95.3KB (-7.7)
+7) quality=35, size=86KB (-9.3)
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+WNIOSKI:
+
+- jakość obrazu niezależnie od poziomu kompresji była zadowalająca
+- kompresja na poziomie quality=95 daje dokładnie tą samą jakość jak oryginał
+- przy wyższych współczynnikach jakości występują największe spadki na rozmiarze, im niżej tym mniejsze te różnice
+- przy mniejszych rozmiarach pojawiają się drobne artefakty (widoczne małe bloczki pikseli), większe rozmazanie szczegółów czy ich nieznaczny zanik
+- transmisja danych po kompresji: synchroniczna jest prawie 2-krotnie dłuższa od asynchronicznej nadając ten sam poziom błędu,
+- czasy: spadek dla synch zmniejsza się wraz z nadanym quality (nieliniowo, zaczynając od prawie 30sek, do 3sek różnicy), podobnie dla asynch (nieliniowo, zaczynając od 14sek, do 1.5sek różnicy)
+- MSE spora różnica, natomiast error SSIM: spadek z 1.0 do 0.8297 (spadek jakości o niecałe 20%)
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+RESULTS:
+
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "original_480p_image_save", "transmission": "synch", "seq_bytes": 0, "t": "0:01:05.474216", "tr": "0:00:00.020000", "MSE": X, "SSIM": X}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG", "Experiment": "synch_res480p_compr_JPEG_qual_95", "transmission": "synch", "seq_bytes": 0, "t": "0:01:04.375044", "tr": "0:00:00.018856", "MSE": 0.0, "SSIM": 1.0}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG", "Experiment": "asynch_res480p_compr_JPEG_qual_95", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:33.907005", "tr": "0:00:00.019873", "MSE": 0.0, "SSIM": 1.0}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG", "Experiment": "synch_res480p_compr_JPEG_qual_85", "transmission": "synch", "seq_bytes": 0, "t": "0:00:36.559050", "tr": "0:00:00.011000", "MSE": 58.83529622395833, "SSIM": 0.9445057600671067}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG", "Experiment": "asynch_res480p_compr_JPEG_qual_85", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:19.303695", "tr": "0:00:00.011998", "MSE": 58.83529622395833, "SSIM": 0.9445057600671067}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG", "Experiment": "synch_res480p_compr_JPEG_qual_75", "transmission": "synch", "seq_bytes": 0, "t": "0:00:27.185504", "tr": "0:00:00.011001", "MSE": 115.37490559895834, "SSIM": 0.9104547065447238}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG", "Experiment": "asynch_res480p_compr_JPEG_qual_75", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:14.213806", "tr": "0:00:00.010999", "MSE": 115.37490559895834, "SSIM": 0.9104547065447238}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG", "Experiment": "synch_res480p_compr_JPEG_qual_65", "transmission": "synch", "seq_bytes": 0, "t": "0:00:22.260487", "tr": "0:00:00.007997", "MSE": 167.06097330729168, "SSIM": 0.8870014094568563}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG", "Experiment": "asynch_res480p_compr_JPEG_qual_65", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:11.686115", "tr": "0:00:00.011001", "MSE": 167.06097330729168, "SSIM": 0.8870014094568563}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG", "Experiment": "synch_res480p_compr_JPEG_qual_55", "transmission": "synch", "seq_bytes": 0, "t": "0:00:18.846331", "tr": "0:00:00.007000", "MSE": 215.51015625, "SSIM": 0.8678929725024054}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG", "Experiment": "asynch_res480p_compr_JPEG_qual_55", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:09.956259", "tr": "0:00:00.008002", "MSE": 215.51015625, "SSIM": 0.8678929725024054}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG", "Experiment": "synch_res480p_compr_JPEG_qual_45", "transmission": "synch", "seq_bytes": 0, "t": "0:00:16.459806", "tr": "0:00:00.006998", "MSE": 261.5889615885417, "SSIM": 0.851407528555366}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG", "Experiment": "asynch_res480p_compr_JPEG_qual_45", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:08.709090", "tr": "0:00:00.007993", "MSE": 261.5889615885417, "SSIM": 0.851407528555366}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG", "Experiment": "synch_res480p_compr_JPEG_qual_35", "transmission": "synch", "seq_bytes": 0, "t": "0:00:13.865696", "tr": "0:00:00.008000", "MSE": 325.862099609375, "SSIM": 0.8297338780357142}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "JPEG", "Experiment": "asynch_res480p_compr_JPEG_qual_35", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:07.321098", "tr": "0:00:00.008000", "MSE": 325.862099609375, "SSIM": 0.8297338780357142}

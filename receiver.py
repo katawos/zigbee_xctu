@@ -62,43 +62,22 @@ def save_image(payload_list):
     global write_out_data
     global experiment
     global transmission
-    global sequence_bytes
     global comparison_image
     global original_image_name
     global method
     global diff_map
-    arr = []
-
     experiment_reconstruction_time_start = datetime.now() 
 
-    if (transmission == "synch"):
-        #flatten payload list by adding each element separately
-        for idx in range(len(payload_list)):
-            arr += payload_list[idx]
+    arr = []
+    #flatten payload list by adding each element separately
+    for idx in range(len(payload_list)):
+        arr += payload_list[idx]
 
-    elif(transmission == "asynch"):
-        prev_packet_num = -1
-        for payload in payload_list:
-            packet_num_list = payload[0][0:sequence_bytes]
-            # print(payload[0][0:sequence_bytes], end="")
-            byte_data = bytes(packet_num_list)
-            packet_num = int.from_bytes(byte_data, 'big')
-
-            diff = packet_num - prev_packet_num
-
-            for _ in range(0, diff - 1):
-                # fill with zeros all missing parts
-                arr += np.zeros(len(payload[0]) - sequence_bytes).tolist()
-
-            # add to arr rest of the payload
-            arr += payload[0][sequence_bytes:]
-
-            prev_packet_num = packet_num
-
+    # convert list to np array of bytes
     np_arr = np.array(arr, dtype = np.uint8)
-    # Shape takes (row, column) where row = y, column = x
 
     try:
+        #decode data accordingly
         if (method == "None"):
             image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
         elif (method == "JPEG"):
@@ -111,20 +90,23 @@ def save_image(payload_list):
         if (diff_map == "True"):
             image_2_name = original_image_name[:-6] + "_2.jpg"
 
+            #change the type of image and ssim_map to float for pixel-wise addition (and to prevent overflow)
+            #change range from <0,1> to <-1,1>, which is ssim range
             ssim_map = img_as_float(image) * 2 - 1
 
             image_2_after_map = img_as_float(cv2.imread(original_image_name)) + ssim_map
+            #normalize values to range <0,1> (to save image values as bytes)
             image_2_after_map = image_2_after_map - np.min(image_2_after_map)
             image_2_after_map = image_2_after_map / np.max(image_2_after_map)
-            # image_2_after_map = np.clip(image_2_after_map, 0, 1)
+            # image_2_after_map = np.clip(image_2_after_map, 0, 1) #not working properly, cuts values and does not normalize them
 
             # ENHANCEMENTS HERE OR BELOW
+            #convert and save in 8-bit unsigned integer format, range <0,255>
             image_2_after_map = img_as_ubyte(image_2_after_map)
+            # ENHANCEMENTS HERE OR ABOVE
             cv2.imwrite(f"diff_{experiment}_image_2_after_map.jpg", image_2_after_map)
 
             
-
-            # DECODE HERE IF METHOD IS USED FOR FASTER DATA TRANSFER
             experiment_reconstruction_time_end = datetime.now()
             diff_time = experiment_reconstruction_time_end - experiment_reconstruction_time_start
             if (image_2_name != ""):
@@ -140,7 +122,6 @@ def save_image(payload_list):
             else:    
                 write_out_data += f', "tr": "{diff_time}", "MSE": X, "SSIM": X' + "}\n"
         else:
-            # DECODE HERE IF METHOD IS USED FOR FASTER DATA TRANSFER
             experiment_reconstruction_time_end = datetime.now()
             diff_time = experiment_reconstruction_time_end - experiment_reconstruction_time_start
             if (original_image_name != ""):
@@ -161,12 +142,9 @@ def save_image(payload_list):
                 original_gray = cv2.cvtColor(originalImage, cv2.COLOR_BGR2GRAY)
                 img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
                 SSIM, diff = ssim(original_gray, img_gray, full=True)
-
-                # #diff image
-                # cv2.imshow("diff_image", diff)
-                # cv2.waitKey()
-                # Convert to allow for saving
-                cv2.imwrite(f"diff_image_{experiment}.jpg", diff)
+                
+                # # Convert to allow for saving
+                # cv2.imwrite(f"diff_image_{experiment}.jpg", diff)
 
                 write_out_data += f', "tr": "{diff_time}", "MSE": {MSE}, "SSIM": {SSIM}' + "}\n"
             else:    
@@ -203,7 +181,6 @@ def data_receive_callback(xbee_message):
     global experiment_transmission_time_end
     global write_out_data
     global transmission
-    global sequence_bytes
     global prev_packet_num
     global payload_size
     global comparison_image
@@ -221,12 +198,11 @@ def data_receive_callback(xbee_message):
         method = string_list[3]
         experiment = string_list[4]
         transmission = string_list[5]
-        sequence_bytes = int(string_list[6])
-        comparison_image = string_list[7]
-        diff_map = string_list[8]
+        comparison_image = string_list[6]
+        diff_map = string_list[7]
         if (comparison_image == "True"):
             original_image_name = ""
-        write_out_data += "{" + f'"X": {image_x}, "Y": {image_y}, "PayloadSize": {payload_size}, "Method": "{method}", "Experiment": "{experiment}", "transmission": "{transmission}", "seq_bytes": {sequence_bytes}'
+        write_out_data += "{" + f'"X": {image_x}, "Y": {image_y}, "PayloadSize": {payload_size}, "Method": "{method}", "Experiment": "{experiment}", "transmission": "{transmission}"'
         bool_start_gathering = True
         bool_get_params = False
         experiment_transmission_time_start = datetime.now()
@@ -243,7 +219,7 @@ def data_receive_callback(xbee_message):
         if (transmission == "synch"):
             payload_list.append(received_data) 
         elif (transmission == "asynch"):
-            payload_list.append([received_data])
+            payload_list.append(received_data)
         experiment_transmission_time_end = datetime.now()
 
     if (received_data == [115, 116, 97, 114, 116]): # START

@@ -1,0 +1,48 @@
+DIFF TEST - ROZDZIELCZOŚĆ 480p
+
+
+SYNCH: 
+car2 - car1 (więcej - mniej)
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "original_640x480_image_save_2", "transmission": "synch", "seq_bytes": 0, "t": "0:01:36.712393", "tr": "0:00:00.024998", "MSE": X, "SSIM": X}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "original_640x480_image_save_1", "transmission": "synch", "seq_bytes": 0, "t": "0:01:37.841611", "tr": "0:00:00.024998", "MSE": X, "SSIM": X}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res480p_diff-TEST", "transmission": "synch", "seq_bytes": 0, "t": "0:01:26.066192", "tr": "0:00:00.098518", "MSE": 1849.94837890625, "SSIM": 0.8869040750282473}
+
+
+car1 - car2 (mniej - więcej)
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "original_640x480_image_save_2", "transmission": "synch", "seq_bytes": 0, "t": "0:01:40.485249", "tr": "0:00:00.025020", "MSE": X, "SSIM": X}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "original_640x480_image_save_1", "transmission": "synch", "seq_bytes": 0, "t": "0:01:36.682248", "tr": "0:00:00.021997", "MSE": X, "SSIM": X}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res480p_diff-TEST", "transmission": "synch", "seq_bytes": 0, "t": "0:01:25.460568", "tr": "0:00:00.079998", "MSE": 22420.040237630208, "SSIM": -0.2643017850229802}
+
+----------------------------------------
+ASYNCH:
+car2 - car1 (więcej - mniej)
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "original_640x480_image_save_2", "transmission": "synch", "seq_bytes": 0, "t": "0:01:37.212698", "tr": "0:00:00.027000", "MSE": X, "SSIM": X}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "original_640x480_image_save_1", "transmission": "synch", "seq_bytes": 0, "t": "0:01:37.147452", "tr": "0:00:00.023002", "MSE": X, "SSIM": X}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res480p_diff-TEST", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:45.104173", "tr": "0:00:00.113020", "MSE": 1849.94837890625, "SSIM": 0.8869040750282473}
+
+
+car1 - car2 (mniej - więcej)
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "original_640x480_image_save_2", "transmission": "synch", "seq_bytes": 0, "t": "0:01:36.174908", "tr": "0:00:00.022011", "MSE": X, "SSIM": X}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "original_640x480_image_save_1", "transmission": "synch", "seq_bytes": 0, "t": "0:01:36.794112", "tr": "0:00:00.024022", "MSE": X, "SSIM": X}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res480p_diff-TEST", "transmission": "asynch", "seq_bytes": 2, "t": "0:00:44.112469", "tr": "0:00:00.085999", "MSE": 22420.040237630208, "SSIM": -0.2643017850229802}
+
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+WNIOSKI:
+
+car2 - car1 (więcej - mniej)
+- pozostaje auto
+- słabsza głębia kolorów
+- czasy: synch 1:26, asynch 00:45sek
+- kompresja a czas: dla synch różnica ok. 10sek, dla asynch różnica 52sek
+- rozmiar obrazu asynch: 208KB (oryginał car2 230KB, kompresja -22KB)
+- SSIM: na poziomie 0.8869 (= dobrze)
+
+
+car1 - car2 (mniej - więcej)
+- widać usunięte resztki auta
+- gorsza jakość obrazu
+- słabsza głębia kolorów
+- czasy: synch 1:25, asynch 00:44sek
+- kompresja a czas: dla synch różnica ok. 15sek, dla asynch różnica 52sek
+- rozmiar obrazu asynch: 208KB (oryginał car1 231KB, kompresja -23KB)
+- SSIM: na poziomie -0.264 (= niedobrze, za duża różnica?)

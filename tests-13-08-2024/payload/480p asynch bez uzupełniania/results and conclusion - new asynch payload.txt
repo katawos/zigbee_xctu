@@ -1,0 +1,31 @@
+POPRAWIONY ASYNCH (bez sekwencyjności i uzupełniania zer)
+
+PAYLOAD 40-105
+
+
+_____________________________________________________________________________________________________________________________________________________________________________________________________________________________
+WNIOSKI:
+- dla payload 40-80 bez znaczących zmian w czasie czy jakości
+- powyżej po prostu inny rodzaj błędu
+
+_____________________________________________________________________________________________________________________________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________________________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+RESULTS:
+
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "original_480p_image_save", "transmission": "synch", "t": "0:01:04.753609", "tr": "0:00:00.018001", "MSE": X, "SSIM": X}
+{"X": 640, "Y": 480, "PayloadSize": 40, "Method": "None", "Experiment": "asynch_res480p_payload_40", "transmission": "asynch", "t": "0:01:07.976962", "tr": "0:00:00.006004", "MSE": 35150.21744140625, "SSIM": 0.02109895236369557}
+{"X": 640, "Y": 480, "PayloadSize": 45, "Method": "None", "Experiment": "asynch_res480p_payload_45", "transmission": "asynch", "t": "0:00:58.809237", "tr": "0:00:00.017997", "MSE": 0.7266015625, "SSIM": 0.9997797754932035}
+{"X": 640, "Y": 480, "PayloadSize": 50, "Method": "None", "Experiment": "asynch_res480p_payload_50", "transmission": "asynch", "t": "0:00:52.915131", "tr": "0:00:00.019000", "MSE": 0.7266015625, "SSIM": 0.9997797754932035}
+{"X": 640, "Y": 480, "PayloadSize": 55, "Method": "None", "Experiment": "asynch_res480p_payload_55", "transmission": "asynch", "t": "0:00:48.062201", "tr": "0:00:00.018134", "MSE": 0.7266015625, "SSIM": 0.9997797754932035}
+{"X": 640, "Y": 480, "PayloadSize": 60, "Method": "None", "Experiment": "asynch_res480p_payload_60", "transmission": "asynch", "t": "0:00:44.039750", "tr": "0:00:00.017003", "MSE": 0.7266015625, "SSIM": 0.9997797754932035}
+{"X": 640, "Y": 480, "PayloadSize": 65, "Method": "None", "Experiment": "asynch_res480p_payload_65", "transmission": "asynch", "t": "0:00:40.315658", "tr": "0:00:00.017999", "MSE": 0.7266015625, "SSIM": 0.9997797754932035}
+{"X": 640, "Y": 480, "PayloadSize": 70, "Method": "None", "Experiment": "asynch_res480p_payload_70", "transmission": "asynch", "t": "0:00:37.809009", "tr": "0:00:00.020007", "MSE": 0.7266015625, "SSIM": 0.9997797754932035}
+{"X": 640, "Y": 480, "PayloadSize": 75, "Method": "None", "Experiment": "asynch_res480p_payload_75", "transmission": "asynch", "t": "0:00:35.274408", "tr": "0:00:00.017005", "MSE": 0.7266015625, "SSIM": 0.9997797754932035}
+{"X": 640, "Y": 480, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res480p_payload_80", "transmission": "asynch", "t": "0:00:33.047302", "tr": "0:00:00.016995", "MSE": 1600.6847721354168, "SSIM": 0.8460731044327461}
+{"X": 640, "Y": 480, "PayloadSize": 85, "Method": "None", "Experiment": "asynch_res480p_payload_85", "transmission": "asynch", "t": "0:00:31.440951", "tr": "0:00:00.005993", "MSE": 32353.049241536457, "SSIM": 0.02078884544515626}
+{"X": 640, "Y": 480, "PayloadSize": 90, "Method": "None", "Experiment": "asynch_res480p_payload_90", "transmission": "asynch", "t": "0:00:29.827119", "tr": "0:00:00.007003", "MSE": 34755.837278645835, "SSIM": 0.016594953195147373}
+{"X": 640, "Y": 480, "PayloadSize": 95, "Method": "None", "Experiment": "asynch_res480p_payload_95", "transmission": "asynch", "t": "0:00:28.029354", "tr": "0:00:00.012986", "MSE": 22568.24671549479, "SSIM": 0.2887603235899451}
+{"X": 640, "Y": 480, "PayloadSize": 100, "Method": "None", "Experiment": "asynch_res480p_payload_100", "transmission": "asynch", "t": "0:00:26.583316", "tr": "0:00:00.011000", "MSE": 32901.90051106771, "SSIM": 0.026473001710469835}
+{"X": 640, "Y": 480, "PayloadSize": 105, "Method": "None", "Experiment": "asynch_res480p_payload_105", "transmission": "asynch", "t": "0:00:25.749699", "tr": "0:00:00.010002", "MSE": 26126.909114583334, "SSIM": 0.25637929597529113}
