@@ -243,8 +243,8 @@ def run(img_name, image_x, image_y, payload_size, experiment, method = None, qua
 
 
 def run_diff(image_x, image_y, payload_size, experiment, method = None, quality = None, transmission = "synch", transmission_sleep = 0.014, comparison_image = False, diff_map = False):
-    img1_name_first_frame = "test-1-car.jpg"
-    img2_name_second_frame = "test-2-car.jpg"
+    img1_name_first_frame = "goose_1.jpg"
+    img2_name_second_frame = "goose_2.jpg"
     
     # img2 - img1 => car2 - car1
     img1 = loadImage(img_name = img1_name_first_frame)

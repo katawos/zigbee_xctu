@@ -1,0 +1,9 @@
+diff images - hist - close - lowest power
+
+RESULTS:
+{"X": 320, "Y": 240, "PayloadSize": 84, "Method": "None", "Experiment": "original_320x240_image_save_2", "transmission": "synch", "t": "0:00:26.398531", "tr": "0:00:00.006000", "MSE": X, "SSIM": X}
+{"X": 320, "Y": 240, "PayloadSize": 84, "Method": "None", "Experiment": "original_320x240_image_save_1", "transmission": "synch", "t": "0:00:26.489615", "tr": "0:00:00.005996", "MSE": X, "SSIM": X}
+{"X": 320, "Y": 240, "PayloadSize": 84, "Method": "None", "Experiment": "asynch_res240p_diff-TEST", "transmission": "asynch", "t": "0:00:11.591377", "tr": "0:00:00.031001", "MSE": 634.3547265625, "SSIM": 0.9584425200290825}
+{"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "None", "Experiment": "original_1920x1080_image_save_2", "transmission": "synch", "t": "0:08:44.987015", "tr": "0:00:00.182998", "MSE": X, "SSIM": X}
+{"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "None", "Experiment": "original_1920x1080_image_save_1", "transmission": "synch", "t": "0:09:03.743949", "tr": "0:00:00.165630", "MSE": X, "SSIM": X}
+{"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "None", "Experiment": "asynch_res1080p_diff-TEST", "transmission": "asynch", "t": "0:03:53.507425", "tr": "0:00:00.777998", "MSE": 12343.23122974537, "SSIM": 0.48416634698374544}
