@@ -98,13 +98,28 @@ def save_image(payload_list):
             #normalize values to range <0,1> (to save image values as bytes)
             image_2_after_map = image_2_after_map - np.min(image_2_after_map)
             image_2_after_map = image_2_after_map / np.max(image_2_after_map)
-            # image_2_after_map = np.clip(image_2_after_map, 0, 1) #not working properly, cuts values and does not normalize them
 
             # ENHANCEMENTS HERE OR BELOW
             #convert and save in 8-bit unsigned integer format, range <0,255>
             image_2_after_map = img_as_ubyte(image_2_after_map)
             # ENHANCEMENTS HERE OR ABOVE
             cv2.imwrite(f"diff_{experiment}_image_2_after_map.jpg", image_2_after_map)
+
+            #CLAHE - adaptive histogram equalization, additional contrast limiting
+            #img = cv2.imread(image_2_after_map, cv2.IMREAD_GRAYSCALE)
+            #assert img is not None, "file could not be read, check with os.path.exists()"
+            
+            # create a CLAHE object (Arguments are optional).
+            # https://stackoverflow.com/questions/25008458/how-to-apply-clahe-on-rgb-color-images
+            lab = cv2.cvtColor(image_2_after_map, cv2.COLOR_BGR2LAB)
+
+            clahe = cv2.createCLAHE(clipLimit=2.0,tileGridSize=(2,2))
+
+            lab[:,:,0] = clahe.apply(lab[:,:,0])
+
+            image_2_after_map = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
+            
+            cv2.imwrite(f"diff_{experiment}_image_2_after_map_ssim_CLAHE.jpg", image_2_after_map)
 
             
             experiment_reconstruction_time_end = datetime.now()
@@ -113,6 +128,7 @@ def save_image(payload_list):
                 image_2 = cv2.imread(image_2_name)
                 MSE = np.sum((image_2.astype("float") - image_2_after_map.astype("float")) ** 2) 
                 MSE /= float(image_2.shape[0] * image_2_after_map.shape[1])
+
                 img_2_gray = cv2.cvtColor(image_2, cv2.COLOR_BGR2GRAY)
                 img_2_after_map_gray = cv2.cvtColor(image_2_after_map, cv2.COLOR_BGR2GRAY)
                 SSIM, diff = ssim(img_2_gray, img_2_after_map_gray, full=True)
@@ -126,10 +142,10 @@ def save_image(payload_list):
             diff_time = experiment_reconstruction_time_end - experiment_reconstruction_time_start
             if (original_image_name != ""):
                 originalImage = cv2.imread(original_image_name)
-                # MSE - Mean Squared Error (for absolute diff between pixel values)
-                #converts to float (proper arithmetic operations), squared differences and sum of them
+                # MSE - Mean Squared Error
+                #converts to float (proper arithmetic operations)
                 MSE = np.sum((originalImage.astype("float") - image.astype("float")) ** 2) 
-                #normalize by number of pixels - divide by (rows0 * columns1)
+                #normalize
                 MSE /= float(originalImage.shape[0] * image.shape[1])
 
                 #READY FUNCTION, TO BE CHANGED
@@ -137,14 +153,10 @@ def save_image(payload_list):
                 #image = img_as_float(image)
                 #MSE = mse(originalImage, image)
                 
-                # SSIM - Structural Similarity Index Measure (changes in structural information, contrast)
-                #modify images to grayscale
+                # SSIM - Structural Similarity Index Measure
                 original_gray = cv2.cvtColor(originalImage, cv2.COLOR_BGR2GRAY)
                 img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
                 SSIM, diff = ssim(original_gray, img_gray, full=True)
-                
-                # # Convert to allow for saving
-                # cv2.imwrite(f"diff_image_{experiment}.jpg", diff)
 
                 write_out_data += f', "tr": "{diff_time}", "MSE": {MSE}, "SSIM": {SSIM}' + "}\n"
             else:    
@@ -202,6 +214,7 @@ def data_receive_callback(xbee_message):
         diff_map = string_list[7]
         if (comparison_image == "True"):
             original_image_name = ""
+        
         write_out_data += "{" + f'"X": {image_x}, "Y": {image_y}, "PayloadSize": {payload_size}, "Method": "{method}", "Experiment": "{experiment}", "transmission": "{transmission}"'
         bool_start_gathering = True
         bool_get_params = False
@@ -216,10 +229,7 @@ def data_receive_callback(xbee_message):
         save_image(payload_list)
     
     if (bool_start_gathering == True):
-        if (transmission == "synch"):
-            payload_list.append(received_data) 
-        elif (transmission == "asynch"):
-            payload_list.append(received_data)
+        payload_list.append(received_data)
         experiment_transmission_time_end = datetime.now()
 
     if (received_data == [115, 116, 97, 114, 116]): # START
@@ -242,7 +252,7 @@ def run():
                 device.open(force_settings=True)
                 print("Connected to device")
                 print(device.get_parameter("TO"))
-                device.set_parameter("TO", b"\x00")
+                device.set_parameter("TO", b"\x01")
                 print(device.get_parameter("TO"))
                 break
             except:

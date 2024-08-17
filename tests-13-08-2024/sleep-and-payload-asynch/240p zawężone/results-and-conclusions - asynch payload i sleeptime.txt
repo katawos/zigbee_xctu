@@ -1,0 +1,77 @@
+TESTY WYKONYWANE DLA PARAMETRU TO = 0 (z retransmisjami), DLA ROZDZIELCZOŚCI 240p
+
+PAYLOAD 70-84, co 2
+SLEEP TIME 12-18ms, co 1
+ASYNCH
+240p
+
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+WNIOSKI:
+
+- jakość: dla 0.012 i 0.013 jakość obrazu mocno zniekształcona (bloki pikseli i kolorów), inne kolory itp, powyżej w porządku
+- czasy transmisji : 
+	- dla czasów 0.012 oraz 0.013 czasy transmisji nie brane pod uwagę ze względu na jakość obrazów
+	- dla czasu 0.014 => payload=84 daje namniejszy czas transmisji (asynch spadek z 00:11:06 do 00:09.03)
+	- dla 0.015 => dla payload=84 najmniejszy czas, spadek z 00:11.15 do 00:09.36
+	- dla 0.016 => najmniejszy dla payload=84, spadek z 00:11.85 do 00:09.91
+	- dla 0.017 => najmniejszy dla payload=84, spadek z 00:12.61 do 00:10.59
+
+PODSUMOWANIE:
+najlepsze parametry dla transmisji ASYNCH:
+- payload = 84
+- sleeptime = 0.014
+
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+RESULTS:
+
+{"X": 320, "Y": 240, "PayloadSize": 80, "Method": "None", "Experiment": "original_240p_image_save", "transmission": "synch", "t": "0:00:18.955480", "tr": "0:00:00.007000", "MSE": X, "SSIM": X}
+{"X": 320, "Y": 240, "PayloadSize": 70, "Method": "None", "Experiment": "asynch_res240p_payload_70_sleep_0.012", "transmission": "asynch", "t": "0:00:09.353378", "tr": "0:00:00.003999", "MSE": 34440.66944010417, "SSIM": 0.18559368022413195}
+{"X": 320, "Y": 240, "PayloadSize": 72, "Method": "None", "Experiment": "asynch_res240p_payload_72_sleep_0.012", "transmission": "asynch", "t": "0:00:09.182988", "tr": "0:00:00.006009", "MSE": 51699.46766927083, "SSIM": 0.16518855587359652}
+{"X": 320, "Y": 240, "PayloadSize": 74, "Method": "None", "Experiment": "asynch_res240p_payload_74_sleep_0.012", "transmission": "asynch", "t": "0:00:08.825843", "tr": "0:00:00.003001", "MSE": 29827.9119140625, "SSIM": 0.22395094257013953}
+{"X": 320, "Y": 240, "PayloadSize": 76, "Method": "None", "Experiment": "asynch_res240p_payload_76_sleep_0.012", "transmission": "asynch", "t": "0:00:08.674776", "tr": "0:00:00.004000", "MSE": 42667.050078125, "SSIM": 0.18998283642503644}
+{"X": 320, "Y": 240, "PayloadSize": 78, "Method": "None", "Experiment": "asynch_res240p_payload_78_sleep_0.012", "transmission": "asynch", "t": "0:00:08.320363", "tr": "0:00:00.004713", "MSE": 33731.66850260417, "SSIM": 0.19452186561958568}
+{"X": 320, "Y": 240, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res240p_payload_80_sleep_0.012", "transmission": "asynch", "t": "0:00:08.052666", "tr": "0:00:00.003999", "MSE": 35191.23329427083, "SSIM": 0.12573425056502582}
+{"X": 320, "Y": 240, "PayloadSize": 82, "Method": "None", "Experiment": "asynch_res240p_payload_82_sleep_0.012", "transmission": "asynch", "t": "0:00:07.933733", "tr": "0:00:00.005998", "MSE": 25769.040286458334, "SSIM": 0.1898791692491419}
+{"X": 320, "Y": 240, "PayloadSize": 70, "Method": "None", "Experiment": "asynch_res240p_payload_70_sleep_0.013", "transmission": "asynch", "t": "0:00:09.957296", "tr": "0:00:00.008000", "MSE": 10217.4096875, "SSIM": 0.44999462639425547}
+{"X": 320, "Y": 240, "PayloadSize": 72, "Method": "None", "Experiment": "asynch_res240p_payload_72_sleep_0.013", "transmission": "asynch", "t": "0:00:09.812402", "tr": "0:00:00.003999", "MSE": 9735.2803125, "SSIM": 0.45946487861233354}
+{"X": 320, "Y": 240, "PayloadSize": 74, "Method": "None", "Experiment": "asynch_res240p_payload_74_sleep_0.013", "transmission": "asynch", "t": "0:00:09.553102", "tr": "0:00:00.004001", "MSE": 22586.3475, "SSIM": 0.37367264745956236}
+{"X": 320, "Y": 240, "PayloadSize": 76, "Method": "None", "Experiment": "asynch_res240p_payload_76_sleep_0.013", "transmission": "asynch", "t": "0:00:09.279980", "tr": "0:00:00.004000", "MSE": 46873.28635416667, "SSIM": 0.3034240881928884}
+{"X": 320, "Y": 240, "PayloadSize": 78, "Method": "None", "Experiment": "asynch_res240p_payload_78_sleep_0.013", "transmission": "asynch", "t": "0:00:09.125214", "tr": "0:00:00.004000", "MSE": 17243.596888020835, "SSIM": 0.330251744098394}
+{"X": 320, "Y": 240, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res240p_payload_80_sleep_0.013", "transmission": "asynch", "t": "0:00:08.902062", "tr": "0:00:00.004000", "MSE": 25503.7183203125, "SSIM": 0.31750344332307084}
+{"X": 320, "Y": 240, "PayloadSize": 82, "Method": "None", "Experiment": "asynch_res240p_payload_82_sleep_0.013", "transmission": "asynch", "t": "0:00:08.732836", "tr": "0:00:00.004000", "MSE": 49272.72, "SSIM": 0.26894377379213524}
+{"X": 320, "Y": 240, "PayloadSize": 70, "Method": "None", "Experiment": "asynch_res240p_payload_70_sleep_0.014", "transmission": "asynch", "t": "0:00:11.061010", "tr": "0:00:00.005994", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 72, "Method": "None", "Experiment": "asynch_res240p_payload_72_sleep_0.014", "transmission": "asynch", "t": "0:00:10.715929", "tr": "0:00:00.004000", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 74, "Method": "None", "Experiment": "asynch_res240p_payload_74_sleep_0.014", "transmission": "asynch", "t": "0:00:10.513401", "tr": "0:00:00.004000", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 76, "Method": "None", "Experiment": "asynch_res240p_payload_76_sleep_0.014", "transmission": "asynch", "t": "0:00:10.190601", "tr": "0:00:00.003818", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 78, "Method": "None", "Experiment": "asynch_res240p_payload_78_sleep_0.014", "transmission": "asynch", "t": "0:00:09.828799", "tr": "0:00:00.003999", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res240p_payload_80_sleep_0.014", "transmission": "asynch", "t": "0:00:09.713688", "tr": "0:00:00.005003", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 82, "Method": "None", "Experiment": "asynch_res240p_payload_82_sleep_0.014", "transmission": "asynch", "t": "0:00:09.545926", "tr": "0:00:00.003999", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 70, "Method": "None", "Experiment": "asynch_res240p_payload_70_sleep_0.015", "transmission": "asynch", "t": "0:00:11.150596", "tr": "0:00:00.004998", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 72, "Method": "None", "Experiment": "asynch_res240p_payload_72_sleep_0.015", "transmission": "asynch", "t": "0:00:10.892481", "tr": "0:00:00.004000", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 74, "Method": "None", "Experiment": "asynch_res240p_payload_74_sleep_0.015", "transmission": "asynch", "t": "0:00:10.577846", "tr": "0:00:00.006001", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 76, "Method": "None", "Experiment": "asynch_res240p_payload_76_sleep_0.015", "transmission": "asynch", "t": "0:00:10.325878", "tr": "0:00:00.006000", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 78, "Method": "None", "Experiment": "asynch_res240p_payload_78_sleep_0.015", "transmission": "asynch", "t": "0:00:10.054951", "tr": "0:00:00.004000", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res240p_payload_80_sleep_0.015", "transmission": "asynch", "t": "0:00:09.843689", "tr": "0:00:00.006998", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 82, "Method": "None", "Experiment": "asynch_res240p_payload_82_sleep_0.015", "transmission": "asynch", "t": "0:00:09.576563", "tr": "0:00:00.003993", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 70, "Method": "None", "Experiment": "asynch_res240p_payload_70_sleep_0.016", "transmission": "asynch", "t": "0:00:11.855578", "tr": "0:00:00.004000", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 72, "Method": "None", "Experiment": "asynch_res240p_payload_72_sleep_0.016", "transmission": "asynch", "t": "0:00:11.545973", "tr": "0:00:00.004004", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 74, "Method": "None", "Experiment": "asynch_res240p_payload_74_sleep_0.016", "transmission": "asynch", "t": "0:00:11.286096", "tr": "0:00:00.004999", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 76, "Method": "None", "Experiment": "asynch_res240p_payload_76_sleep_0.016", "transmission": "asynch", "t": "0:00:10.883897", "tr": "0:00:00.005001", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 78, "Method": "None", "Experiment": "asynch_res240p_payload_78_sleep_0.016", "transmission": "asynch", "t": "0:00:10.698397", "tr": "0:00:00.004016", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res240p_payload_80_sleep_0.016", "transmission": "asynch", "t": "0:00:10.461778", "tr": "0:00:00.004002", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 82, "Method": "None", "Experiment": "asynch_res240p_payload_82_sleep_0.016", "transmission": "asynch", "t": "0:00:10.192629", "tr": "0:00:00.005227", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 70, "Method": "None", "Experiment": "asynch_res240p_payload_70_sleep_0.017", "transmission": "asynch", "t": "0:00:12.611391", "tr": "0:00:00.003999", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 72, "Method": "None", "Experiment": "asynch_res240p_payload_72_sleep_0.017", "transmission": "asynch", "t": "0:00:12.208658", "tr": "0:00:00.004999", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 74, "Method": "None", "Experiment": "asynch_res240p_payload_74_sleep_0.017", "transmission": "asynch", "t": "0:00:11.959009", "tr": "0:00:00.004001", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 76, "Method": "None", "Experiment": "asynch_res240p_payload_76_sleep_0.017", "transmission": "asynch", "t": "0:00:11.600971", "tr": "0:00:00.007002", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 78, "Method": "None", "Experiment": "asynch_res240p_payload_78_sleep_0.017", "transmission": "asynch", "t": "0:00:11.301987", "tr": "0:00:00.005002", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 80, "Method": "None", "Experiment": "asynch_res240p_payload_80_sleep_0.017", "transmission": "asynch", "t": "0:00:10.976533", "tr": "0:00:00.004000", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 82, "Method": "None", "Experiment": "asynch_res240p_payload_82_sleep_0.017", "transmission": "asynch", "t": "0:00:10.790859", "tr": "0:00:00.004000", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 84, "Method": "None", "Experiment": "asynch_res240p_payload_84_sleep_0.012", "transmission": "asynch", "t": "0:00:07.714100", "tr": "0:00:00.002999", "MSE": 25647.917786458333, "SSIM": 0.26219403187992407}
+{"X": 320, "Y": 240, "PayloadSize": 84, "Method": "None", "Experiment": "asynch_res240p_payload_84_sleep_0.013", "transmission": "asynch", "t": "0:00:08.433972", "tr": "0:00:00.004000", "MSE": 13509.8611328125, "SSIM": 0.3198067633636166}
+{"X": 320, "Y": 240, "PayloadSize": 84, "Method": "None", "Experiment": "asynch_res240p_payload_84_sleep_0.014", "transmission": "asynch", "t": "0:00:09.036051", "tr": "0:00:00.004999", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 84, "Method": "None", "Experiment": "asynch_res240p_payload_84_sleep_0.015", "transmission": "asynch", "t": "0:00:09.361794", "tr": "0:00:00.003999", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 84, "Method": "None", "Experiment": "asynch_res240p_payload_84_sleep_0.016", "transmission": "asynch", "t": "0:00:09.912438", "tr": "0:00:00.003997", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 84, "Method": "None", "Experiment": "asynch_res240p_payload_84_sleep_0.017", "transmission": "asynch", "t": "0:00:10.593426", "tr": "0:00:00.005001", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}

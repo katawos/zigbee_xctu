@@ -1,0 +1,26 @@
+720p
+JPEG compression
+payload size to test parameter TO=00, with additional index increase at Exception
+
+TYLKO DLA SYNCH!
+______________________________________________________________________________________________________________________________________________________________________________
+
+WNIOSKI:
+
+- przy odległości 1m nie ma żadnych zakłóceń, więc wyniki są takie same (nieznacznie lepszy czas przez poprawę parametrów)
+- wręcz minimalnie dłuższe czasy transmisji w przypadku bez retransmisji (TO=01) aniżeli z (TO=00)
+
+______________________________________________________________________________________________________________________________________________________________________________
+______________________________________________________________________________________________________________________________________________________________________________
+______________________________________________________________________________________________________________________________________________________________________________
+
+RESULTS:
+
+{"X": 1280, "Y": 720, "PayloadSize": 84, "Method": "None", "Experiment": "original_720p_image_save", "transmission": "synch", "t": "0:02:37.298878", "tr": "0:00:00.050000", "MSE": X, "SSIM": X}
+{"X": 1280, "Y": 720, "PayloadSize": 84, "Method": "JPEG", "Experiment": "synch_res720p_compr_JPEG_qual_95", "transmission": "synch", "t": "0:02:37.398062", "tr": "0:00:00.049000", "MSE": 0.0, "SSIM": 1.0}
+{"X": 1280, "Y": 720, "PayloadSize": 84, "Method": "JPEG", "Experiment": "synch_res720p_compr_JPEG_qual_85", "transmission": "synch", "t": "0:01:26.472548", "tr": "0:00:00.034000", "MSE": 46.04247395833333, "SSIM": 0.9443353978675958}
+{"X": 1280, "Y": 720, "PayloadSize": 84, "Method": "JPEG", "Experiment": "synch_res720p_compr_JPEG_qual_75", "transmission": "synch", "t": "0:01:03.113741", "tr": "0:00:00.026001", "MSE": 81.451396484375, "SSIM": 0.9146498058876288}
+{"X": 1280, "Y": 720, "PayloadSize": 84, "Method": "JPEG", "Experiment": "synch_res720p_compr_JPEG_qual_65", "transmission": "synch", "t": "0:00:51.044888", "tr": "0:00:00.022002", "MSE": 110.88639214409723, "SSIM": 0.8960284548577367}
+{"X": 1280, "Y": 720, "PayloadSize": 84, "Method": "JPEG", "Experiment": "synch_res720p_compr_JPEG_qual_55", "transmission": "synch", "t": "0:00:44.063516", "tr": "0:00:00.023003", "MSE": 138.60126085069444, "SSIM": 0.8810028386891187}
+{"X": 1280, "Y": 720, "PayloadSize": 84, "Method": "JPEG", "Experiment": "synch_res720p_compr_JPEG_qual_45", "transmission": "synch", "t": "0:00:38.134847", "tr": "0:00:00.025001", "MSE": 164.5464919704861, "SSIM": 0.8678164039283077}
+{"X": 1280, "Y": 720, "PayloadSize": 84, "Method": "JPEG", "Experiment": "synch_res720p_compr_JPEG_qual_35", "transmission": "synch", "t": "0:00:32.199117", "tr": "0:00:00.028002", "MSE": 200.49844618055556, "SSIM": 0.8506150828731339}
