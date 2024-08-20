@@ -50,7 +50,7 @@ original_image_name = ""
 method = None
 
 #output file
-file = open("16bitAddressingColor_receive_buffer.txt", "a+")
+file = open("receiveBuffer_FAR_API1_TO-0_APS_Tx-4.txt", "a+")
 write_out_data = ""
 
 def save_image(payload_list):
@@ -105,18 +105,14 @@ def save_image(payload_list):
             # ENHANCEMENTS HERE OR ABOVE
             cv2.imwrite(f"diff_{experiment}_image_2_after_map.jpg", image_2_after_map)
 
-            #CLAHE - adaptive histogram equalization, additional contrast limiting
-            #img = cv2.imread(image_2_after_map, cv2.IMREAD_GRAYSCALE)
-            #assert img is not None, "file could not be read, check with os.path.exists()"
-            
-            # create a CLAHE object (Arguments are optional).
+            #CLAHE - adaptive histogram equalization, additional contrast limiting          
+            # create a CLAHE object, conversion BGR -> LAB -> BGR
             # https://stackoverflow.com/questions/25008458/how-to-apply-clahe-on-rgb-color-images
             lab = cv2.cvtColor(image_2_after_map, cv2.COLOR_BGR2LAB)
-
+            #set the threshold limiting the contrast and tile size
             clahe = cv2.createCLAHE(clipLimit=2.0,tileGridSize=(2,2))
-
+            #0 to 'L' channel, 1 to 'a' channel, and 2 to 'b' channel
             lab[:,:,0] = clahe.apply(lab[:,:,0])
-
             image_2_after_map = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
             
             cv2.imwrite(f"diff_{experiment}_image_2_after_map_ssim_CLAHE.jpg", image_2_after_map)
@@ -252,7 +248,7 @@ def run():
                 device.open(force_settings=True)
                 print("Connected to device")
                 print(device.get_parameter("TO"))
-                device.set_parameter("TO", b"\x01")
+                device.set_parameter("TO", b"\x00")
                 print(device.get_parameter("TO"))
                 break
             except:

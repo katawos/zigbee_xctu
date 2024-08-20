@@ -1,0 +1,22 @@
+FAR - low power
+
+TO does not matter - no idx in Exception
+
+{"X": 320, "Y": 240, "PayloadSize": 84, "Method": "None", "Experiment": "original_240p_image_save", "transmission": "synch", "t": "0:00:24.970133", "tr": "0:00:00.005003", "MSE": X, "SSIM": X}
+{"X": 320, "Y": 240, "PayloadSize": 84, "Method": "None", "Experiment": "synch_resolution_240p_far", "transmission": "synch", "t": "0:00:28.986993", "tr": "0:00:00.004664", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 84, "Method": "None", "Experiment": "asynch_resolution_240p_far", "transmission": "asynch", "t": "0:00:09.957983", "tr": "0:00:00.008521", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+
+
+TO = 0x00, idx++ at Exception
+
+{"X": 320, "Y": 240, "PayloadSize": 84, "Method": "None", "Experiment": "original_240p_image_save", "transmission": "synch", "t": "0:00:23.961669", "tr": "0:00:00.005004", "MSE": X, "SSIM": X}
+{"X": 320, "Y": 240, "PayloadSize": 84, "Method": "None", "Experiment": "synch_resolution_240p_far", "transmission": "synch", "t": "0:00:29.077193", "tr": "0:00:00.003996", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 84, "Method": "None", "Experiment": "asynch_resolution_240p_far", "transmission": "asynch", "t": "0:00:10.036426", "tr": "0:00:00.004001", "MSE": 15641.0731640625, "SSIM": 0.4047242589474469}
+
+
+TO = 0x01, idx++ at Exception
+
+{"X": 320, "Y": 240, "PayloadSize": 84, "Method": "None", "Experiment": "original_240p_image_save", "transmission": "synch", "t": "0:00:24.691793", "tr": "0:00:00.004002", "MSE": X, "SSIM": X}
+{"X": 320, "Y": 240, "PayloadSize": 84, "Method": "None", "Experiment": "synch_resolution_240p_far", "transmission": "synch", "t": "0:00:24.809018", "tr": "0:00:00.004001", "MSE": 1.1647526041666667, "SSIM": 0.9998372851706389}
+{"X": 320, "Y": 240, "PayloadSize": 84, "Method": "None", "Experiment": "asynch_resolution_240p_far", "transmission": "asynch", "t": "0:00:10.181011", "tr": "0:00:00.004002", "MSE": 35273.88403645833, "SSIM": 0.16210457139518633}
+

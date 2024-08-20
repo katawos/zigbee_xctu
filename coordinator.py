@@ -17,10 +17,10 @@ import time
 import sys
 import numpy as np
 import cv2
-import pandas as pd
-from PIL import Image
+#import pandas as pd
+#from PIL import Image
 import jpeg_ls
-from skimage import io, img_as_ubyte, img_as_float
+from skimage import img_as_ubyte, img_as_float
 
 
 
@@ -33,6 +33,20 @@ BAUD_RATE = 115200
 
 DATA_TO_SEND = "Hello XBee!"
 REMOTE_NODE_ID = "sensor" #REMOTE
+
+
+def setParameters(device):
+    #set command TO = 0 => MAC ACK and retries, TO = 1 => no MAC ACK, no retries
+    device.set_parameter("TO", b"\x00")
+    print(f"MAC ACK and retries, TO: {device.get_parameter('TO')}")
+
+    #set Tx Power Level => 0 - lowest, 1 - low, 2 - medium, 3 - high, 4 - highest
+    device.set_parameter("PL", b"\x04")
+    print(f"Tx Power Level: {device.get_parameter('PL')}")
+
+    #set API Mode => 1 - no escapes, 2 - escaped
+    device.set_parameter("AP", b"\x01")
+    print(f"API Mode: {device.get_parameter('AP')}")
 
 
 def compressJPEG(image_name, quality):
@@ -151,10 +165,8 @@ def XbeeSend(data_payloads, data_size, transmission = "synch", transmission_slee
             try:
                 device.open(force_settings=True)
                 print("Connected to device")
-                #set command TO = 0 => retries, TO = 1 => no retries
-                print(device.get_parameter("TO"))
-                device.set_parameter("TO", b"\x01")
-                print(device.get_parameter("TO"))
+                #set transmission parameters: TO, PL, AP
+                setParameters(device)
                 break
             except Exception as e:
                 print("Device is not connected .. resuming in 10 seconds")
@@ -193,13 +205,13 @@ def XbeeSend(data_payloads, data_size, transmission = "synch", transmission_slee
             try:
                 if (type(data_payloads[data_idx]) != str):  #check the type of particular element, if not string (e.g. "start")
                     if (transmission == "synch"):
-                        #send data Synchronously - wait for the packet response (ACK)
+                        #send data Synchronously - wait for the packet response (FrameID = 1, APS ACK)
                         device.send_data(remote_device, bytearray(data_payloads[data_idx])) 
                     elif (transmission == "asynch"):
                         if (firstAsynch == True):
                             time.sleep(transmission_sleep) 
                             firstAsynch = False
-                        #send data Asynchronously - do not wait for data response (NO ACK)
+                        #send data Asynchronously - do not wait for data response (FrameID = 0, no APS ACK)
                         device.send_data_async(remote_device, bytearray(data_payloads[data_idx]))
                         #time.sleep() slows down sending the packets to: reduce number of dropped packets, avoid collisions and help control data rate
                         time.sleep(transmission_sleep)
@@ -271,29 +283,32 @@ if __name__ == '__main__':
         "1080p": [1920, 1080]
     }
 
-    res = "1080p"                        #resolution
+    res = "480p"                 #resolution
     trans_type = ["synch", "asynch"]    #transmission type-like
     img_name = "test.jpg"               #test image name
     
 
-    #diff test: with compression method, its quality for async
+    # # diff test: with compression method, its quality for async
     # exper_name = trans_type[0] + f"_res{res}_diff-TEST"
     # #synch
     # run_diff(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment = exper_name, method = None, quality = None, transmission = trans_type[0], diff_map = True)
     #asynch
-    exper_name = trans_type[1] + f"_res{res}_diff-TEST"
-    run_diff(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment = exper_name, method = None, quality = None, transmission = trans_type[1], diff_map = True)
+    # exper_name = trans_type[1] + f"_res{res}_diffTest_ducks"
+    # run_diff(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment = exper_name, method = None, quality = None, transmission = trans_type[1], diff_map = True)
+    #asynch JPEG quality=35 diff images
+    # exper_name = trans_type[1] + f"_API2_res{res}_JPEG_diff-TEST-Close"
+    # run_diff(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment = exper_name, method = "JPEG", quality = 35, transmission = trans_type[1], diff_map = True)
 
 
-    # (1) Payload test
+    # # (1) Payload test
     # SendPerfectImage(img_name, res)
-    # for payload_bytes in range(70, 90, 2):
-        # #synch
-        # exper_name = trans_type[0] + f"_res{res}_payload_{payload_bytes}"
-        # run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = payload_bytes, experiment = exper_name, method = None, transmission = trans_type[0])
-        #asynch
-        # exper_name = trans_type[1] + f"_res{res}_payload_{payload_bytes}"
-        # run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = payload_bytes, experiment = exper_name, method = None, transmission = trans_type[1])
+    # for payload_bytes in range(70, 88, 2):
+    #     # #synch
+    #     # exper_name = trans_type[0] + f"_res{res}_payload_{payload_bytes}"
+    #     # run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = payload_bytes, experiment = exper_name, method = None, transmission = trans_type[0])
+    #     #asynch
+    #     exper_name = trans_type[1] + f"_res{res}_payload_{payload_bytes}"
+    #     run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = payload_bytes, experiment = exper_name, method = None, transmission = trans_type[1])
 
     
     # # (2) asynch transmission sleep test from 5 to 20 ms
@@ -303,14 +318,13 @@ if __name__ == '__main__':
     #     #asynch
     #     exper_name = trans_type[1] + f"_res{res}_sleep_{sleep_time}"
     #     run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment = exper_name, method = None, transmission = trans_type[1], transmission_sleep = sleep_time)
-    # ##     time.sleep(5)
 
     # # (3) Resolution test - not needed now
     # for key in resolutions.keys():  #go through each of resolutions names (key pairs)
     #     SendPerfectImage(img_name, key)
-    #     #synch
-    #     exper_name = trans_type[0] + f"_resolution_{key}"
-    #     run(img_name, image_x = resolutions[key][0], image_y = resolutions[key][1], payload_size = 84, experiment = exper_name, method = None, transmission = trans_type[0])
+    #     # #synch
+    #     # exper_name = trans_type[0] + f"_resolution_{key}"
+    #     # run(img_name, image_x = resolutions[key][0], image_y = resolutions[key][1], payload_size = 84, experiment = exper_name, method = None, transmission = trans_type[0])
     #     #asynch
     #     exper_name = trans_type[1] + f"_resolution_{key}"
     #     run(img_name, image_x = resolutions[key][0], image_y = resolutions[key][1], payload_size = 84, experiment = exper_name, method = None, transmission = trans_type[1], transmission_sleep=0.014)
@@ -320,7 +334,7 @@ if __name__ == '__main__':
     # SendPerfectImage(img_name, res)
     # for idx in range(12, 18):
     #     sleep_time = idx / 1000
-    #     for payload_bytes in range(84, 86, 2):
+    #     for payload_bytes in range(80, 86, 2):
     #         exper_name = trans_type[1] + f"_res{res}_payload_{payload_bytes}_sleep_{sleep_time}"
     #         run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = payload_bytes, experiment = exper_name, method = None, transmission = trans_type[1], transmission_sleep = sleep_time)
 
@@ -328,10 +342,11 @@ if __name__ == '__main__':
     # # (5) Compression methods
     # SendPerfectImage(img_name, res)
     # # JPEG - THE BEST COMPRESSION OF SIZE TO QUALITY OF IMAGE RATIO
+    # res ="480p"
     # for quality_ in range(95, 25, -10):
-    #     #synch
-    #     exper_name = trans_type[0] + f"_res{res}_compr_JPEG_qual_" + str(quality_)
-    #     run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment = exper_name, method = "JPEG", quality = quality_, transmission = trans_type[0])
+    #     # #synch
+    #     # exper_name = trans_type[0] + f"_res{res}_compr_JPEG_qual_" + str(quality_)
+    #     # run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment = exper_name, method = "JPEG", quality = quality_, transmission = trans_type[0])
     #     #asynch
     #     exper_name = trans_type[1] + f"_res{res}_compr_JPEG_qual_" + str(quality_)
     #     run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment = exper_name, method = "JPEG", quality = quality_, transmission = trans_type[1])
@@ -352,3 +367,14 @@ if __name__ == '__main__':
     #     #asynch
     #     exper_name = trans_type[1] + f"_res{res}_compr_JPEG-LS_qual_" + str(quality_)
     #     run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment = exper_name, method = "JPEG-LS", quality = quality_, transmission = trans_type[1])
+
+
+
+    #-------------------------------
+    # #quick transmission test
+    # SendPerfectImage(img_name, res)
+    # #asynch
+    # res = "240p"
+    # quality_ = 35
+    # exper_name = f"QUICK_" + trans_type[1] + f"_res{res}_compr_JPEG_qual_" + str(quality_)
+    # run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment = exper_name, method = "JPEG", quality = quality_, transmission = trans_type[1])

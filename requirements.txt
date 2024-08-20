@@ -6,6 +6,4 @@ pandas
 opencv-python
 scikit-image
 pyjpegls
-openpyxl
-pylibjpeg-openjpeg
-numpy-hilbert-curve
+scipy

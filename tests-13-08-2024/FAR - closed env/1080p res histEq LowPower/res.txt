@@ -1,0 +1,6 @@
+FAR - 1080p - low power - resolution only
+
+
+{"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "None", "Experiment": "original_1080p_image_save", "transmission": "synch", "t": "0:07:39.687555", "tr": "0:00:00.123538", "MSE": X, "SSIM": X}
+{"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "None", "Experiment": "synch_resolution_1080p_far", "transmission": "synch", "t": "0:07:34.407648", "tr": "0:00:00.107000", "MSE": 0.3283574459876543, "SSIM": 0.999709904358069}
+{"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "None", "Experiment": "asynch_resolution_1080p_far", "transmission": "asynch", "t": "0:02:54.993243", "tr": "0:00:00.098518", "MSE": 52417.7404697145, "SSIM": 0.29300560315015156}
