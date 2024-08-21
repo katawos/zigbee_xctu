@@ -50,7 +50,7 @@ original_image_name = ""
 method = None
 
 #output file
-file = open("receiveBuffer_FAR_API1_TO-0_APS_Tx-4.txt", "a+")
+file = open("receiveBuffer_FAR_API1_TO-1_APS_Tx-1.txt", "a+")
 write_out_data = ""
 
 def save_image(payload_list):
