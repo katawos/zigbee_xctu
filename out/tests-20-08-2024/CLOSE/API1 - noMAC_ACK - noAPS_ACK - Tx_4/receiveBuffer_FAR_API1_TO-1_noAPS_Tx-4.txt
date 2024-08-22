@@ -1,0 +1,49 @@
+DIFF 480p - Tx_1
+{"X": 640, "Y": 480, "PayloadSize": 84, "Method": "None", "Experiment": "original_640x480_image_save_2", "transmission": "synch", "t": "0:01:22.134972", "tr": "0:00:00.022000", "MSE": X, "SSIM": X}
+{"X": 640, "Y": 480, "PayloadSize": 84, "Method": "None", "Experiment": "original_640x480_image_save_1", "transmission": "synch", "t": "0:01:18.418807", "tr": "0:00:00.025001", "MSE": X, "SSIM": X}
+{"X": 640, "Y": 480, "PayloadSize": 84, "Method": "None", "Experiment": "asynch_res480p_diffTest_ducks", "transmission": "asynch", "t": "0:00:16.230999", "tr": "0:00:00.510515", "MSE": 3598.319612630208, "SSIM": 0.7867907442120078}
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+DIFF 480p JPEG-35 - Tx_1
+{"X": 640, "Y": 480, "PayloadSize": 84, "Method": "None", "Experiment": "original_640x480_image_save_2", "transmission": "synch", "t": "0:01:15.031117", "tr": "0:00:00.037999", "MSE": X, "SSIM": X}
+{"X": 640, "Y": 480, "PayloadSize": 84, "Method": "None", "Experiment": "original_640x480_image_save_1", "transmission": "synch", "t": "0:01:15.247694", "tr": "0:00:00.019001", "MSE": X, "SSIM": X}
+{"X": 640, "Y": 480, "PayloadSize": 84, "Method": "JPEG", "Experiment": "asynch_res480p_diffTest_JPEG-35", "transmission": "asynch", "t": "0:00:01.816596", "tr": "0:00:00.196001", "MSE": 2900.5741634114584, "SSIM": 0.7823208645539631}
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+DIFF 480p JPEG-55 - Tx_1
+{"X": 640, "Y": 480, "PayloadSize": 84, "Method": "None", "Experiment": "original_640x480_image_save_2", "transmission": "synch", "t": "0:01:15.855710", "tr": "0:00:00.018999", "MSE": X, "SSIM": X}
+{"X": 640, "Y": 480, "PayloadSize": 84, "Method": "None", "Experiment": "original_640x480_image_save_1", "transmission": "synch", "t": "0:01:15.646481", "tr": "0:00:00.024999", "MSE": X, "SSIM": X}
+{"X": 640, "Y": 480, "PayloadSize": 84, "Method": "JPEG", "Experiment": "asynch_res480p_diffTest_JPEG-55", "transmission": "asynch", "t": "0:00:02.603659", "tr": "0:00:00.143004", "MSE": 3063.2777408854167, "SSIM": 0.7769194022826563}
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+JPEG compression 480p - Tx_1
+{"X": 640, "Y": 480, "PayloadSize": 84, "Method": "None", "Experiment": "original_480p_image_save", "transmission": "synch", "t": "0:01:16.607832", "tr": "0:00:00.021001", "MSE": X, "SSIM": X}
+{"X": 640, "Y": 480, "PayloadSize": 84, "Method": "JPEG", "Experiment": "asynch_res480p_compr_JPEG_qual_95", "transmission": "asynch", "t": "0:00:32.142164", "tr": "0:00:00.031999", "MSE": 0.0, "SSIM": 1.0}
+{"X": 640, "Y": 480, "PayloadSize": 84, "Method": "JPEG", "Experiment": "asynch_res480p_compr_JPEG_qual_85", "transmission": "asynch", "t": "0:00:18.367393", "tr": "0:00:00.014996", "MSE": 58.83529622395833, "SSIM": 0.9445057600671067}
+{"X": 640, "Y": 480, "PayloadSize": 84, "Method": "JPEG", "Experiment": "asynch_res480p_compr_JPEG_qual_75", "transmission": "asynch", "t": "0:00:13.505891", "tr": "0:00:00.008999", "MSE": 115.37490559895834, "SSIM": 0.9104547065447238}
+{"X": 640, "Y": 480, "PayloadSize": 84, "Method": "JPEG", "Experiment": "asynch_res480p_compr_JPEG_qual_65", "transmission": "asynch", "t": "0:00:11.725147", "tr": "0:00:00.021002", "MSE": 167.06097330729168, "SSIM": 0.8870014094568563}
+{"X": 640, "Y": 480, "PayloadSize": 84, "Method": "JPEG", "Experiment": "asynch_res480p_compr_JPEG_qual_55", "transmission": "asynch", "t": "0:00:09.530185", "tr": "0:00:00.010999", "MSE": 215.51015625, "SSIM": 0.8678929725024054}
+{"X": 640, "Y": 480, "PayloadSize": 84, "Method": "JPEG", "Experiment": "asynch_res480p_compr_JPEG_qual_45", "transmission": "asynch", "t": "0:00:08.321976", "tr": "0:00:00.015999", "MSE": 261.5889615885417, "SSIM": 0.851407528555366}
+{"X": 640, "Y": 480, "PayloadSize": 84, "Method": "JPEG", "Experiment": "asynch_res480p_compr_JPEG_qual_35", "transmission": "asynch", "t": "0:00:07.040422", "tr": "0:00:00.006998", "MSE": 325.862099609375, "SSIM": 0.8297338780357142}
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+DIFF 1080p - Tx_1
+{"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "None", "Experiment": "original_1920x1080_image_save_2", "transmission": "synch", "t": "0:05:34.838096", "tr": "0:00:00.122998", "MSE": X, "SSIM": X}
+{"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "None", "Experiment": "original_1920x1080_image_save_1", "transmission": "synch", "t": "0:05:56.981897", "tr": "0:00:00.126004", "MSE": X, "SSIM": X}
+{"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "None", "Experiment": "asynch_res1080p_diffTest_ducks", "transmission": "asynch", "t": "0:01:31.669330", "tr": "0:00:01.325037", "MSE": 3329.1005328896604, "SSIM": 0.8340169654747361}
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+DIFF 1080p JPEG-35 - Tx_1
+{"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "None", "Experiment": "original_1920x1080_image_save_2", "transmission": "synch", "t": "0:05:31.080743", "tr": "0:00:00.194005", "MSE": X, "SSIM": X}
+{"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "None", "Experiment": "original_1920x1080_image_save_1", "transmission": "synch", "t": "0:05:53.674205", "tr": "0:00:00.125999", "MSE": X, "SSIM": X}
+{"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "JPEG", "Experiment": "asynch_res1080p_diffTest_JPEG-35", "transmission": "asynch", "t": "0:00:14.004492", "tr": "0:00:01.171557", "MSE": 2948.961008391204, "SSIM": 0.7781698318287006}
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+DIFF 1080p JPEG-55 - Tx_1
+{"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "None", "Experiment": "original_1920x1080_image_save_2", "transmission": "synch", "t": "0:05:59.320877", "tr": "0:00:00.160513", "MSE": X, "SSIM": X}
+{"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "None", "Experiment": "original_1920x1080_image_save_1", "transmission": "synch", "t": "0:05:59.304352", "tr": "0:00:00.242050", "MSE": X, "SSIM": X}
+{"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "None", "Experiment": "original_1080p_image_save", "transmission": "synch", "tr": "0:00:01.175113", "MSE": 3428.5653202160493, "SSIM": 0.7783480252166851}
+, "t": "0:07:09.801558", "tr": "0:00:00.214031", "MSE": 21633.607268518517, "SSIM": 0.3409270425474354}
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+JPEG compression 1080p - Tx_1
+{"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "JPEG", "Experiment": "asynch_res1080p_compr_JPEG_qual_95", "transmission": "asynch", "t": "0:02:52.413680", "tr": "0:00:00.161004", "MSE": 0.007544849537037037, "SSIM": 0.9999826687754787}
+{"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "JPEG", "Experiment": "asynch_res1080p_compr_JPEG_qual_85", "transmission": "asynch", "t": "0:01:35.337018", "tr": "0:00:00.081999", "MSE": 31.759565489969138, "SSIM": 0.956532359597768}
+{"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "JPEG", "Experiment": "asynch_res1080p_compr_JPEG_qual_75", "transmission": "asynch", "t": "0:01:09.694538", "tr": "0:00:00.082038", "MSE": 54.555260898919755, "SSIM": 0.9311485098349581}
+{"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "JPEG", "Experiment": "asynch_res1080p_compr_JPEG_qual_65", "transmission": "asynch", "t": "0:00:57.623845", "tr": "0:00:00.066003", "MSE": 72.70258439429013, "SSIM": 0.9144120939741989}
+{"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "JPEG", "Experiment": "asynch_res1080p_compr_JPEG_qual_55", "transmission": "asynch", "t": "0:00:45.285862", "tr": "0:00:00.134001", "MSE": 16039.235568576389, "SSIM": 0.49295113500496013}
+{"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "JPEG", "Experiment": "asynch_res1080p_compr_JPEG_qual_45", "transmission": "asynch", "t": "0:00:38.731543", "tr": "0:00:00.059002", "MSE": 105.54021122685185, "SSIM": 0.8884945140051645}
+{"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "JPEG", "Experiment": "asynch_res1080p_compr_JPEG_qual_35", "transmission": "asynch", "t": "0:00:33.095624", "tr": "0:00:00.091002", "MSE": 127.63044077932099, "SSIM": 0.8725641616971921}

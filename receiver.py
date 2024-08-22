@@ -19,9 +19,12 @@ import sys
 import numpy as np
 import cv2
 from skimage.metrics import structural_similarity as ssim
+from skimage.metrics import peak_signal_noise_ratio as psnr
 from skimage import io, img_as_ubyte, img_as_float
 #from skimage.metrics import mse
 import jpeg_ls
+import os
+import shutil
 
 # TODO: Replace with the serial port where your local module is connected to.
 PORT = "COM4"
@@ -36,7 +39,7 @@ bool_get_params = False
 image_x = None
 image_y = None
 
-experiment = None
+experiment_sub_name = None
 experiment_transmission_time_start = None
 experiment_transmission_time_end = None
 experiment_reconstruction_time_start = None
@@ -46,12 +49,45 @@ sequence_bytes = 0
 prev_packet_num = -1
 payload_size = None
 comparison_image = False
+
 original_image_name = ""
+experiment_name = ""
+
 method = None
 
-#output file
-file = open("receiveBuffer_FAR_API1_TO-1_APS_Tx-1.txt", "a+")
+#output file    "receiveBuffer_CLOSE_API1_TO-1_APS_Tx-4.txt"
+if (not os.path.exists("out")):
+    os.mkdir("out")
+
+file = open("out//test.txt", "a+")
 write_out_data = ""
+
+def move_files():
+    global experiment_name
+    global file
+
+    print(f"End of experiment: {experiment_name}")
+
+    file.close()
+    extensions = [".jpg", ".txt"]
+
+    source_dir = os.getcwd()
+    out_folder_path = os.path.join(source_dir, "out")
+    out_folder_dest_path = os.path.join(out_folder_path, experiment_name)
+    os.mkdir(out_folder_dest_path)
+    # Loop through all files in the source directory
+
+    for filename in os.listdir(out_folder_path):
+        for extension in extensions:
+            # Check if the file has the specified extension
+            if filename.endswith(extension):
+                # Construct the full file path
+                file_path = os.path.join(out_folder_path, filename)
+                
+                # Move the file to the destination directory
+                shutil.move(file_path, out_folder_dest_path)
+
+    file = open("out//test.txt", "a+")
 
 def save_image(payload_list):
     global image_x
@@ -60,7 +96,6 @@ def save_image(payload_list):
     global experiment_reconstruction_time_end
     global file
     global write_out_data
-    global experiment
     global transmission
     global comparison_image
     global original_image_name
@@ -91,31 +126,36 @@ def save_image(payload_list):
             image_2_name = original_image_name[:-6] + "_2.jpg"
 
             #change the type of image and ssim_map to float for pixel-wise addition (and to prevent overflow)
-            #change range from <0,1> to <-1,1>, which is ssim range
-            ssim_map = img_as_float(image) * 2 - 1
+            #change 0 255 data to -255 +255 diff
+            cv2.imwrite(f"out//diff_{experiment_sub_name}_map.jpg", image)
+            ssim_map = np.int16(image) * 2 - 255
 
-            image_2_after_map = img_as_float(cv2.imread(original_image_name)) + ssim_map
-            #normalize values to range <0,1> (to save image values as bytes)
-            image_2_after_map = image_2_after_map - np.min(image_2_after_map)
-            image_2_after_map = image_2_after_map / np.max(image_2_after_map)
+            image_1_original = cv2.imread(original_image_name)
+            image_1_original = np.int16(image_1_original)
+            image_2_after_map = image_1_original + ssim_map
 
-            # ENHANCEMENTS HERE OR BELOW
-            #convert and save in 8-bit unsigned integer format, range <0,255>
-            image_2_after_map = img_as_ubyte(image_2_after_map)
+
+            # image_2_after_map = image_2_after_map - np.min(image_2_after_map)
+            # image_2_after_map = image_2_after_map / np.max(image_2_after_map) * 255
+
+            image_2_after_map = np.clip(image_2_after_map, 0, 255)
+            image_2_after_map = np.uint8(image_2_after_map)
+
+
             # ENHANCEMENTS HERE OR ABOVE
-            cv2.imwrite(f"diff_{experiment}_image_2_after_map.jpg", image_2_after_map)
+            cv2.imwrite(f"out//diff_{experiment_sub_name}_image_2_after_map.jpg", image_2_after_map)
 
             #CLAHE - adaptive histogram equalization, additional contrast limiting          
             # create a CLAHE object, conversion BGR -> LAB -> BGR
             # https://stackoverflow.com/questions/25008458/how-to-apply-clahe-on-rgb-color-images
-            lab = cv2.cvtColor(image_2_after_map, cv2.COLOR_BGR2LAB)
-            #set the threshold limiting the contrast and tile size
-            clahe = cv2.createCLAHE(clipLimit=2.0,tileGridSize=(2,2))
-            #0 to 'L' channel, 1 to 'a' channel, and 2 to 'b' channel
-            lab[:,:,0] = clahe.apply(lab[:,:,0])
-            image_2_after_map = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
+            # lab = cv2.cvtColor(image_2_after_map, cv2.COLOR_BGR2LAB)
+            # #set the threshold limiting the contrast and tile size
+            # clahe = cv2.createCLAHE(clipLimit=2.0,tileGridSize=(2,2))
+            # #0 to 'L' channel, 1 to 'a' channel, and 2 to 'b' channel
+            # lab[:,:,0] = clahe.apply(lab[:,:,0])
+            # image_2_after_map = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
             
-            cv2.imwrite(f"diff_{experiment}_image_2_after_map_ssim_CLAHE.jpg", image_2_after_map)
+            # cv2.imwrite(f"out//diff_{experiment}_image_2_after_map_ssim_CLAHE.jpg", image_2_after_map)
 
             
             experiment_reconstruction_time_end = datetime.now()
@@ -128,11 +168,12 @@ def save_image(payload_list):
                 img_2_gray = cv2.cvtColor(image_2, cv2.COLOR_BGR2GRAY)
                 img_2_after_map_gray = cv2.cvtColor(image_2_after_map, cv2.COLOR_BGR2GRAY)
                 SSIM, diff = ssim(img_2_gray, img_2_after_map_gray, full=True)
-                cv2.imwrite(f"diff_{experiment}_image_2_after_map_ssim.jpg", img_as_ubyte(diff))
+                cv2.imwrite(f"out//diff_{experiment_sub_name}_image_2_after_map_ssim.jpg", img_as_ubyte(diff))
+                psnr_float = psnr(originalImage, image)
 
-                write_out_data += f', "tr": "{diff_time}", "MSE": {MSE}, "SSIM": {SSIM}' + "}\n"
+                write_out_data += f', "tr": "{diff_time}", "MSE": {MSE:04f}, "SSIM": {SSIM:04f}, "PSNR": {psnr_float:04f}, "payload_bytes": {len(np_arr)}' + "}\n"
             else:    
-                write_out_data += f', "tr": "{diff_time}", "MSE": X, "SSIM": X' + "}\n"
+                write_out_data += f', "tr": "{diff_time}", "MSE": X, "SSIM": X, "PSNR": X, "payload_bytes": {len(np_arr)}' + "}\n"
         else:
             experiment_reconstruction_time_end = datetime.now()
             diff_time = experiment_reconstruction_time_end - experiment_reconstruction_time_start
@@ -154,20 +195,22 @@ def save_image(payload_list):
                 img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
                 SSIM, diff = ssim(original_gray, img_gray, full=True)
 
-                write_out_data += f', "tr": "{diff_time}", "MSE": {MSE}, "SSIM": {SSIM}' + "}\n"
+                psnr_float = psnr(originalImage, image)
+
+                write_out_data += f', "tr": "{diff_time}", "MSE": {MSE:04f}, "SSIM": {SSIM:04f}, "PSNR": {psnr_float:04f}, "payload_bytes": {len(np_arr)}' + "}\n"
             else:    
-                write_out_data += f', "tr": "{diff_time}", "MSE": X, "SSIM": X' + "}\n"
+                write_out_data += f', "tr": "{diff_time}", "MSE": X, "SSIM": X, "PSNR": X, "payload_bytes": {len(np_arr)}' + "}\n"
 
         print(write_out_data)
         file.write(write_out_data)
         file.flush()
         write_out_data = ""
-        image_name = f'received_image_{experiment}.jpg'
+        image_name = f'received_image_{experiment_sub_name}.jpg'
 
         if (original_image_name == ""):
-            original_image_name = image_name
+            original_image_name = "out//" + image_name
 
-        cv2.imwrite(image_name, image)
+        cv2.imwrite("out//" + image_name, image)
     
     except Exception as e:
         print(f"Broken\n{e}")
@@ -184,7 +227,7 @@ def data_receive_callback(xbee_message):
     global payload_list
     global image_x
     global image_y
-    global experiment
+    global experiment_sub_name
     global experiment_transmission_time_start
     global experiment_transmission_time_end
     global write_out_data
@@ -195,6 +238,7 @@ def data_receive_callback(xbee_message):
     global original_image_name
     global method
     global diff_map
+    global experiment_name
     received_data = list(xbee_message.data)
 
     if (bool_get_params == True):
@@ -204,14 +248,16 @@ def data_receive_callback(xbee_message):
         image_y = int(string_list[1])
         payload_size = int(string_list[2])
         method = string_list[3]
-        experiment = string_list[4]
+        experiment_sub_name = string_list[4]
         transmission = string_list[5]
         comparison_image = string_list[6]
         diff_map = string_list[7]
+        
         if (comparison_image == "True"):
             original_image_name = ""
+            experiment_name = string_list[8]
         
-        write_out_data += "{" + f'"X": {image_x}, "Y": {image_y}, "PayloadSize": {payload_size}, "Method": "{method}", "Experiment": "{experiment}", "transmission": "{transmission}"'
+        write_out_data += "{" + f'"X": {image_x}, "Y": {image_y}, "PayloadSize": {payload_size}, "Method": "{method}", "Experiment": "{experiment_sub_name}", "transmission": "{transmission}"'
         bool_start_gathering = True
         bool_get_params = False
         experiment_transmission_time_start = datetime.now()
@@ -233,7 +279,9 @@ def data_receive_callback(xbee_message):
         write_out_data = ""
         bool_get_params = True
         payload_list = []
-        
+
+    if (received_data == [101, 110, 100, 50]):  # END2
+        move_files()
 
 def run():
     print(" +-----------------------------------------+")

@@ -1,0 +1,6 @@
+{"X": 192, "Y": 144, "PayloadSize": 84, "Method": "None", "Experiment": "original_144p_image_save", "transmission": "synch", "t": "0:00:07.662284", "tr": "0:00:00.002999", "MSE": X, "SSIM": X, "PSNR": X}
+{"X": 192, "Y": 144, "PayloadSize": 84, "Method": "JPEG", "Experiment": "synch_res144p_compr_JPEG_qual_35", "transmission": "synch", "t": "0:00:01.970520", "tr": "0:00:00.001000", "MSE": 664.692310, "SSIM": 0.797372, "PSNR": 24.675810}
+{"X": 192, "Y": 144, "PayloadSize": 84, "Method": "JPEG-2000", "Experiment": "synch_res144p_compr_JPEG2k_qual_90", "transmission": "synch", "t": "0:00:03.195426", "tr": "0:00:00.002998", "MSE": 629.901259, "SSIM": 0.717002, "PSNR": 24.909291}
+{"X": 640, "Y": 480, "PayloadSize": 84, "Method": "None", "Experiment": "original_480p_image_save", "transmission": "synch", "t": "0:01:04.555615", "tr": "0:00:00.021998", "MSE": X, "SSIM": X, "PSNR": X}
+{"X": 640, "Y": 480, "PayloadSize": 84, "Method": "JPEG", "Experiment": "synch_res480p_compr_JPEG_qual_35", "transmission": "synch", "t": "0:00:13.978992", "tr": "0:00:00.007000", "MSE": 325.862100, "SSIM": 0.829734, "PSNR": 27.771678}
+{"X": 640, "Y": 480, "PayloadSize": 84, "Method": "JPEG-2000", "Experiment": "synch_res480p_compr_JPEG2k_qual_90", "transmission": "synch", "t": "0:00:33.610232", "tr": "0:00:00.034000", "MSE": 166.977829, "SSIM": 0.837817, "PSNR": 30.675428}
