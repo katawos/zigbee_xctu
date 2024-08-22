@@ -37,7 +37,7 @@ REMOTE_NODE_ID = "sensor" #REMOTE
 
 def setParameters(device):
     #set command TO = 0 => MAC ACK and retries, TO = 1 => no MAC ACK, no retries
-    device.set_parameter("TO", b"\x01")
+    device.set_parameter("TO", b"\x00")
     print(f"MAC ACK and retries, TO: {device.get_parameter('TO')}")
 
     #set Tx Power Level => 0 - lowest, 1 - low, 2 - medium, 3 - high, 4 - highest
@@ -50,7 +50,7 @@ def setParameters(device):
 
 
 def compressJPEG(image_name, quality):
-    print("Im compressing JPEG")
+    #print("Im compressing JPEG")
     image = cv2.imread(image_name)
     img_name = 'before_JPEG_image.jpg'
     #save image to the one with the new name and given JPEG quality
@@ -59,7 +59,7 @@ def compressJPEG(image_name, quality):
 
 
 def compressJPEG2000(image_name, quality):
-    print("Im compressing JPEG-2000")
+    #print("Im compressing JPEG-2000")
     image = cv2.imread(image_name)
     img_name = 'before_JPEG-2000_image.jp2'
     #save image to the one with the new name and given JPEG compression ratio
@@ -68,7 +68,7 @@ def compressJPEG2000(image_name, quality):
 
 
 def compressJPEG_LS(image, quality):
-    print("Im compressing JPEG-LS")
+    #print("Im compressing JPEG-LS")
     image = cv2.imread(image)
     quality = int(((100 - quality) / 100) * 255)    #ranges from 0 to 255
     img_name = 'before_JPEG-LS_image.jls'
@@ -79,19 +79,21 @@ def compressJPEG_LS(image, quality):
     f.close()
     return img_name
 
-#conversion from float to byte (to save it as image, but it loses the color depth), difference between images
+# substract images as int - value after conversion to int16 is the same 
+# it allows for negative values after substraction, int8 <-128,127> is too small
+# value after conversion back to uint8 -> only halfs are rounded down
 def diff_images(img1, img2):
-    diff = np.int16(img2) - np.int16(img1)
-    diff = diff + 255
-    diff = diff / 2
-    diff = np.uint8(diff)
-    #cv2.imwrite("diff", img_as_ubyte(diff)) #TUTAJ SPRAWDZIĆ
+    diff = np.int16(img2) - np.int16(img1)  #range of values <-255,255>
+    diff = diff + 255                       #range <0,510>
+    diff = diff / 2                         #range <0,255>
+    diff = np.uint8(diff)                   #conversion to proper type (JPEG compatible)
+    #cv2.imwrite("diff.jpg", diff)
     return diff
 
 
 def divide_to_payload(array, _payload_size, parameters):
     arr = []
-    count = 0
+    #count = 0
     #array = image size in array, _payload_size = size of image part that can be send at a time 
     for i in range(0, len(array), _payload_size):
         new_arr = []
@@ -99,7 +101,7 @@ def divide_to_payload(array, _payload_size, parameters):
         #slice array to include elements from i to (i+payload_size)
         new_arr += array[i:i + _payload_size]
         arr.append(new_arr)
-        count += 1
+        #count += 1
 
     #pattern for data array
     arr.insert(0, "start")
@@ -138,7 +140,7 @@ def modifyImage(_img, image_x, image_y, method = None, quality = None):
     cv2.imwrite(img_name, img)
 
     if (method is not None):
-        img_name = functions[method](img_name, quality) 
+        img_name = functions[method](img_name, quality) #use compression method with given quality parameter
 
     img_file = open(img_name, "rb") #open in binary read mode
     img_bytes = img_file.read() #read as byte string
@@ -209,7 +211,7 @@ def XbeeSend(data_payloads, data_size, transmission = "synch", transmission_slee
                             firstAsynch = False
                         #send data Asynchronously - do not wait for data response (FrameID = 0, no APS ACK)
                         device.send_data_async(remote_device, bytearray(data_payloads[data_idx]))
-                        #time.sleep() slows down sending the packets to: reduce number of dropped packets, avoid collisions and help control data rate
+                        #time.sleep() slows down sending the packets to: reduce number of dropped packets
                         time.sleep(transmission_sleep)
                 else:
                     device.send_data(remote_device, data_payloads[data_idx])    #for string data type, like "end"
@@ -258,9 +260,10 @@ def run_diff(image_x, image_y, payload_size, experiment_sub_name, method = None,
     img1_name_first_frame = "goose_1.jpg"
     img2_name_second_frame = "goose_2.jpg"
     
-    # img2 - img1 => car2 - car1
+    # img2 - img1 => goose_2 - goose_1
     img1 = loadImage(img_name = img1_name_first_frame)
     img2 = loadImage(img_name = img2_name_second_frame)
+    #resize, then calculate diff
     img1 = cv2.resize(img1, (image_x, image_y))
     img2 = cv2.resize(img2, (image_x, image_y))
     diff_img = diff_images(img1, img2)
@@ -285,13 +288,13 @@ if __name__ == '__main__':
         "1080p": [1920, 1080]
     }
 
-    res = "144p"                 #resolution
-    trans_type = ["synch", "asynch"]    #transmission type-like
+    res = "480p"                        #resolution
+    trans_type = ["synch", "asynch"]    #transmission type
     img_name = "test.jpg"               #test image name
     
-
-    # diff test: with compression method, its quality for async
-    # exper_sub_name = trans_type[0] + f"_res{res}_diffTest"
+ 
+    # # diff test: with compression method, its quality for async
+    # exper_sub_name = trans_type[0] + f"_res{res}_diffTest_ducks"
     # #synch
     # run_diff(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = None, quality = None, transmission = trans_type[0], diff_map = True)
     # #synch JPEG quality=35 diff images
@@ -310,25 +313,27 @@ if __name__ == '__main__':
     # #asynch JPEG quality=55 diff images
     # exper_sub_name = trans_type[1] + f"_res{res}_diffTest_JPEG-55"
     # run_diff(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 55, transmission = trans_type[1], diff_map = True)
-
-    # JPEG vs JPEG2000
-    now = datetime.datetime.now()
-    dt = now.strftime("%Y-%m-%d_%H-%M-%S")
-    experiment_name = "compr_" + dt
-    res = "144p"
-    SendPerfectImage(img_name, res, experiment_name)
-    exper_sub_name = trans_type[0] + f"_res{res}_compr_JPEG_qual_" + str(35)
-    run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 35, transmission = trans_type[0])
-    exper_sub_name = trans_type[0] + f"_res{res}_compr_JPEG2k_qual_" + str(90)
-    run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG-2000", quality = 90, transmission = trans_type[0])
-
-    res = "480p"
-    SendPerfectImage(img_name, res, experiment_name)
-    exper_sub_name = trans_type[0] + f"_res{res}_compr_JPEG_qual_" + str(35)
-    run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 35, transmission = trans_type[0])
-    exper_sub_name = trans_type[0] + f"_res{res}_compr_JPEG2k_qual_" + str(90)
-    run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG-2000", quality = 90, transmission = trans_type[0])
     SendExperimentFinish()
+
+
+    # # JPEG vs JPEG2000
+    # now = datetime.datetime.now()
+    # dt = now.strftime("%Y-%m-%d_%H-%M-%S")
+    # experiment_name = "compr_" + dt
+    # res = "144p"
+    # SendPerfectImage(img_name, res, experiment_name)
+    # exper_sub_name = trans_type[0] + f"_res{res}_compr_JPEG_qual_" + str(35)
+    # run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 35, transmission = trans_type[0])
+    # exper_sub_name = trans_type[0] + f"_res{res}_compr_JPEG2k_qual_" + str(90)
+    # run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG-2000", quality = 90, transmission = trans_type[0])
+
+    # res = "480p"
+    # SendPerfectImage(img_name, res, experiment_name)
+    # exper_sub_name = trans_type[0] + f"_res{res}_compr_JPEG_qual_" + str(35)
+    # run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 35, transmission = trans_type[0])
+    # exper_sub_name = trans_type[0] + f"_res{res}_compr_JPEG2k_qual_" + str(90)
+    # run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG-2000", quality = 90, transmission = trans_type[0])
+    # SendExperimentFinish()
 
     # # (1) Payload test
     # SendPerfectImage(img_name, res)

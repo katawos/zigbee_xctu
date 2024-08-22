@@ -56,11 +56,13 @@ experiment_name = ""
 method = None
 
 #output file    "receiveBuffer_CLOSE_API1_TO-1_APS_Tx-4.txt"
+#check if folder "out" exists, if not - create one
 if (not os.path.exists("out")):
     os.mkdir("out")
 
 file = open("out//test.txt", "a+")
 write_out_data = ""
+
 
 def move_files():
     global experiment_name
@@ -71,12 +73,12 @@ def move_files():
     file.close()
     extensions = [".jpg", ".txt"]
 
-    source_dir = os.getcwd()
-    out_folder_path = os.path.join(source_dir, "out")
-    out_folder_dest_path = os.path.join(out_folder_path, experiment_name)
-    os.mkdir(out_folder_dest_path)
+    source_dir = os.getcwd()    #get current working directory X
+    out_folder_path = os.path.join(source_dir, "out")   #X\out
+    out_folder_dest_path = os.path.join(out_folder_path, experiment_name)   #X\out\experiment
+    os.mkdir(out_folder_dest_path)  #create folder
+    
     # Loop through all files in the source directory
-
     for filename in os.listdir(out_folder_path):
         for extension in extensions:
             # Check if the file has the specified extension
@@ -88,6 +90,7 @@ def move_files():
                 shutil.move(file_path, out_folder_dest_path)
 
     file = open("out//test.txt", "a+")
+
 
 def save_image(payload_list):
     global image_x
@@ -112,7 +115,7 @@ def save_image(payload_list):
     np_arr = np.array(arr, dtype = np.uint8)
 
     try:
-        #decode data accordingly
+        #decode data to ndarray (n-dimensional array)
         if (method == "None"):
             image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
         elif (method == "JPEG"):
@@ -125,8 +128,7 @@ def save_image(payload_list):
         if (diff_map == "True"):
             image_2_name = original_image_name[:-6] + "_2.jpg"
 
-            #change the type of image and ssim_map to float for pixel-wise addition (and to prevent overflow)
-            #change 0 255 data to -255 +255 diff
+            #change 0 255 data to -255 +255, int16 and add diff
             cv2.imwrite(f"out//diff_{experiment_sub_name}_map.jpg", image)
             ssim_map = np.int16(image) * 2 - 255
 
@@ -134,13 +136,12 @@ def save_image(payload_list):
             image_1_original = np.int16(image_1_original)
             image_2_after_map = image_1_original + ssim_map
 
-
             # image_2_after_map = image_2_after_map - np.min(image_2_after_map)
             # image_2_after_map = image_2_after_map / np.max(image_2_after_map) * 255
 
+            #cut values that goes over 255, change type to uint8 (jpg compatible)
             image_2_after_map = np.clip(image_2_after_map, 0, 255)
             image_2_after_map = np.uint8(image_2_after_map)
-
 
             # ENHANCEMENTS HERE OR ABOVE
             cv2.imwrite(f"out//diff_{experiment_sub_name}_image_2_after_map.jpg", image_2_after_map)
@@ -169,6 +170,7 @@ def save_image(payload_list):
                 img_2_after_map_gray = cv2.cvtColor(image_2_after_map, cv2.COLOR_BGR2GRAY)
                 SSIM, diff = ssim(img_2_gray, img_2_after_map_gray, full=True)
                 cv2.imwrite(f"out//diff_{experiment_sub_name}_image_2_after_map_ssim.jpg", img_as_ubyte(diff))
+                
                 psnr_float = psnr(originalImage, image)
 
                 write_out_data += f', "tr": "{diff_time}", "MSE": {MSE:04f}, "SSIM": {SSIM:04f}, "PSNR": {psnr_float:04f}, "payload_bytes": {len(np_arr)}' + "}\n"
