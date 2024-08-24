@@ -179,7 +179,7 @@ def save_image(payload_list):
 
                 write_out_data += f', "tr": "{diff_time}", "MSE": {MSE:04f}, "SSIM": {SSIM:04f}, "PSNR": {psnr_float:04f}, "payload_bytes_sent": {payload_bytes_sent}, "payload_bytes_received": {len(np_arr)}' + "}\n"
             else:    
-                write_out_data += f', "tr": "{diff_time}", "MSE": X, "SSIM": X, "PSNR": X, "payload_bytes_sent": {payload_bytes_sent}, "payload_bytes_received": {len(np_arr)}' + "}\n"
+                write_out_data += f', "tr": "{diff_time}", "MSE": 0, "SSIM": 0, "PSNR": 0, "payload_bytes_sent": {payload_bytes_sent}, "payload_bytes_received": {len(np_arr)}' + "}\n"
         else:
             experiment_reconstruction_time_end = datetime.now()
             diff_time = experiment_reconstruction_time_end - experiment_reconstruction_time_start
@@ -205,7 +205,7 @@ def save_image(payload_list):
 
                 write_out_data += f', "tr": "{diff_time}", "MSE": {MSE:04f}, "SSIM": {SSIM:04f}, "PSNR": {psnr_float:04f}, "payload_bytes_sent": {payload_bytes_sent}, "payload_bytes_received": {len(np_arr)}' + "}\n"
             else:    
-                write_out_data += f', "tr": "{diff_time}", "MSE": X, "SSIM": X, "PSNR": X, "payload_bytes_sent": {payload_bytes_sent}, "payload_bytes_received": {len(np_arr)}' + "}\n"
+                write_out_data += f', "tr": "{diff_time}", "MSE": 0, "SSIM": 0, "PSNR": 0, "payload_bytes_sent": {payload_bytes_sent}, "payload_bytes_received": {len(np_arr)}' + "}\n"
 
         print(write_out_data)
         file.write(write_out_data)
