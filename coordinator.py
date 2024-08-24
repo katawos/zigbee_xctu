@@ -264,7 +264,7 @@ def run(img_name, resolution, payload_size, experiment_sub_name, method = None, 
     img = loadImage(img_name)
     mod_img_1d = modifyImage(img, image_x, image_y, method, quality)
 
-    data_payloads = divide_to_payload(mod_img_1d, payload_size, f"{image_x},{image_y},{payload_size},{method},{experiment_sub_name},{transmission},{comparison_image},{diff_map}")
+    data_payloads = divide_to_payload(mod_img_1d, payload_size, f"{image_x},{image_y},{payload_size},{method},{experiment_sub_name},{transmission},{comparison_image},{diff_map},{len(mod_img_1d)}")
     data_size = len(data_payloads)
 
     XbeeSend(data_payloads, data_size, transmission, transmission_sleep)
@@ -287,10 +287,10 @@ def run_diff(img_names, resolution, payload_size, experiment_sub_name, method = 
     mod_img_1d = modifyImage(diff_img, image_x, image_y, method, quality)
 
     #SendPerfectImage
-    run(img2_name_second_frame, resolution, payload_size = 84, experiment_sub_name = f"original_{image_x}x{image_y}_image_save_2", method = None, transmission="synch", transmission_sleep=0.014, comparison_image=True, diff_map = False, experiment_name=experiment_name)
+    run(img2_name_second_frame, resolution, payload_size = 84, experiment_sub_name = f"original_{image_x}x{image_y}_image_save_2", method = None, transmission="synch", transmission_sleep=0.014, comparison_image=True, diff_map = False)
     run(img1_name_first_frame, resolution, payload_size = 84, experiment_sub_name = f"original_{image_x}x{image_y}_image_save_1", method = None, transmission="synch", transmission_sleep=0.014, comparison_image=True, diff_map = False)
 
-    data_payloads = divide_to_payload(mod_img_1d, payload_size, f"{image_x},{image_y},{payload_size},{method},{experiment_sub_name},{transmission},{comparison_image},{diff_map}")
+    data_payloads = divide_to_payload(mod_img_1d, payload_size, f"{image_x},{image_y},{payload_size},{method},{experiment_sub_name},{transmission},{comparison_image},{diff_map},{len(mod_img_1d)}")
     data_size = len(data_payloads)
 
     XbeeSend(data_payloads, data_size, transmission, transmission_sleep)
@@ -524,10 +524,10 @@ if __name__ == '__main__':
 
     img_names_first_second_frame = ["goose_1.jpg", "goose_2.jpg"]
     # (1) diff test
-    test_diff_with_compr("diff_with_compr_test", img_names_first_second_frame)
+    # test_diff_with_compr("diff_with_compr_test", img_names_first_second_frame)
 
     # (2) JPEG vs JPEG2000
-    test_jpeg_vs_jpeg2k("jpeg_jpeg2k_compr", img_name)
+    # test_jpeg_vs_jpeg2k("jpeg_jpeg2k_compr", img_name)
 
     # (1) Payload test
     parameters = {
@@ -535,13 +535,13 @@ if __name__ == '__main__':
         "stop": 86,
         "iter": 2
     }
-    test_payload("payload_test", img_name, res = "144p", parameters = parameters)
+    # test_payload("payload_test", img_name, res = "144p", parameters = parameters)
 
     # (2) asynch transmission sleep test from 5 to 20 ms
     test_asynch_trans("asynch_transmission_sleep_2_20_ms", img_name, res = "144p")
 
     # (3) Resolution test 
-    test_resolution("resolution_test_144p", img_name, res="144p")
+    # test_resolution("resolution_test_144p", img_name, res="144p")
 
     # (4) Sleep and payload asynch - two at once (narrow range)
     parameters = {
@@ -552,7 +552,7 @@ if __name__ == '__main__':
         "payloadStop": 86,
         "PayloadIter": 2
     }
-    test_sleep_payload_async("sleep_payload_async_test", img_name, res="144p", parameters=parameters)
+    # test_sleep_payload_async("sleep_payload_async_test", img_name, res="144p", parameters=parameters)
 
     # (5) Compression methods
-    test_compression("compr_JPEG_JPEG2k_JPEG-LS", img_name, res="144p")
+    # test_compression("compr_JPEG_JPEG2k_JPEG-LS", img_name, res="144p")

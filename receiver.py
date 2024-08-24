@@ -54,6 +54,7 @@ original_image_name = ""
 experiment_name = ""
 
 method = None
+payload_bytes_sent = 0
 
 #output file    "receiveBuffer_CLOSE_API1_TO-1_APS_Tx-4.txt"
 #check if folder "out" exists, if not - create one
@@ -104,6 +105,7 @@ def save_image(payload_list):
     global original_image_name
     global method
     global diff_map
+    global payload_bytes_sent
     experiment_reconstruction_time_start = datetime.now() 
 
     arr = []
@@ -173,9 +175,9 @@ def save_image(payload_list):
                 
                 psnr_float = psnr(original_image_2, image_2_after_map)
 
-                write_out_data += f', "tr": "{diff_time}", "MSE": {MSE:04f}, "SSIM": {SSIM:04f}, "PSNR": {psnr_float:04f}, "payload_bytes": {len(np_arr)}' + "}\n"
+                write_out_data += f', "tr": "{diff_time}", "MSE": {MSE:04f}, "SSIM": {SSIM:04f}, "PSNR": {psnr_float:04f}, "payload_bytes_sent": {payload_bytes_sent}, "payload_bytes_received": {len(np_arr)}' + "}\n"
             else:    
-                write_out_data += f', "tr": "{diff_time}", "MSE": X, "SSIM": X, "PSNR": X, "payload_bytes": {len(np_arr)}' + "}\n"
+                write_out_data += f', "tr": "{diff_time}", "MSE": X, "SSIM": X, "PSNR": X, "payload_bytes_sent": {payload_bytes_sent}, "payload_bytes_received": {len(np_arr)}' + "}\n"
         else:
             experiment_reconstruction_time_end = datetime.now()
             diff_time = experiment_reconstruction_time_end - experiment_reconstruction_time_start
@@ -199,9 +201,9 @@ def save_image(payload_list):
 
                 psnr_float = psnr(originalImage, image)
 
-                write_out_data += f', "tr": "{diff_time}", "MSE": {MSE:04f}, "SSIM": {SSIM:04f}, "PSNR": {psnr_float:04f}, "payload_bytes": {len(np_arr)}' + "}\n"
+                write_out_data += f', "tr": "{diff_time}", "MSE": {MSE:04f}, "SSIM": {SSIM:04f}, "PSNR": {psnr_float:04f}, "payload_bytes_sent": {payload_bytes_sent}, "payload_bytes_received": {len(np_arr)}' + "}\n"
             else:    
-                write_out_data += f', "tr": "{diff_time}", "MSE": X, "SSIM": X, "PSNR": X, "payload_bytes": {len(np_arr)}' + "}\n"
+                write_out_data += f', "tr": "{diff_time}", "MSE": X, "SSIM": X, "PSNR": X, "payload_bytes_sent": {payload_bytes_sent}, "payload_bytes_received": {len(np_arr)}' + "}\n"
 
         print(write_out_data)
         file.write(write_out_data)
@@ -241,6 +243,7 @@ def data_receive_callback(xbee_message):
     global method
     global diff_map
     global experiment_name
+    global payload_bytes_sent
     received_data = list(xbee_message.data)
 
     if (bool_get_params == True):
@@ -254,6 +257,7 @@ def data_receive_callback(xbee_message):
         transmission = string_list[5]
         comparison_image = string_list[6]
         diff_map = string_list[7]
+        payload_bytes_sent = int(string_list[8])
         
         if (comparison_image == "True"):
             original_image_name = ""
