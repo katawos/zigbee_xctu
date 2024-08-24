@@ -20,7 +20,7 @@ import numpy as np
 import cv2
 from skimage.metrics import structural_similarity as ssim
 from skimage.metrics import peak_signal_noise_ratio as psnr
-from skimage import io, img_as_ubyte, img_as_float
+from skimage import img_as_ubyte
 #from skimage.metrics import mse
 import jpeg_ls
 import os
@@ -162,16 +162,16 @@ def save_image(payload_list):
             experiment_reconstruction_time_end = datetime.now()
             diff_time = experiment_reconstruction_time_end - experiment_reconstruction_time_start
             if (image_2_name != ""):
-                image_2 = cv2.imread(image_2_name)
-                MSE = np.sum((image_2.astype("float") - image_2_after_map.astype("float")) ** 2) 
-                MSE /= float(image_2.shape[0] * image_2_after_map.shape[1])
+                original_image_2 = cv2.imread(image_2_name)
+                MSE = np.sum((original_image_2.astype("float") - image_2_after_map.astype("float")) ** 2) 
+                MSE /= float(original_image_2.shape[0] * image_2_after_map.shape[1])
 
-                img_2_gray = cv2.cvtColor(image_2, cv2.COLOR_BGR2GRAY)
+                original_img_2_gray = cv2.cvtColor(original_image_2, cv2.COLOR_BGR2GRAY)
                 img_2_after_map_gray = cv2.cvtColor(image_2_after_map, cv2.COLOR_BGR2GRAY)
-                SSIM, diff = ssim(img_2_gray, img_2_after_map_gray, full=True)
+                SSIM, diff = ssim(original_img_2_gray, img_2_after_map_gray, full=True)
                 cv2.imwrite(f"out//diff_{experiment_sub_name}_image_2_after_map_ssim.jpg", img_as_ubyte(diff))
                 
-                psnr_float = psnr(originalImage, image)
+                psnr_float = psnr(original_image_2, image_2_after_map)
 
                 write_out_data += f', "tr": "{diff_time}", "MSE": {MSE:04f}, "SSIM": {SSIM:04f}, "PSNR": {psnr_float:04f}, "payload_bytes": {len(np_arr)}' + "}\n"
             else:    
@@ -257,7 +257,6 @@ def data_receive_callback(xbee_message):
         
         if (comparison_image == "True"):
             original_image_name = ""
-            experiment_name = string_list[8]
         
         write_out_data += "{" + f'"X": {image_x}, "Y": {image_y}, "PayloadSize": {payload_size}, "Method": "{method}", "Experiment": "{experiment_sub_name}", "transmission": "{transmission}"'
         bool_start_gathering = True
@@ -282,7 +281,10 @@ def data_receive_callback(xbee_message):
         bool_get_params = True
         payload_list = []
 
-    if (received_data == [101, 110, 100, 50]):  # END2
+    if (received_data[0:4] == [101, 110, 100, 50]):  # END2
+        string = f"{xbee_message.data.decode('utf-8')}"
+        string_list = string.split(",")
+        experiment_name = string_list[1]
         move_files()
 
 def run():

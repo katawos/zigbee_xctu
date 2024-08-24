@@ -21,9 +21,6 @@ import cv2
 #import pandas as pd
 #from PIL import Image
 import jpeg_ls
-from skimage import img_as_ubyte, img_as_float, img_as_int, img_as_float64
-
-
 
 # TODO: Replace with the serial port where your local module is connected to.
 PORT = "COM3"
@@ -34,6 +31,19 @@ BAUD_RATE = 115200
 
 DATA_TO_SEND = "Hello XBee!"
 REMOTE_NODE_ID = "sensor" #REMOTE
+
+RESOLUTIONS = {
+    "144p": [192, 144],
+    "240p": [320, 240],
+    "480p": [640, 480],
+    "720p": [1280, 720],
+    "1080p": [1920, 1080]
+}
+
+COMPRESS_METHODS = ["JPEG","JPEG-2000","JPEG-LS"]
+
+TRANSMISSION_TYPE = ["synch", "asynch"]
+
 
 def setParameters(device):
     #set command TO = 0 => MAC ACK and retries, TO = 1 => no MAC ACK, no retries
@@ -237,28 +247,35 @@ def XbeeSend(data_payloads, data_size, transmission = "synch", transmission_slee
         # Without this it may be possible that callbacks are overlapping (especially for higher resolutions)
         time.sleep(2)
 
-def SendExperimentFinish():
+def SendExperimentFinish(experiment_name):
     arr = []
-    arr.append("end2")
+    arr.append(f"end2,{experiment_name}")
+    print(arr)
     XbeeSend(arr, len(arr), transmission="synch")
 
-def SendPerfectImage(img_name, image_resolution, experiment_name): #send image to reliably compare and calculate transmission errors (original, synch, no compression)
-    run(img_name, image_x = resolutions[image_resolution][0], image_y = resolutions[image_resolution][1], payload_size = 84, experiment_sub_name = f"original_{image_resolution}_image_save", method = None, transmission="synch", transmission_sleep=0.014, comparison_image=True, experiment_name=experiment_name)
+def SendPerfectImage(img_name, image_resolution): #send image to reliably compare and calculate transmission errors (original, synch, no compression)
+    run(img_name, RESOLUTIONS[image_resolution], payload_size = 84, experiment_sub_name = f"original_{image_resolution}_image_save", method = None, transmission="synch", transmission_sleep=0.014, comparison_image=True)
 
 
-def run(img_name, image_x, image_y, payload_size, experiment_sub_name, method = None, quality = None, transmission = "synch", transmission_sleep = 0.014, comparison_image = False, diff_map = False, experiment_name = None):
+def run(img_name, resolution, payload_size, experiment_sub_name, method = None, quality = None, transmission = "synch", transmission_sleep = 0.014, comparison_image = False, diff_map = False):
+    image_x = resolution[0]
+    image_y = resolution[1]
+    
     img = loadImage(img_name)
     mod_img_1d = modifyImage(img, image_x, image_y, method, quality)
 
-    data_payloads = divide_to_payload(mod_img_1d, payload_size, f"{image_x},{image_y},{payload_size},{method},{experiment_sub_name},{transmission},{comparison_image},{diff_map},{experiment_name}")
+    data_payloads = divide_to_payload(mod_img_1d, payload_size, f"{image_x},{image_y},{payload_size},{method},{experiment_sub_name},{transmission},{comparison_image},{diff_map}")
     data_size = len(data_payloads)
 
     XbeeSend(data_payloads, data_size, transmission, transmission_sleep)
 
 
-def run_diff(image_x, image_y, payload_size, experiment_sub_name, method = None, quality = None, transmission = "synch", transmission_sleep = 0.014, comparison_image = False, diff_map = False):
-    img1_name_first_frame = "goose_1.jpg"
-    img2_name_second_frame = "goose_2.jpg"
+def run_diff(img_names, resolution, payload_size, experiment_sub_name, method = None, quality = None, transmission = "synch", transmission_sleep = 0.014, comparison_image = False, diff_map = False):
+    image_x = resolution[0]
+    image_y = resolution[1]
+    
+    img1_name_first_frame = img_names[0]
+    img2_name_second_frame = img_names[1]
     
     # img2 - img1 => goose_2 - goose_1
     img1 = loadImage(img_name = img1_name_first_frame)
@@ -270,163 +287,272 @@ def run_diff(image_x, image_y, payload_size, experiment_sub_name, method = None,
     mod_img_1d = modifyImage(diff_img, image_x, image_y, method, quality)
 
     #SendPerfectImage
-    run(img2_name_second_frame, image_x = image_x, image_y = image_y, payload_size = 84, experiment_sub_name = f"original_{image_x}x{image_y}_image_save_2", method = None, transmission="synch", transmission_sleep=0.014, comparison_image=True, diff_map = False)
-    run(img1_name_first_frame, image_x = image_x, image_y = image_y, payload_size = 84, experiment_sub_name = f"original_{image_x}x{image_y}_image_save_1", method = None, transmission="synch", transmission_sleep=0.014, comparison_image=True, diff_map = False)
+    run(img2_name_second_frame, resolution, payload_size = 84, experiment_sub_name = f"original_{image_x}x{image_y}_image_save_2", method = None, transmission="synch", transmission_sleep=0.014, comparison_image=True, diff_map = False, experiment_name=experiment_name)
+    run(img1_name_first_frame, resolution, payload_size = 84, experiment_sub_name = f"original_{image_x}x{image_y}_image_save_1", method = None, transmission="synch", transmission_sleep=0.014, comparison_image=True, diff_map = False)
 
     data_payloads = divide_to_payload(mod_img_1d, payload_size, f"{image_x},{image_y},{payload_size},{method},{experiment_sub_name},{transmission},{comparison_image},{diff_map}")
     data_size = len(data_payloads)
 
     XbeeSend(data_payloads, data_size, transmission, transmission_sleep)
 
-if __name__ == '__main__':
+# ----------------- EXPERIMENTS METHODS ------------------------
+def createExperimentName(experiment_name):
+    """Creates full experiment name with datetime
 
-    resolutions = {
-        "144p": [192, 144],
-        "240p": [320, 240],
-        "480p": [640, 480],
-        "720p": [1280, 720],
-        "1080p": [1920, 1080]
-    }
+    Args:
+      experiment_name: normal string explaining experiment
 
-    res = "480p"                        #resolution
-    trans_type = ["synch", "asynch"]    #transmission type
-    img_name = "test.jpg"               #test image name
+    Returns:
+        experiment_name_full: full experiment name with appended datetime
+    """
+    now = datetime.datetime.now()
+    dt = now.strftime("%Y-%m-%d_%H-%M-%S")
+    experiment_name_full = f"{experiment_name}_{dt}"
+
+    return experiment_name_full
+
+def test_diff_with_compr(experiment_name, img_names):
+    """Performs diff tests with compression method. First and second frames are send and then difference. Measurement takes place in receiver.
+
+    Args:
+      experiment_name: name of experiment
+      img_name: image full name
+    """
+    # diff test: with compression method, its quality for async
     
- 
-    # # diff test: with compression method, its quality for async
-    # exper_sub_name = trans_type[0] + f"_res{res}_diffTest_ducks"
-    # #synch
-    # run_diff(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = None, quality = None, transmission = trans_type[0], diff_map = True)
-    # #synch JPEG quality=35 diff images
-    # exper_sub_name = trans_type[0] + f"_res{res}_diffTest_JPEG-35"
-    # run_diff(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 35, transmission = trans_type[0], diff_map = True)
-    # #synch JPEG quality=55 diff images
-    # exper_sub_name = trans_type[0] + f"_res{res}_diffTest_JPEG-55"
-    # run_diff(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 55, transmission = trans_type[0], diff_map = True)
+    res = "144p" 
+    # synch
+    exper_sub_name = TRANSMISSION_TYPE[0] + f"_res{res}_diffTest_ducks"
+    run_diff(img_names = img_names, resolution= RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = None, quality = None, transmission = TRANSMISSION_TYPE[0], diff_map = True)
+    #synch JPEG quality=35 diff images
+    exper_sub_name = TRANSMISSION_TYPE[0] + f"_res{res}_diffTest_JPEG-35"
+    run_diff(img_names = img_names, resolution= RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 35, transmission = TRANSMISSION_TYPE[0], diff_map = True)
+    #synch JPEG quality=55 diff images
+    exper_sub_name = TRANSMISSION_TYPE[0] + f"_res{res}_diffTest_JPEG-55"
+    run_diff(img_names = img_names, resolution= RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 55, transmission = TRANSMISSION_TYPE[0], diff_map = True)
 
-    # # asynch
-    # exper_sub_name = trans_type[1] + f"_res{res}_diffTest_ducks"
-    # run_diff(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = None, quality = None, transmission = trans_type[1], diff_map = True)
-    # #asynch JPEG quality=35 diff images
-    # exper_sub_name = trans_type[1] + f"_res{res}_diffTest_JPEG-35"
-    # run_diff(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 35, transmission = trans_type[1], diff_map = True)
-    # #asynch JPEG quality=55 diff images
-    # exper_sub_name = trans_type[1] + f"_res{res}_diffTest_JPEG-55"
-    # run_diff(image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 55, transmission = trans_type[1], diff_map = True)
-    SendExperimentFinish()
+    # asynch
+    exper_sub_name = TRANSMISSION_TYPE[1] + f"_res{res}_diffTest_ducks"
+    run_diff(img_names = img_names, resolution= RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = None, quality = None, transmission = TRANSMISSION_TYPE[1], diff_map = True)
+    #asynch JPEG quality=35 diff images
+    exper_sub_name = TRANSMISSION_TYPE[1] + f"_res{res}_diffTest_JPEG-35"
+    run_diff(img_names = img_names, resolution= RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 35, transmission = TRANSMISSION_TYPE[1], diff_map = True)
+    #asynch JPEG quality=55 diff
+    exper_sub_name = TRANSMISSION_TYPE[1] + f"_res{res}_diffTest_JPEG-55"
+    run_diff(img_names = img_names, resolution= RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 55, transmission = TRANSMISSION_TYPE[1], diff_map = True)
+    
+    # Send status to receiver that experiment was finished and to create new folder under "experiment_name" and datetime name
+    SendExperimentFinish(experiment_name=createExperimentName(experiment_name))
 
+def test_jpeg_vs_jpeg2k(experiment_name, img_name):
+    """Performs comparison between JPEG and JPEG2k compressions
 
-    # # JPEG vs JPEG2000
-    # now = datetime.datetime.now()
-    # dt = now.strftime("%Y-%m-%d_%H-%M-%S")
-    # experiment_name = "compr_" + dt
-    # res = "144p"
-    # SendPerfectImage(img_name, res, experiment_name)
-    # exper_sub_name = trans_type[0] + f"_res{res}_compr_JPEG_qual_" + str(35)
-    # run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 35, transmission = trans_type[0])
-    # exper_sub_name = trans_type[0] + f"_res{res}_compr_JPEG2k_qual_" + str(90)
-    # run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG-2000", quality = 90, transmission = trans_type[0])
+    Args:
+      experiment_name: name of experiment
+      img_name: image full name
+    """
+
+    res = "144p"
+    SendPerfectImage(img_name, res)
+    exper_sub_name = TRANSMISSION_TYPE[0] + f"_res{res}_compr_JPEG_qual_" + str(35)
+    run(img_name, resolution=RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 35, transmission = TRANSMISSION_TYPE[0])
+    exper_sub_name = TRANSMISSION_TYPE[0] + f"_res{res}_compr_JPEG2k_qual_" + str(90)
+    run(img_name, resolution=RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG-2000", quality = 90, transmission = TRANSMISSION_TYPE[0])
 
     # res = "480p"
-    # SendPerfectImage(img_name, res, experiment_name)
-    # exper_sub_name = trans_type[0] + f"_res{res}_compr_JPEG_qual_" + str(35)
-    # run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 35, transmission = trans_type[0])
-    # exper_sub_name = trans_type[0] + f"_res{res}_compr_JPEG2k_qual_" + str(90)
-    # run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG-2000", quality = 90, transmission = trans_type[0])
-    # SendExperimentFinish()
-
-    # # (1) Payload test
     # SendPerfectImage(img_name, res)
-    # for payload_bytes in range(70, 88, 2):
-    #     # #synch
-    #     # exper_sub_name = trans_type[0] + f"_res{res}_payload_{payload_bytes}"
-    #     # run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = payload_bytes, experiment_sub_name = exper_sub_name, method = None, transmission = trans_type[0])
-    #     #asynch
-    #     exper_sub_name = trans_type[1] + f"_res{res}_payload_{payload_bytes}"
-    #     run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = payload_bytes, experiment_sub_name = exper_sub_name, method = None, transmission = trans_type[1])
-
+    # exper_sub_name = TRANSMISSION_TYPE[0] + f"_res{res}_compr_JPEG_qual_" + str(35)
+    # run(img_name, resolution=RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 35, transmission = TRANSMISSION_TYPE[0])
+    # exper_sub_name = TRANSMISSION_TYPE[0] + f"_res{res}_compr_JPEG2k_qual_" + str(90)
+    # run(img_name, resolution=RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG-2000", quality = 90, transmission = TRANSMISSION_TYPE[0])
     
-    # # (2) asynch transmission sleep test from 5 to 20 ms
-    # SendPerfectImage(img_name, res)
-    # for idx in range(5, 21):
-    #     sleep_time = idx / 1000
-    #     #asynch
-    #     exper_sub_name = trans_type[1] + f"_res{res}_sleep_{sleep_time}"
-    #     run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = None, transmission = trans_type[1], transmission_sleep = sleep_time)
+    # Send status to receiver that experiment was finished and to create new folder under "experiment_name" and datetime name
+    SendExperimentFinish(experiment_name=createExperimentName(experiment_name))
 
-    # # (3) Resolution test 
-    # for key in resolutions.keys():  #go through each of resolutions names (key pairs)
-    #     SendPerfectImage(img_name, key)
-    #     #synch
-    #     exper_sub_name = trans_type[0] + f"_resolution_{key}"
-    #     run(img_name, image_x = resolutions[key][0], image_y = resolutions[key][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = None, transmission = trans_type[0])
-    #     #synch JPEG quality=35 diff images
-    #     exper_sub_name = trans_type[0] + f"_resolution_{key}_JPEG-35"
-    #     run(img_name, image_x = resolutions[key][0], image_y = resolutions[key][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 35, transmission = trans_type[0])
-    #     #synch JPEG quality=55 diff images
-    #     exper_sub_name = trans_type[0] + f"_resolution_{key}_JPEG-55"
-    #     run(img_name, image_x = resolutions[key][0], image_y = resolutions[key][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 55, transmission = trans_type[0])
+def test_payload(experiment_name, img_name, res, parameters):
+    """Performs payload tests, coordinator sends hardoded sequence
 
-        # #asynch
-        # exper_sub_name = trans_type[1] + f"_resolution_{key}"
-        # run(img_name, image_x = resolutions[key][0], image_y = resolutions[key][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = None, transmission = trans_type[1], transmission_sleep=0.014)
-        # #asynch JPEG quality=35 diff images
-        # exper_sub_name = trans_type[1] + f"_resolution_{key}_JPEG-35"
-        # run(img_name, image_x = resolutions[key][0], image_y = resolutions[key][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 35, transmission = trans_type[1])
-        # #asynch JPEG quality=55 diff images
-        # exper_sub_name = trans_type[1] + f"_resolution_{key}_JPEG-55"
-        # run(img_name, image_x = resolutions[key][0], image_y = resolutions[key][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 55, transmission = trans_type[1])
+    Args:
+      experiment_name: name of experiment
+      img_name: image full name
+      res: resolution for image scaling
+      parameters: (start, stop, iter) - for payload bytes tests
+    """
+    SendPerfectImage(img_name, res)
+
+    for payload_bytes in range(parameters["start"], parameters["stop"], parameters["iter"]):
+        # synch
+        exper_sub_name = TRANSMISSION_TYPE[0] + f"_res{res}_payload_{payload_bytes}"
+        run(img_name, resolution=RESOLUTIONS[res], payload_size = payload_bytes, experiment_sub_name = exper_sub_name, method = None, transmission = TRANSMISSION_TYPE[0])
+        # asynch
+        exper_sub_name = TRANSMISSION_TYPE[1] + f"_res{res}_payload_{payload_bytes}"
+        run(img_name, resolution=RESOLUTIONS[res], payload_size = payload_bytes, experiment_sub_name = exper_sub_name, method = None, transmission = TRANSMISSION_TYPE[1])
+
+    # Send status to receiver that experiment was finished and to create new folder under "experiment_name" and datetime name
+    SendExperimentFinish(experiment_name=createExperimentName(experiment_name))
 
 
-    # # (4) Sleep and payload asynch - two at once (narrow range)
-    # SendPerfectImage(img_name, res)
-    # for idx in range(12, 18):
-    #     sleep_time = idx / 1000
-    #     for payload_bytes in range(80, 86, 2):
-    #         exper_sub_name = trans_type[1] + f"_res{res}_payload_{payload_bytes}_sleep_{sleep_time}"
-    #         run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = payload_bytes, experiment_sub_name = exper_sub_name, method = None, transmission = trans_type[1], transmission_sleep = sleep_time)
+def test_asynch_trans(experiment_name, img_name, res):
+    """Performs payload tests, coordinator sends hardoded sequence
+
+    Args:
+      experiment_name: name of experiment
+      img_name: image full name
+      res: resolution for image scaling
+    """
+
+    SendPerfectImage(img_name, res)
+    for idx in range(5, 21):
+        sleep_time = idx / 1000
+        #asynch
+        exper_sub_name = TRANSMISSION_TYPE[1] + f"_res{res}_sleep_{sleep_time}"
+        run(img_name, resolution=RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = None, transmission = TRANSMISSION_TYPE[1], transmission_sleep = sleep_time)
 
 
-    # # (5) Compression methods
-    # SendPerfectImage(img_name, res)
-    # # JPEG - THE BEST COMPRESSION OF SIZE TO QUALITY OF IMAGE RATIO
-    # #res ="480p"
-    # for quality_ in range(95, 25, -10):
-    #     #synch
-    #     exper_sub_name = trans_type[0] + f"_res{res}_compr_JPEG_qual_" + str(quality_)
-    #     run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = quality_, transmission = trans_type[0])
-        # #asynch
-        # exper_sub_name = trans_type[1] + f"_res{res}_compr_JPEG_qual_" + str(quality_)
-        # run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = quality_, transmission = trans_type[1])
+    # Send status to receiver that experiment was finished and to create new folder under "experiment_name" and datetime name
+    SendExperimentFinish(experiment_name=createExperimentName(experiment_name))    
 
-    # # JPEG 2000
-    # for quality_ in range(360, 20, -40):
-    #     #synch str(quality_)
-    #     run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG-2000", quality = quality_, transmission = trans_type[0])
-    #     #asynch
-    #     exper_sub_name = trans_type[1] + f"_res{res}_compr_JPEG-2000_qual_" + str(quality_)
-    #     run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG-2000", quality = quality_, transmission = trans_type[1])
+def test_resolution(experiment_name, img_name, res):
+    """Performs resolution tests, coordinator sends hardoded sequence.
 
-    # # JPEG LS
-    # for quality_ in range(95, 25, -10):
-    #     #synch
-    #     exper_sub_name = trans_type[0] + f"_res{res}_compr_JPEG-LS_qual_" + str(quality_)
-    #     run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG-LS", quality = quality_, transmission = trans_type[0])
-    #     #asynch
-    #     exper_sub_name = trans_type[1] + f"_res{res}_compr_JPEG-LS_qual_" + str(quality_)
-    #     run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG-LS", quality = quality_, transmission = trans_type[1])
+    Args:
+      experiment_name: name of experiment
+      img_name: image full name
+      res: resolution for image scaling
+    """
 
-#----------------------
-    # SendPerfectImage(img_name, res)
-    # #synch
-    # exper_sub_name = trans_type[0] + f"_res{res}_compr"
-    # run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = None, transmission = trans_type[0])
-    # #synch
-    # quality_ = 35
-    # exper_sub_name = trans_type[0] + f"_res{res}_compr_JPEG_qual_" + str(quality_)
-    # run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = quality_, transmission = trans_type[0])
-    # #synch
-    # quality_ = 55
-    # exper_sub_name = trans_type[0] + f"_res{res}_compr_JPEG_qual_" + str(quality_)
-    # run(img_name, image_x = resolutions[res][0], image_y = resolutions[res][1], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = quality_, transmission = trans_type[0])
-     
+    SendPerfectImage(img_name, res)
+    #synch
+    exper_sub_name = TRANSMISSION_TYPE[0] + f"_resolution_{res}"
+    run(img_name, resolution=RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = None, transmission = TRANSMISSION_TYPE[0])
+    #synch JPEG quality=35 diff images
+    exper_sub_name = TRANSMISSION_TYPE[0] + f"_resolution_{res}_JPEG-35"
+    run(img_name, resolution=RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 35, transmission = TRANSMISSION_TYPE[0])
+    #synch JPEG quality=55 diff images
+    exper_sub_name = TRANSMISSION_TYPE[0] + f"_resolution_{res}_JPEG-55"
+    run(img_name, resolution=RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 55, transmission = TRANSMISSION_TYPE[0])
+
+    #asynch
+    exper_sub_name = TRANSMISSION_TYPE[1] + f"_resolution_{res}"
+    run(img_name, resolution=RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = None, transmission = TRANSMISSION_TYPE[1], transmission_sleep=0.014)
+    #asynch JPEG quality=35 diff images
+    exper_sub_name = TRANSMISSION_TYPE[1] + f"_resolution_{res}_JPEG-35"
+    run(img_name, resolution=RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 35, transmission = TRANSMISSION_TYPE[1])
+    #asynch JPEG quality=55 diff images
+    exper_sub_name = TRANSMISSION_TYPE[1] + f"_resolution_{res}_JPEG-55"
+    run(img_name, resolution=RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 55, transmission = TRANSMISSION_TYPE[1])
+
+    # Send status to receiver that experiment was finished and to create new folder under "experiment_name" and datetime name
+    SendExperimentFinish(experiment_name=createExperimentName(experiment_name))
+
+
+def test_sleep_payload_async(experiment_name, img_name, res, parameters):
+    """Performs payload tests, coordinator sends hardoded sequence
+
+    Args:
+      experiment_name: name of experiment
+      img_name: image full name
+      res: resolution for image scaling
+      parameters: (sleepTimeStart, sleepTimeStop, sleepTimeIter, payloadStart, PayloadStop, PayloadIter) - for payload bytes tests
+    """
+
+    SendPerfectImage(img_name, res)
+    for idx in range(parameters["sleepTimeStart"], parameters["sleepTimeStop"], parameters["sleepTimeIter"]):
+        sleep_time = idx / 1000
+        for payload_bytes in range(parameters["payloadStart"], parameters["payloadStop"], parameters["PayloadIter"]):
+            exper_sub_name = TRANSMISSION_TYPE[1] + f"_res{res}_payload_{payload_bytes}_sleep_{sleep_time}"
+            run(img_name, RESOLUTIONS[res], payload_size = payload_bytes, experiment_sub_name = exper_sub_name, method = None, transmission = TRANSMISSION_TYPE[1], transmission_sleep = sleep_time)
+
+    # Send status to receiver that experiment was finished and to create new folder under "experiment_name" and datetime name
+    SendExperimentFinish(experiment_name=createExperimentName(experiment_name))
+
+def test_compression(experiment_name, img_name, res):
+    """Performs compression tests for JPEG, JPEG2k, JPEGLS. Coordinator sends hardoded sequence
+
+    Args:
+      experiment_name: name of experiment
+      img_name: image full name
+      res: resolution for image scaling
+    """
+
+    SendPerfectImage(img_name, res)
+    # JPEG - THE BEST COMPRESSION OF SIZE TO QUALITY OF IMAGE RATIO
+    #res ="480p"
+    for quality_ in range(95, 25, -10):
+        #synch
+        exper_sub_name = TRANSMISSION_TYPE[0] + f"_res{res}_compr_JPEG_qual_" + str(quality_)
+        run(img_name, RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = quality_, transmission = TRANSMISSION_TYPE[0])
+        #asynch
+        exper_sub_name = TRANSMISSION_TYPE[1] + f"_res{res}_compr_JPEG_qual_" + str(quality_)
+        run(img_name, RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = quality_, transmission = TRANSMISSION_TYPE[1])
+
+    # JPEG 2000
+    for quality_ in range(360, 20, -40):
+        #synch str(quality_)
+        run(img_name, RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG-2000", quality = quality_, transmission = TRANSMISSION_TYPE[0])
+        #asynch
+        exper_sub_name = TRANSMISSION_TYPE[1] + f"_res{res}_compr_JPEG-2000_qual_" + str(quality_)
+        run(img_name, RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG-2000", quality = quality_, transmission = TRANSMISSION_TYPE[1])
+
+    # JPEG LS
+    for quality_ in range(95, 25, -10):
+        #synch
+        exper_sub_name = TRANSMISSION_TYPE[0] + f"_res{res}_compr_JPEG-LS_qual_" + str(quality_)
+        run(img_name, RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG-LS", quality = quality_, transmission = TRANSMISSION_TYPE[0])
+        #asynch
+        exper_sub_name = TRANSMISSION_TYPE[1] + f"_res{res}_compr_JPEG-LS_qual_" + str(quality_)
+        run(img_name, RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG-LS", quality = quality_, transmission = TRANSMISSION_TYPE[1])
+
+    # Send status to receiver that experiment was finished and to create new folder under "experiment_name" and datetime name
+    SendExperimentFinish(experiment_name=createExperimentName(experiment_name))
+
+def test_function_template(experiment_name, img_name):
+    """Performs payload tests, coordinator sends hardoded sequence
+
+    Args:
+      experiment_name: name of experiment
+      img_name: image full name
+    """
+
+    # PLACE FOR EXPERIMENTS
+
+    # Send status to receiver that experiment was finished and to create new folder under "experiment_name" and datetime name
+    SendExperimentFinish(experiment_name=createExperimentName(experiment_name))
+
+if __name__ == '__main__':
+    img_name = "test.jpg"               #test image name
+
+    img_names_first_second_frame = ["goose_1.jpg", "goose_2.jpg"]
+    # (1) diff test
+    test_diff_with_compr("diff_with_compr_test", img_names_first_second_frame)
+
+    # (2) JPEG vs JPEG2000
+    test_jpeg_vs_jpeg2k("jpeg_jpeg2k_compr", img_name)
+
+    # (1) Payload test
+    parameters = {
+        "start": 70,
+        "stop": 86,
+        "iter": 2
+    }
+    test_payload("payload_test", img_name, res = "144p", parameters = parameters)
+
+    # (2) asynch transmission sleep test from 5 to 20 ms
+    test_asynch_trans("asynch_transmission_sleep_2_20_ms", img_name, res = "144p")
+
+    # (3) Resolution test 
+    test_resolution("resolution_test_144p", img_name, res="144p")
+
+    # (4) Sleep and payload asynch - two at once (narrow range)
+    parameters = {
+        "sleepTimeStart": 12,
+        "sleepTimeStop": 18,
+        "sleepTimeIter": 1,
+        "payloadStart": 80,
+        "payloadStop": 86,
+        "PayloadIter": 2
+    }
+    test_sleep_payload_async("sleep_payload_async_test", img_name, res="144p", parameters=parameters)
+
+    # (5) Compression methods
+    test_compression("compr_JPEG_JPEG2k_JPEG-LS", img_name, res="144p")
