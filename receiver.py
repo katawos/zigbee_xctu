@@ -33,6 +33,8 @@ PORT = "COM4"
 # TODO: Replace with the baud rate of your local module.
 BAUD_RATE = 115200
 
+device = None
+
 payload_list = []
 bool_start_gathering = False
 bool_get_params = False
@@ -244,6 +246,7 @@ def data_receive_callback(xbee_message):
     global diff_map
     global experiment_name
     global payload_bytes_sent
+    global device
     received_data = list(xbee_message.data)
 
     if (bool_get_params == True):
@@ -258,31 +261,46 @@ def data_receive_callback(xbee_message):
         comparison_image = string_list[6]
         diff_map = string_list[7]
         payload_bytes_sent = int(string_list[8])
+        to_coord = string_list[9]
+        to_recv = string_list[10]
+
+        if (to_recv != "None"):
+            if (int(to_recv) == 0):
+                device.set_parameter("TO", b"\x00")
+            elif (int(to_recv) == 1):
+                device.set_parameter("TO", b"\x01")
+            print("payload Parameter TO: ", device.get_parameter("TO"))
         
         if (comparison_image == "True"):
             original_image_name = ""
         
-        write_out_data += "{" + f'"X": {image_x}, "Y": {image_y}, "PayloadSize": {payload_size}, "Method": "{method}", "Experiment": "{experiment_sub_name}", "transmission": "{transmission}"'
+        write_out_data += "{" + f'"X": {image_x}, "Y": {image_y}, "PayloadSize": {payload_size}, "Method": "{method}", "Experiment": "{experiment_sub_name}", "transmission": "{transmission}", "to_coord":{to_coord}, "to_recv":{to_recv}'
         bool_start_gathering = True
         bool_get_params = False
-        experiment_transmission_time_start = datetime.now()
         return
 
     if (received_data == [101, 110, 100]):  # END
         diff_time = experiment_transmission_time_end - experiment_transmission_time_start
         write_out_data += f', "t": "{diff_time}"'
+        device.set_parameter("TO", b"\x00")
+        print("end Parameter TO: ", device.get_parameter("TO"))
         # print("stop gathering")
         bool_start_gathering = False
         save_image(payload_list)
     
     if (bool_start_gathering == True):
+        if (experiment_transmission_time_start is None):
+            experiment_transmission_time_start = datetime.now()
         payload_list.append(received_data)
         experiment_transmission_time_end = datetime.now()
 
     if (received_data == [115, 116, 97, 114, 116]): # START
         print("start gathering")
+        device.set_parameter("TO", b"\x00")
+        print("start Parameter TO: ", device.get_parameter("TO"))
         write_out_data = ""
         bool_get_params = True
+        experiment_transmission_time_start = None
         payload_list = []
 
     if (received_data[0:4] == [101, 110, 100, 50]):  # END2
@@ -292,6 +310,7 @@ def data_receive_callback(xbee_message):
         move_files()
 
 def run():
+    global device
     print(" +-----------------------------------------+")
     print(" | XBee Python Library Receive Data Sample |")
     print(" +-----------------------------------------+\n")
