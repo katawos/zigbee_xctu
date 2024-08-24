@@ -516,6 +516,49 @@ def test_compression(experiment_name, img_name, res, TO_coord = 0, TO_recv = 0):
     # Send status to receiver that experiment was finished and to create new folder under "experiment_name" and datetime name
     SendExperimentFinish(experiment_name=createExperimentName(experiment_name))
 
+def test_resolution_480p_vs_1080p(experiment_name, img_name, TO_coord = 0, TO_recv = 0):
+    """Performs resolution tests, coordinator sends hardoded sequence.
+
+    Args:
+      experiment_name: name of experiment
+      img_name: image full name
+      res: resolution for image scaling
+    """
+    res = "480p"
+    SendPerfectImage(img_name, res)
+    #synch JPEG quality=35 diff images
+    exper_sub_name = TRANSMISSION_TYPE[0] + f"_resolution_{res}_JPEG-35"
+    run(img_name, resolution=RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 35, transmission = TRANSMISSION_TYPE[0], TO_coord = TO_coord, TO_recv = TO_recv)
+    #synch JPEG quality=55 diff images
+    exper_sub_name = TRANSMISSION_TYPE[0] + f"_resolution_{res}_JPEG-55"
+    run(img_name, resolution=RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 55, transmission = TRANSMISSION_TYPE[0], TO_coord = TO_coord, TO_recv = TO_recv)
+
+    #asynch
+    exper_sub_name = TRANSMISSION_TYPE[1] + f"_resolution_{res}_JPEG-35"
+    run(img_name, resolution=RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 35, transmission = TRANSMISSION_TYPE[1], TO_coord = TO_coord, TO_recv = TO_recv)
+    #asynch JPEG quality=55 diff images
+    exper_sub_name = TRANSMISSION_TYPE[1] + f"_resolution_{res}_JPEG-55"
+    run(img_name, resolution=RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 55, transmission = TRANSMISSION_TYPE[1], TO_coord = TO_coord, TO_recv = TO_recv)
+
+    res = "1080p"
+    SendPerfectImage(img_name, res)
+    #synch JPEG quality=35 diff images
+    exper_sub_name = TRANSMISSION_TYPE[0] + f"_resolution_{res}_JPEG-35"
+    run(img_name, resolution=RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 35, transmission = TRANSMISSION_TYPE[0], TO_coord = TO_coord, TO_recv = TO_recv)
+    #synch JPEG quality=55 diff images
+    exper_sub_name = TRANSMISSION_TYPE[0] + f"_resolution_{res}_JPEG-55"
+    run(img_name, resolution=RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 55, transmission = TRANSMISSION_TYPE[0], TO_coord = TO_coord, TO_recv = TO_recv)
+
+    #asynch
+    exper_sub_name = TRANSMISSION_TYPE[1] + f"_resolution_{res}_JPEG-35"
+    run(img_name, resolution=RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 35, transmission = TRANSMISSION_TYPE[1], TO_coord = TO_coord, TO_recv = TO_recv)
+    #asynch JPEG quality=55 diff images
+    exper_sub_name = TRANSMISSION_TYPE[1] + f"_resolution_{res}_JPEG-55"
+    run(img_name, resolution=RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 55, transmission = TRANSMISSION_TYPE[1], TO_coord = TO_coord, TO_recv = TO_recv)
+
+    # Send status to receiver that experiment was finished and to create new folder under "experiment_name" and datetime name
+    SendExperimentFinish(experiment_name=createExperimentName(experiment_name))
+
 def test_function_template(experiment_name, img_name, TO_coord = 0, TO_recv = 0):
     """Performs payload tests, coordinator sends hardoded sequence
 
@@ -573,4 +616,10 @@ if __name__ == '__main__':
 
     # testy z kartki konsultacje 23
 
-    # test_asynch_trans("asynch_transmission_sleep_2_20_ms", img_name, res = "144p", TO_coord = 0, TO_recv = 0)
+    # 5) async 00 vs async 01 (no APS, no MAC)
+    # test_asynch_trans("asynch_transmission_sleep_2_20_ms_00", img_name, res = "144p", TO_coord = 0, TO_recv = 0)
+    # test_asynch_trans("asynch_transmission_sleep_2_20_ms_01", img_name, res = "144p", TO_coord = 0, TO_recv = 1)
+
+    # 3)
+
+    test_resolution_480p_vs_1080p("resolution_test_480p_vs_1080p", img_name, TO_coord = 0, TO_recv = 0)
