@@ -1,0 +1,3 @@
+{"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "None", "Experiment": "original_1080p_image_save", "transmission": "synch", "to_coord":0, "to_recv":0, "t": "0:05:08.839378", "tr": "0:00:00.185028", "MSE": 0, "SSIM": 0, "PSNR": 0, "payload_bytes_sent": 802203, "payload_bytes_received": 802035}
+, "tr": "broken"}
+{"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "JPEG", "Experiment": "asynch_MAC-1_1080p_JPEG-85", "transmission": "asynch", "to_coord":0, "to_recv":1, "t": "0:01:18.100827", "tr": "broken"}

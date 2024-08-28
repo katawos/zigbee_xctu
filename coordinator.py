@@ -92,8 +92,14 @@ def compressJPEG_LS(image, quality):
 # substract images as int - value after conversion to int16 is the same 
 # it allows for negative values after substraction, int8 <-128,127> is too small
 # value after conversion back to uint8 -> only halfs are rounded down
-def diff_images(img1, img2):
+def diff_images(img1, img2, diffVal):
+
+
     diff = np.int16(img2) - np.int16(img1)  #range of values <-255,255>
+
+    # arr, inside make boolean expression of all values 0, 1. If boolean comes as 0 (value is found), then assign 0
+    diff[np.abs(diff) <= diffVal] = 0
+
     diff = diff + 255                       #range <0,510>
     diff = diff / 2                         #range <0,255>
     diff = np.uint8(diff)                   #conversion to proper type (JPEG compatible)
@@ -279,7 +285,7 @@ def run(img_name, resolution, payload_size, experiment_sub_name, method = None, 
     XbeeSend(data_payloads, data_size, transmission, transmission_sleep, TO=TO_coord)
 
 
-def run_diff(img_names, resolution, payload_size, experiment_sub_name, method = None, quality = None, transmission = "synch", transmission_sleep = 0.014, comparison_image = False, diff_map = False, TO_coord = None, TO_recv = None):
+def run_diff(img_names, resolution, payload_size, experiment_sub_name, method = None, quality = None, transmission = "synch", transmission_sleep = 0.014, comparison_image = False, diff_map = False, TO_coord = None, TO_recv = None, skipOriginalSave = False, diffVal = 0):
     image_x = resolution[0]
     image_y = resolution[1]
     
@@ -292,12 +298,13 @@ def run_diff(img_names, resolution, payload_size, experiment_sub_name, method = 
     #resize, then calculate diff
     img1 = cv2.resize(img1, (image_x, image_y))
     img2 = cv2.resize(img2, (image_x, image_y))
-    diff_img = diff_images(img1, img2)
+    diff_img = diff_images(img1, img2, diffVal)
     mod_img_1d = modifyImage(diff_img, image_x, image_y, method, quality)
 
     #SendPerfectImage
-    run(img2_name_second_frame, resolution, payload_size = 84, experiment_sub_name = f"original_{image_x}x{image_y}_image_save_2", method = None, transmission="synch", transmission_sleep=0.014, comparison_image=True, diff_map = False, TO_coord = 0, TO_recv = 0)
-    run(img1_name_first_frame, resolution, payload_size = 84, experiment_sub_name = f"original_{image_x}x{image_y}_image_save_1", method = None, transmission="synch", transmission_sleep=0.014, comparison_image=True, diff_map = False, TO_coord = 0, TO_recv = 0)
+    if (skipOriginalSave != True):
+        run(img2_name_second_frame, resolution, payload_size = 84, experiment_sub_name = f"original_{image_x}x{image_y}_image_save_2", method = None, transmission="synch", transmission_sleep=0.014, comparison_image=True, diff_map = False, TO_coord = 0, TO_recv = 0)
+        run(img1_name_first_frame, resolution, payload_size = 84, experiment_sub_name = f"original_{image_x}x{image_y}_image_save_1", method = None, transmission="synch", transmission_sleep=0.014, comparison_image=True, diff_map = False, TO_coord = 0, TO_recv = 0)
 
     data_payloads = divide_to_payload(mod_img_1d, payload_size, f"{image_x},{image_y},{payload_size},{method},{experiment_sub_name},{transmission},{comparison_image},{diff_map},{len(mod_img_1d)},{TO_coord},{TO_recv}")
     data_size = len(data_payloads)
@@ -330,25 +337,48 @@ def test_diff_with_compr(experiment_name, img_names, TO_coord = 0, TO_recv = 0):
     # diff test: with compression method, its quality for async
     
     res = "144p" 
-    # synch
-    exper_sub_name = TRANSMISSION_TYPE[0] + f"_res{res}_diffTest_ducks"
-    run_diff(img_names = img_names, resolution= RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = None, quality = None, transmission = TRANSMISSION_TYPE[0], diff_map = True, TO_coord = TO_coord, TO_recv = TO_recv)
-    #synch JPEG quality=35 diff images
+
+    exper_sub_name = TRANSMISSION_TYPE[0] + f"_res{res}_diffTest"
+    # First original pair must be sent
+    skipOriginalSave = False 
+    run_diff(img_names = img_names, resolution= RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = None, quality = None, transmission = TRANSMISSION_TYPE[0], diff_map = True, TO_coord = TO_coord, TO_recv = TO_recv, skipOriginalSave=skipOriginalSave, diffVal=50)
+    # synch JPEG quality=35 diff images
+    skipOriginalSave = True
     exper_sub_name = TRANSMISSION_TYPE[0] + f"_res{res}_diffTest_JPEG-35"
-    run_diff(img_names = img_names, resolution= RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 35, transmission = TRANSMISSION_TYPE[0], diff_map = True, TO_coord = TO_coord, TO_recv = TO_recv)
+    run_diff(img_names = img_names, resolution= RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 35, transmission = TRANSMISSION_TYPE[0], diff_map = True, TO_coord = TO_coord, TO_recv = TO_recv, skipOriginalSave=skipOriginalSave, diffVal=50)
     #synch JPEG quality=55 diff images
     exper_sub_name = TRANSMISSION_TYPE[0] + f"_res{res}_diffTest_JPEG-55"
-    run_diff(img_names = img_names, resolution= RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 55, transmission = TRANSMISSION_TYPE[0], diff_map = True, TO_coord = TO_coord, TO_recv = TO_recv)
+    run_diff(img_names = img_names, resolution= RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 55, transmission = TRANSMISSION_TYPE[0], diff_map = True, TO_coord = TO_coord, TO_recv = TO_recv, skipOriginalSave=skipOriginalSave, diffVal=50)
 
     # asynch
-    exper_sub_name = TRANSMISSION_TYPE[1] + f"_res{res}_diffTest_ducks"
-    run_diff(img_names = img_names, resolution= RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = None, quality = None, transmission = TRANSMISSION_TYPE[1], diff_map = True, TO_coord = TO_coord, TO_recv = TO_recv)
+    exper_sub_name = TRANSMISSION_TYPE[1] + f"_res{res}_diffTest"
+    run_diff(img_names = img_names, resolution= RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = None, quality = None, transmission = TRANSMISSION_TYPE[1], diff_map = True, TO_coord = TO_coord, TO_recv = TO_recv, skipOriginalSave=skipOriginalSave, diffVal=50)
     #asynch JPEG quality=35 diff images
     exper_sub_name = TRANSMISSION_TYPE[1] + f"_res{res}_diffTest_JPEG-35"
-    run_diff(img_names = img_names, resolution= RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 35, transmission = TRANSMISSION_TYPE[1], diff_map = True, TO_coord = TO_coord, TO_recv = TO_recv)
+    run_diff(img_names = img_names, resolution= RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 35, transmission = TRANSMISSION_TYPE[1], diff_map = True, TO_coord = TO_coord, TO_recv = TO_recv, skipOriginalSave=skipOriginalSave, diffVal=50)
     #asynch JPEG quality=55 diff
     exper_sub_name = TRANSMISSION_TYPE[1] + f"_res{res}_diffTest_JPEG-55"
-    run_diff(img_names = img_names, resolution= RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 55, transmission = TRANSMISSION_TYPE[1], diff_map = True, TO_coord = TO_coord, TO_recv = TO_recv)
+    run_diff(img_names = img_names, resolution= RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = "JPEG", quality = 55, transmission = TRANSMISSION_TYPE[1], diff_map = True, TO_coord = TO_coord, TO_recv = TO_recv, skipOriginalSave=skipOriginalSave, diffVal=50)
+    
+    # Send status to receiver that experiment was finished and to create new folder under "experiment_name" and datetime name
+    SendExperimentFinish(experiment_name=createExperimentName(experiment_name))
+
+def test_diff_with_compr_with_diff(experiment_name, img_names, TO_coord = 0, TO_recv = 0):
+    """Performs diff tests with compression method. First and second frames are send and then difference. Measurement takes place in receiver.
+
+    Args:
+      experiment_name: name of experiment
+      img_name: image full name
+    """
+    # diff test: with compression method, its quality for async
+    
+    res = "1080p" 
+    # synch
+    skipOriginalSave = False
+    for diffVal in [0, 25, 50]:
+        exper_sub_name = TRANSMISSION_TYPE[0] + f"_res{res}_diffTest_diff_{diffVal}"
+        run_diff(img_names = img_names, resolution= RESOLUTIONS[res], payload_size = 84, experiment_sub_name = exper_sub_name, method = None, quality = None, transmission = TRANSMISSION_TYPE[0], diff_map = True, TO_coord = TO_coord, TO_recv = TO_recv, skipOriginalSave=skipOriginalSave, diffVal=diffVal)
+        skipOriginalSave = True
     
     # Send status to receiver that experiment was finished and to create new folder under "experiment_name" and datetime name
     SendExperimentFinish(experiment_name=createExperimentName(experiment_name))
@@ -575,15 +605,15 @@ def test_function_template(experiment_name, img_name, TO_coord = 0, TO_recv = 0)
 if __name__ == '__main__':
     img_name = "test.jpg"               #test image name
 
-    img_names_first_second_frame = ["goose_1.jpg", "goose_2.jpg"]
+    img_names_first_second_frame = ["street-1.jpg", "street-3.jpg"]
     # (1) diff test
-    # test_diff_with_compr("diff_with_compr_test", img_names_first_second_frame, TO_coord = 0, TO_recv = 0)
+    test_diff_with_compr("diff_with_compr_test", img_names_first_second_frame, TO_coord = 0, TO_recv = 0)
 
     # (2) JPEG vs JPEG2000
-    test_jpeg_vs_jpeg2k("jpeg_jpeg2k_compr_00", img_name, TO_coord = 0, TO_recv = 0)
-    test_jpeg_vs_jpeg2k("jpeg_jpeg2k_compr_01", img_name, TO_coord = 0, TO_recv = 1)
-    test_jpeg_vs_jpeg2k("jpeg_jpeg2k_compr_10", img_name, TO_coord = 1, TO_recv = 0)
-    test_jpeg_vs_jpeg2k("jpeg_jpeg2k_compr_11", img_name, TO_coord = 1, TO_recv = 1)
+    # test_jpeg_vs_jpeg2k("jpeg_jpeg2k_compr_00", img_name, TO_coord = 0, TO_recv = 0)
+    # test_jpeg_vs_jpeg2k("jpeg_jpeg2k_compr_01", img_name, TO_coord = 0, TO_recv = 1)
+    # test_jpeg_vs_jpeg2k("jpeg_jpeg2k_compr_10", img_name, TO_coord = 1, TO_recv = 0)
+    # test_jpeg_vs_jpeg2k("jpeg_jpeg2k_compr_11", img_name, TO_coord = 1, TO_recv = 1)
 
 
     # (1) Payload test
@@ -622,4 +652,4 @@ if __name__ == '__main__':
 
     # 3)
 
-    test_resolution_480p_vs_1080p("resolution_test_480p_vs_1080p", img_name, TO_coord = 0, TO_recv = 0)
+    # test_resolution_480p_vs_1080p("resolution_test_480p_vs_1080p", img_name, TO_coord = 0, TO_recv = 0)

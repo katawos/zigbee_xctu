@@ -24,4 +24,8 @@ def json_to_excel(jsonl_file, excel_file):
     df.to_excel(excel_file, index=False)
 
 # Example usage
-json_to_excel('16bitAddressingGray_receive_buffer.txt', '16bitAddressingGray_receive_buffer.xlsx')
+#json_to_excel('16bitAddressingGray_receive_buffer.txt', '16bitAddressingGray_receive_buffer.xlsx')
+json_to_excel('test_APS_recv-MAC.txt', 'test_APS_recv-MAC.xlsx')
+json_to_excel('test_APS_recv-noMAC.txt', 'test_APS_recv-noMAC.xlsx')
+json_to_excel('test_noAPS_recv-MAC.txt', 'test_noAPS_recv-MAC.xlsx')
+json_to_excel('test_noAPS_recv-noMAC.txt', 'test_noAPS_recv-noMAC.xlsx')

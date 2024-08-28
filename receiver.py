@@ -58,7 +58,6 @@ experiment_name = ""
 method = None
 payload_bytes_sent = 0
 
-#output file    "receiveBuffer_CLOSE_API1_TO-1_APS_Tx-4.txt"
 #check if folder "out" exists, if not - create one
 if (not os.path.exists("out")):
     os.mkdir("out")
@@ -330,6 +329,7 @@ def run():
                 print("Device is not connected .. resuming in 10 seconds")
                 time.sleep(10)
 
+        #does not block the application, adds user defined callback
         device.add_data_received_callback(data_receive_callback)
 
         print("Waiting for data...\n")
