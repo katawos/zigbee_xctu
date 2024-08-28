@@ -172,7 +172,10 @@ def save_image(payload_list):
                 original_img_2_gray = cv2.cvtColor(original_image_2, cv2.COLOR_BGR2GRAY)
                 img_2_after_map_gray = cv2.cvtColor(image_2_after_map, cv2.COLOR_BGR2GRAY)
                 SSIM, diff = ssim(original_img_2_gray, img_2_after_map_gray, full=True)
-                cv2.imwrite(f"out//diff_{experiment_sub_name}_image_2_after_map_ssim.jpg", img_as_ubyte(diff))
+                # diff can be above 1 for some reason
+                diff = np.clip(diff, 0, 1)
+                diff = img_as_ubyte(diff)
+                cv2.imwrite(f"out//diff_{experiment_sub_name}_image_2_after_map_ssim.jpg", diff)
                 
                 psnr_float = psnr(original_image_2, image_2_after_map)
 
