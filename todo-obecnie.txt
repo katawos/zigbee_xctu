@@ -1,5 +1,5 @@
 WYWALIĆ:
-1) beacon, operating modes
+1) 
 - \cite{bib:ZigBee_operational_modes}
 
 2) możliwe że do wywalenia/przerobienia cały subsection - CONNETCTING TO AN EXISTING ZIGBEE NETWORK
@@ -18,8 +18,8 @@ PRZENIEŚĆ / PRZEROBIĆ:
 
 ----------------
 TODO:
-- póki poprzedni test się wykonuje - dopisać do obrazów różnicowych co i jak?
-	DIFF teraz nie wymaga resize(), ale zostawić dla szybkich testów
-- jak się skończy obecny test -> odpalić parse_to_excel.py -> uśrednianie wartości żeby porównać czy to coś daje
-- puścić test [3] close resolution
-- zacząć uśredniać wartości z testu [1] ACK impact (z każdego po trzy wartości (wpierw uśrednić wersje, potem ogólny wynik))
+- jak się skończy test x10 async 15ms dla APS/noAPS, MAC/noMAC, to puścić x10 test dla ACK impact
+- dodatkowo: payload puścić (SYNC/ASYNC, wide/narrow), dla 480p
+- dodatkowo: resolution time x10
+
+- jutro: ustawić FAR i puścić
