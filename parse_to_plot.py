@@ -73,13 +73,16 @@ def scatter(ax, rest_df, name):
     # giving a title to my graph
     ax.set_title(label_list[-2] + name)
     ax.grid()
-    ax.legend()
+    # ax.legend()
 
 
-def json_to_plot(jsonl_file, file_name, showOriginal=True, figTitle="test"):
+def json_to_plot(jsonl_file, showOriginal=True, figTitle="test"):
     file = open(jsonl_file, "r")
     lines = file.readlines()
     file.close()
+
+    jsonl_file_list = jsonl_file.split(".")
+    file_name = jsonl_file_list[0] + ".png"
 
     df = None
 
@@ -99,9 +102,12 @@ def json_to_plot(jsonl_file, file_name, showOriginal=True, figTitle="test"):
     # Parse to matplotplib plot data structure
     original_time = df.iloc[0]["t"]
     original_time = convertTimeStrToSeconds(original_time)
-    rest_df = df.iloc[1:]
+    # rest_df = df.iloc[1:]
 
-    fig = plt.figure(layout="constrained", figsize=(9, 9))
+    rest_df = df[~df["Experiment"].str.contains("original")]
+
+    # fig = plt.figure(layout="constrained", figsize=(9, 9))
+    fig = plt.figure()
     fig.suptitle(figTitle, fontsize=12)
 
     df_methods_names = rest_df["Method"].unique()
@@ -160,8 +166,7 @@ def json_to_plot(jsonl_file, file_name, showOriginal=True, figTitle="test"):
 # )
 
 json_to_plot(
-    r"out\tests-28-08-2024\initial\jpeg_vs_jpeg2k_vs_jpegls\jpeg_jpeg2k_jpegls_compr_00_2024-08-28_12-41-08\test.txt",
-    r"out\tests-28-08-2024\initial\jpeg_vs_jpeg2k_vs_jpegls\jpeg_jpeg2k_jpegls_compr_00_2024-08-28_12-41-08\test.png",
+    r"out\tests-28-08-2024\final\differential images\diff_with_compr_Street_pix_diff_2024-08-28_20-23-37\test.txt",
     showOriginal=False,
     figTitle="test",
 )
