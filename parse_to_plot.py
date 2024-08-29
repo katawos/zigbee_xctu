@@ -145,16 +145,23 @@ def json_to_plot(jsonl_file, file_name, showOriginal=True, figTitle="test"):
 
 
 # Example usage
-json_to_plot(
-    r"out\tests-28-08-2024\initial\payload\narrow\payload_test_narrow_range_2024-08-29_10-44-29\test_fix.txt",
-    r"out\tests-28-08-2024\initial\payload\narrow\payload_test_narrow_range_2024-08-29_10-44-29\test.png",
-    showOriginal=False,
-    figTitle="test",
-)
+# json_to_plot(
+#     r"out\tests-28-08-2024\initial\payload\narrow\payload_test_narrow_range_2024-08-29_10-44-29\test_fix.txt",
+#     r"out\tests-28-08-2024\initial\payload\narrow\payload_test_narrow_range_2024-08-29_10-44-29\test.png",
+#     showOriginal=False,
+#     figTitle="test",
+# )
+
+# json_to_plot(
+#     r"out\tests-28-08-2024\initial\payload\wide\test.txt",
+#     r"out\tests-28-08-2024\initial\payload\wide\test.png",
+#     showOriginal=False,
+#     figTitle="test",
+# )
 
 json_to_plot(
-    r"out\tests-28-08-2024\initial\payload\wide\test.txt",
-    r"out\tests-28-08-2024\initial\payload\wide\test.png",
+    r"out\tests-28-08-2024\initial\jpeg_vs_jpeg2k_vs_jpegls\jpeg_jpeg2k_jpegls_compr_00_2024-08-28_12-41-08\test.txt",
+    r"out\tests-28-08-2024\initial\jpeg_vs_jpeg2k_vs_jpegls\jpeg_jpeg2k_jpegls_compr_00_2024-08-28_12-41-08\test.png",
     showOriginal=False,
     figTitle="test",
 )
