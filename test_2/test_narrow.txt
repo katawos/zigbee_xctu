@@ -1,0 +1,15 @@
+{'quality': 15, 'MSE': 324.00901475694445, 'SSIM': 0.8472549589172818, 'PSNR': 27.796445220330202, 'double_resize_bytes': 391399, 'compressed_bytes': 93297}
+{'quality': 14, 'MSE': 319.9354740547839, 'SSIM': 0.8466840054368566, 'PSNR': 27.851392187916737, 'double_resize_bytes': 391399, 'compressed_bytes': 87103}
+{'quality': 13, 'MSE': 314.641958912037, 'SSIM': 0.8472632444626356, 'PSNR': 27.92384978327378, 'double_resize_bytes': 391399, 'compressed_bytes': 80800}
+{'quality': 12, 'MSE': 311.49763985339507, 'SSIM': 0.846621911615442, 'PSNR': 27.967468551302016, 'double_resize_bytes': 391399, 'compressed_bytes': 74645}
+{'quality': 11, 'MSE': 312.5134157986111, 'SSIM': 0.8480616817375277, 'PSNR': 27.95332949804294, 'double_resize_bytes': 391399, 'compressed_bytes': 68382}
+{'quality': 10, 'MSE': 311.4033174189815, 'SSIM': 0.848103269814119, 'PSNR': 27.968783807367057, 'double_resize_bytes': 391399, 'compressed_bytes': 62204}
+{'quality': 9, 'MSE': 317.3091681134259, 'SSIM': 0.8438318043170295, 'PSNR': 27.88718995099048, 'double_resize_bytes': 391399, 'compressed_bytes': 55996}
+{'quality': 8, 'MSE': 325.01275366512345, 'SSIM': 0.8410037142028511, 'PSNR': 27.783012123388147, 'double_resize_bytes': 391399, 'compressed_bytes': 49719}
+{'quality': 7, 'MSE': 332.85563078703706, 'SSIM': 0.8349793717348958, 'PSNR': 27.679457074497865, 'double_resize_bytes': 391399, 'compressed_bytes': 43552}
+{'quality': 6, 'MSE': 333.6298982445988, 'SSIM': 0.8317984689737113, 'PSNR': 27.66936652576245, 'double_resize_bytes': 391399, 'compressed_bytes': 37222}
+{'quality': 5, 'MSE': 331.38566165123456, 'SSIM': 0.8310909248566565, 'PSNR': 27.698679020910454, 'double_resize_bytes': 391399, 'compressed_bytes': 31057}
+{'quality': 4, 'MSE': 332.5617795138889, 'SSIM': 0.8271431615978468, 'PSNR': 27.683292802050183, 'double_resize_bytes': 391399, 'compressed_bytes': 24831}
+{'quality': 3, 'MSE': 368.9900959683642, 'SSIM': 0.8160937683854541, 'PSNR': 27.23186906133153, 'double_resize_bytes': 391399, 'compressed_bytes': 18663}
+{'quality': 2, 'MSE': 416.0297526041667, 'SSIM': 0.8013686456064945, 'PSNR': 26.71077225033521, 'double_resize_bytes': 391399, 'compressed_bytes': 12279}
+{'quality': 1, 'MSE': 561.6900906635802, 'SSIM': 0.7692643649296652, 'PSNR': 25.407048534669727, 'double_resize_bytes': 391399, 'compressed_bytes': 6171}

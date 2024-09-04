@@ -1,16 +1,18 @@
 TEST - ASYNC sleep time, blisko (144p i 240p to samo), tutaj dla 480p
 Test dla async, czas opóźnienia, dla każdego przypadku 15ms było konieczne, czas? nieznacznie inny
-1) TO_ coord = 0, TO_recv = 0,	=> 15ms	=> mean 25.0297972
-2) TO_ coord = 0, TO_recv = 1,	=> 15ms	=> mean 25.0557826
-3) T1_ coord = 1, TO_recv = 0,	=> 15ms	=> mean 24.992984
-4) T1_ coord = 1, TO_recv = 1,	=> 15ms	=> mean 24.7975958
-DO POWTÓRZENIA DLA 15ms DO 10x? 
+					test x5						test x10
+1) TO_ coord = 0, TO_recv = 0,	=> 15ms	=> mean 25.0297972	=> 15ms x10	=> mean 00:25.1276437	SSIM 0.8838708
+2) TO_ coord = 0, TO_recv = 1,	=> 15ms	=> mean 25.0557826	=> 15ms x10	=> mean 00:24.9444504	SSIM 0.9157383	
+3) T1_ coord = 1, TO_recv = 0,	=> 15ms	=> mean 24.992984	=> 15ms x10	=> mean 00:24.8972164	SSIM 0.9756537
+4) T1_ coord = 1, TO_recv = 1,	=> 15ms	=> mean 24.7975958	=> 15ms x10	=> mean 00:24.9628706	SSIM 0.7656678
+
 
 
 TEST - JPEG compression ratio, blisko (480p, 1080p)
 wybory (gorsza jakość dla mniejszego obrazu, dla 1080p wartości q mogłyby być niższe)
-(1) bez widocznej różnicy (nawet ostrzejszy obraz) - q=85
-(2) znaczna kompresja, ale jeszcze nie najgorsza jakość (mocno pogorszona jakość dla q=15) - q=35
+
+(1) bez widocznej różnicy (nawet do q=55 by można zejść) - q=85
+(2) znaczna kompresja, ale jeszcze nie najgorsza jakość - q=35
 
 -------------------------------------------------------------------------------------------------------------
 TEST - [1] wpływ ACK (MAC, APS), blisko, potwierdzenia, 1080p, małe straty kompr JPEG q=85
@@ -19,23 +21,31 @@ TEST - [1] wpływ ACK (MAC, APS), blisko, potwierdzenia, 1080p, małe straty kom
 2) sync (APS), noMAC (TO_recv = 1)	=> mean 2:02.501629	- x10	=> mean 2:09.6214917 with SSIM 0.9282742
 3) async (noAPS), MAC (TO_recv = 0)	=> mean 1:00.380553	- x10	=> mean 1:00.111336 with SSIM 0.7682068
 4) async (noAPS), noMAC (TO_recv = 1)	=> mean 1:00.379720	- x10	=> mean 1:00.2046773 with SSIM 0.755558
-DO POWTÓRZENIA DO 10x?
 
 
-TEST - [2] wpływ odległości i ACK przy % zgubionych paczek
+TEST - [2] FAR wpływ odległości i ACK przy % zgubionych paczek
 DALEKO + Tx = 1, 1080p, małe straty kompr JPEG q=85, sprawdzić 2 przypadki (dla danego potwierdzenia, może MAC?)
-1) sync (APS), MAC (TO_recv = 0)	- x10	=> mean 
-2) sync (APS), noMAC (TO_recv = 1)	- x10	=> mean 
-3) async (noAPS), MAC (TO_recv = 0)	- x10	=> mean 
-4) async (noAPS), noMAC (TO_recv = 1)	- x10	=> mean 
+1) sync (APS), MAC (TO_recv = 0)	- x10	=> mean 2:22.0985728	SSIM 0.9886805
+2) sync (APS), noMAC (TO_recv = 1)	- x10	=> mean 3:09.6503677	SSIM 0.9379081
+3) async (noAPS), MAC (TO_recv = 0)	- x10	=> mean 1:00.323684	SSIM 0.4248825
+4) async (noAPS), noMAC (TO_recv = 1)	- x10	=> mean 1:00.90591	SSIM 0.443599
 
 
 TEST - [3] czasy transmisji dla 1080p i 480p dla współczynników kompresji q=35 i q=85, jeden rodzaj transmisji
 (1) 1080p
-1) sync (APS), MAC (TO_recv = 0), JPEG q=35
-2) sync (APS), MAC (TO_recv = 0), JPEG q=85
+1) sync (APS), MAC (TO_recv = 0), JPEG q=85		=> mean 2:02.3939418	SSIM 0.989804
+2) sync (APS), MAC (TO_recv = 0), JPEG q=35		=> mean 00:52.9503151	SSIM 0.954409
+
 (1) 480p
-1) sync (APS), MAC (TO_recv = 0), JPEG q=35
-2) sync (APS), MAC (TO_recv = 0), JPEG q=85
+1) sync (APS), MAC (TO_recv = 0), JPEG q=85		=> mean 00:28.5293058	SSIM 0.965707
+2) sync (APS), MAC (TO_recv = 0), JPEG q=35		=> mean 00:11.0212966	SSIM 0.884272
+
 
 -------------------------------------------------------------------------------------------------------------
+JEŚLI PSNR = 0inf ALBO JUŻ ZOSTAŁ NADPISANY JAKO 10000, TO DLA CZYTELNOŚCI WYNIKÓW, PSNR = 77 RÓWNO!!!
+
+- jeśli jakiś wynik znacząco odstaje w czasie transmisji od pozostałych i tym samym zaburza czytelność wykresu,
+	a test był powtórzony x10 dla danego przypadku, to można pozbyć się tego konkretnego przypadku
+np. test ACK -> APS, noMAC => {"X": 1920, "Y": 1080, "PayloadSize": 84, "Method": "JPEG", "Experiment": "v9_sync_recvMAC-1_1080p_JPEG-85", "transmission": "sync", "to_coord":0, "to_recv":1, "t": "0:03:14.582770", "tr": "0:00:00.059033", "MSE": 27859.201690, "SSIM": 0.374506, "PSNR": 8.452329, "payload_bytes_sent": 318751, "payload_bytes_received": 319507}
+
+

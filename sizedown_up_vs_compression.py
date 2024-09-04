@@ -14,22 +14,18 @@ FOLDER_NAME = "test_2"
 def loadImage(img_name = "test.jpg"):
     # open test image
     img = cv2.imread(img_name)
-    #cv2.imshow("test image", img)
-    #cv2.waitKey()
     # Shape will give (row, column) where row = y, column = x
     # print(img.shape)
 
     return img
 
 def compressJPEG(image, quality, img_name = "compressed_street_1080p.jpg"):
-    #print("Im compressing JPEG")
     img_name = f'{FOLDER_NAME}//{img_name}'
     #save image to the one with the new name and given JPEG quality
     cv2.imwrite(img_name, image, [int(cv2.IMWRITE_JPEG_QUALITY), quality])  # Quality ranges from 0 to 100
     return img_name
 
 def compressJPEG2000(image, quality, img_name = "compressed_street_1080p.jpg"):
-    #print("Im compressing JPEG-2000")
     img_name = f'{FOLDER_NAME}//{img_name}'
     #save image to the one with the new name and given JPEG compression ratio
     cv2.imwrite(img_name, image, [int(cv2.IMWRITE_JPEG2000_COMPRESSION_X1000), quality])  # Compression ratio ranges from 0 to 1000
@@ -71,7 +67,6 @@ def checkSimilarity(img_name1, img_name2, diffmap_name = "diff_map.jpg"):
         "SSIM": SSIM,
         "PSNR": psnr_float
     }
-
     return results
 
 if __name__ == '__main__':
@@ -87,7 +82,7 @@ if __name__ == '__main__':
     f = open(f"{FOLDER_NAME}//test.txt", "w+")
 
     double_resized_img_name = doubleResize(image, 0.25, "street_double_resize.jpg")
-    for quality in range(15, 0, -1):
+    for quality in range(50, 15, -1):
         compressed_img_name = compressJPEG2000(image, quality, f"compressed_street_1080p_qual_{quality}.jp2")
 
         results = checkSimilarity(double_resized_img_name, compressed_img_name, f"diff_map_qual_{quality}.jpg")

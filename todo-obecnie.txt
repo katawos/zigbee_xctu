@@ -1,25 +1,28 @@
 WYWALIĆ:
 1) 
-- \cite{bib:ZigBee_operational_modes}
 
 2) możliwe że do wywalenia/przerobienia cały subsection - CONNETCTING TO AN EXISTING ZIGBEE NETWORK
 3) 
+---------------------
+1) MACK ACK - sprawdzić wszystkie pomiary, dla routera i koordynatora, porównać średnie wyników i różnice 
+2) sprawdzić i przepisać wszystkie tabelki 
+3) poprawki w analizie czy solution, sprawdzić wszystko jeszcze raz dokładnie
+
+3) remove JPEG-LS ???
 
 
 
-------------------------
-DODAĆ: 
-- but within the master thesis, \(ssim()\) function is used from skimage.metrics library (do solution) etc
-
-------------------------
-PRZENIEŚĆ / PRZEROBIĆ:
-- The coordinator.py that is responsible for image modifications and encoding for transmission over ZigBee network and receiver.py that focuses on receiving data, decoding and enhancing image features. Both of them performs different set of tests, but all of them revolve around finding optimal parameters for the best image quality (subjective and based on appropriate measures: MSE and SSIM), as well as reduction of transmission time.
-
-
-----------------
-TODO:
-- jak się skończy test x10 async 15ms dla APS/noAPS, MAC/noMAC, to puścić x10 test dla ACK impact
-- dodatkowo: payload puścić (SYNC/ASYNC, wide/narrow), dla 480p
-- dodatkowo: resolution time x10
-
-- jutro: ustawić FAR i puścić
+\begin{table}
+    \centering
+    \caption{Caption}
+    \begin{tabular}{|c|c|c|c|}  %rozdzielenie kolumn, osobno dla każdej
+    \toprule
+        c1 & c2 & c3 & c4 \\   \midrule
+         & \\ \hline
+         & \\ \hline
+         & \\ \hline
+         & \\ \hline
+         & \\   \bottomrule
+    \end{tabular}
+    \label{tab:label}
+\end{table}

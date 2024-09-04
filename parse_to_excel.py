@@ -24,8 +24,9 @@ def json_to_excel(jsonl_file, excel_file):
     df.to_excel(excel_file, index=False)
 
 # Example usage
-#json_to_excel('16bitAddressingGray_receive_buffer.txt', '16bitAddressingGray_receive_buffer.xlsx')
-json_to_excel('test_FAR_APS_MAC-00.txt', 'test_FAR_APS_MAC-00.xlsx')
-json_to_excel('test_FAR_APS_noMAC-01.txt', 'test_FAR_APS_noMAC-01.xlsx')
-json_to_excel('test_FAR_noAPS_MAC-00.txt', 'test_FAR_noAPS_MAC-00.xlsx')
-json_to_excel('test_FAR_noAPS_noMAC-01.txt', 'test_FAR_noAPS_noMAC-01.xlsx')
+# json_to_excel('synch.txt', 'sync_payload_wide.xlsx')
+# json_to_excel('asynch.txt', 'async_payload_wide.xlsx')
+json_to_excel('test.txt', 'differential-images-diff.xlsx')
+# json_to_excel('resolution-vs-time-1080p.txt', 'resolution-vs-time-1080p.xlsx')
+# json_to_excel('15ms_TO-10.txt', '15ms_TO-10.xlsx')
+# json_to_excel('15ms_TO-11.txt', '15ms_TO-11.xlsx')

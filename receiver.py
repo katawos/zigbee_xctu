@@ -206,7 +206,7 @@ def save_image(payload_list):
                 psnr_float = psnr(originalImage, image)
                 psnr_txt = f"{psnr_float:04f}"
                 if (psnr_txt == "0inf"):
-                    psnr_float = 1000
+                    psnr_float = 77
 
                 write_out_data += f', "tr": "{diff_time}", "MSE": {MSE:04f}, "SSIM": {SSIM:04f}, "PSNR": {psnr_float:04f}, "payload_bytes_sent": {payload_bytes_sent}, "payload_bytes_received": {len(np_arr)}' + "}\n"
             else:    
@@ -284,7 +284,7 @@ def data_receive_callback(xbee_message):
         bool_get_params = False
         return
 
-    if (received_data == [101, 110, 100]):  # END
+    if (received_data == [101, 110, 100]):  # end
         diff_time = experiment_transmission_time_end - experiment_transmission_time_start
         write_out_data += f', "t": "{diff_time}"'
         device.set_parameter("TO", b"\x00")
@@ -299,7 +299,7 @@ def data_receive_callback(xbee_message):
         payload_list.append(received_data)
         experiment_transmission_time_end = datetime.now()
 
-    if (received_data == [115, 116, 97, 114, 116]): # START
+    if (received_data == [115, 116, 97, 114, 116]): # start
         print("start gathering")
         device.set_parameter("TO", b"\x00")
         print("start Parameter TO: ", device.get_parameter("TO"))
@@ -308,7 +308,7 @@ def data_receive_callback(xbee_message):
         experiment_transmission_time_start = None
         payload_list = []
 
-    if (received_data[0:4] == [101, 110, 100, 50]):  # END2
+    if (received_data[0:4] == [101, 110, 100, 50]):  # end2
         string = f"{xbee_message.data.decode('utf-8')}"
         string_list = string.split(",")
         experiment_name = string_list[1]
