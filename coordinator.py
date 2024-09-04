@@ -23,7 +23,7 @@ import cv2
 import jpeg_ls
 
 # TODO: Replace with the serial port where your local module is connected to.
-PORT = "COM4"
+PORT = "COM3"
 #MAC: ___FC (right, sticker "2")
 
 # TODO: Replace with the baud rate of your local module.
@@ -203,7 +203,6 @@ def XbeeSend(data_payloads, data_size, transmission = "sync", transmission_sleep
         dataSendFails = 0
         dataSendMaxFails = 50
 
-        firstAsync = True
         payloadTOset = False
         while (data_idx < data_size):
 
@@ -237,9 +236,6 @@ def XbeeSend(data_payloads, data_size, transmission = "sync", transmission_sleep
                         #send data Synchronously - wait for the packet response (FrameID = 1, APS ACK)
                         device.send_data(remote_device, bytearray(data_payloads[data_idx])) 
                     elif (transmission == "async"):
-                        if (firstAsync == True):
-                            time.sleep(transmission_sleep) 
-                            firstAsync = False
                         #send data Asynchronously - do not wait for data response (FrameID = 0, no APS ACK)
                         device.send_data_async(remote_device, bytearray(data_payloads[data_idx]))
                         #time.sleep() slows down sending the packets to: reduce number of dropped packets
@@ -248,6 +244,7 @@ def XbeeSend(data_payloads, data_size, transmission = "sync", transmission_sleep
                     device.set_parameter("TO", b"\x00")
                     print(f"parameter MAC ACK and retries, TO: {device.get_parameter('TO')}")
                     device.send_data(remote_device, data_payloads[data_idx])    #for string data type, like "end"
+                    time.sleep(0.5)
                 # print("Success")
                 data_idx += 1
             except Exception as e:
