@@ -204,6 +204,9 @@ def save_image(payload_list):
                 SSIM, diff = ssim(original_gray, img_gray, full=True)
 
                 psnr_float = psnr(originalImage, image)
+                psnr_txt = f"{psnr_float:04f}"
+                if (psnr_txt == "0inf"):
+                    psnr_float = 1000
 
                 write_out_data += f', "tr": "{diff_time}", "MSE": {MSE:04f}, "SSIM": {SSIM:04f}, "PSNR": {psnr_float:04f}, "payload_bytes_sent": {payload_bytes_sent}, "payload_bytes_received": {len(np_arr)}' + "}\n"
             else:    

@@ -1,0 +1,1 @@
+%~dp0venv\Scripts\python.exe parse_to_plot.py

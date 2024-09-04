@@ -1,24 +1,34 @@
-TEST - ASYNC sleep time, blisko (144p i 240p to samo)
-1) TO_ coord = 0, TO_recv = 0,	=> 15ms
-2) TO_ coord = 0, TO_recv = 1,	=> 15ms
+TEST - ASYNC sleep time, blisko (144p i 240p to samo), tutaj dla 480p
+Test dla async, czas opóźnienia, dla każdego przypadku 15ms było konieczne, czas? nieznacznie inny
+1) TO_ coord = 0, TO_recv = 0,	=> 15ms	=> mean 25.0297972
+2) TO_ coord = 0, TO_recv = 1,	=> 15ms	=> mean 25.0557826
+3) T1_ coord = 1, TO_recv = 0,	=> 15ms	=> mean 24.992984
+4) T1_ coord = 1, TO_recv = 1,	=> 15ms	=> mean 24.7975958
+DO POWTÓRZENIA DLA 15ms DO 10x? 
+
 
 TEST - JPEG compression ratio, blisko (480p, 1080p)
-wybory
+wybory (gorsza jakość dla mniejszego obrazu, dla 1080p wartości q mogłyby być niższe)
 (1) bez widocznej różnicy (nawet ostrzejszy obraz) - q=85
 (2) znaczna kompresja, ale jeszcze nie najgorsza jakość (mocno pogorszona jakość dla q=15) - q=35
 
-
+-------------------------------------------------------------------------------------------------------------
 TEST - [1] wpływ ACK (MAC, APS), blisko, potwierdzenia, 1080p, małe straty kompr JPEG q=85
-* TO_coord = 0 (nie zmieniam, MAC?)
-1) sync (APS), MAC (TO_recv = 0)
-2) sync (APS), noMAC (TO_recv = 1)
-3) async (noAPS), MAC (TO_recv = 0)
-4) async (noAPS), noMAC (TO_recv = 1)
+* TO_coord = 0 (nie zmieniam, MAC?); 		test x3				text x10
+1) sync (APS), MAC (TO_recv = 0)	=> mean 2:02.333322	- x10	=> mean 2:02.456389 with SSIM 0.989804
+2) sync (APS), noMAC (TO_recv = 1)	=> mean 2:02.501629	- x10	=> mean 2:09.6214917 with SSIM 0.9282742
+3) async (noAPS), MAC (TO_recv = 0)	=> mean 1:00.380553	- x10	=> mean 1:00.111336 with SSIM 0.7682068
+4) async (noAPS), noMAC (TO_recv = 1)	=> mean 1:00.379720	- x10	=> mean 1:00.2046773 with SSIM 0.755558
+DO POWTÓRZENIA DO 10x?
+
 
 TEST - [2] wpływ odległości i ACK przy % zgubionych paczek
 DALEKO + Tx = 1, 1080p, małe straty kompr JPEG q=85, sprawdzić 2 przypadki (dla danego potwierdzenia, może MAC?)
-1) sync (APS), MAC (TO_recv = 0)
-2) sync (APS), noMAC (TO_recv = 1)
+1) sync (APS), MAC (TO_recv = 0)	- x10	=> mean 
+2) sync (APS), noMAC (TO_recv = 1)	- x10	=> mean 
+3) async (noAPS), MAC (TO_recv = 0)	- x10	=> mean 
+4) async (noAPS), noMAC (TO_recv = 1)	- x10	=> mean 
+
 
 TEST - [3] czasy transmisji dla 1080p i 480p dla współczynników kompresji q=35 i q=85, jeden rodzaj transmisji
 (1) 1080p
@@ -28,5 +38,4 @@ TEST - [3] czasy transmisji dla 1080p i 480p dla współczynników kompresji q=3
 1) sync (APS), MAC (TO_recv = 0), JPEG q=35
 2) sync (APS), MAC (TO_recv = 0), JPEG q=85
 
-
---------------------------
+-------------------------------------------------------------------------------------------------------------
